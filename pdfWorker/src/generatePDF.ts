@@ -56,5 +56,5 @@ export async function generatePDF(data: string) {
 
   await browser.close();
 
-  //   await uploadPDFToS3(`./pdfs/${pdfName}`, pdfName);
+  await uploadPDFToS3(`./pdfs/${pdfName}`, pdfName);
 }
