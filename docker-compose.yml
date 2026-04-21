@@ -1,0 +1,29 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build: ./apiOficios
+    ports:
+      - "3333:3333"
+    env_file:
+      - ./apiOficios/.env
+    depends_on:
+      - rabbitmq:
+        condition: service_healthy
+
+  worker:
+    build: ./workerOficios
+    env_file:
+      - ./pdfWorker/.env
+    depends_on:
+      - rabbitmq:
+        condition: service_healthy

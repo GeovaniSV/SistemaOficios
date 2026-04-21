@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ofício</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #d6d3cc;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+        padding: 40px 20px;
+        font-family: "EB Garamond", serif;
+      }
+
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        background: #faf9f6;
+        box-shadow:
+          0 8px 40px rgba(0, 0, 0, 0.18),
+          0 2px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Barra lateral decorativa */
+      .page::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 6px;
+        background: linear-gradient(
+          180deg,
+          #1a2744 0%,
+          #2c3e6b 50%,
+          #1a2744 100%
+        );
+      }
+
+      /* ===== HEADER ===== */
+      .header {
+        padding: 28px 35px 22px 45px;
+        border-bottom: 1px solid #c8c2b4;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        background: #faf9f6;
+      }
+
+      .logo-placeholder {
+        width: 68px;
+        height: 68px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #1a2744, #2c3e6b);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        color: #c9a84c;
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        font-family: "Cormorant Garamond", serif;
+      }
+
+      .header-info {
+        flex: 1;
+        text-align: center;
+      }
+
+      .header-info .orgao {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 11pt;
+        font-weight: 300;
+        color: #5a5040;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        margin-bottom: 3px;
+      }
+
+      .header-info .nome-empresa {
+        font-family: "EB Garamond", serif;
+        font-size: 17pt;
+        font-weight: 700;
+        color: #1a2744;
+        letter-spacing: 0.5px;
+        line-height: 1.1;
+        margin-bottom: 5px;
+      }
+
+      .header-info .sub-info {
+        font-size: 8.5pt;
+        color: #7a7060;
+        font-style: italic;
+        line-height: 1.6;
+      }
+
+      .logo-placeholder-right {
+        width: 68px;
+        height: 68px;
+        border-radius: 4px;
+        background: #edeae3;
+        border: 1px solid #d4cfc5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        color: #9a9080;
+        font-size: 8pt;
+        text-align: center;
+        font-family: "Cormorant Garamond", serif;
+        letter-spacing: 1px;
+      }
+
+      /* Linha dourada abaixo do header */
+      .header-accent {
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          #1a2744 0%,
+          #c9a84c 40%,
+          #c9a84c 60%,
+          #1a2744 100%
+        );
+      }
+
+      /* ===== BODY ===== */
+      .body {
+        padding: 28px 45px 28px 45px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Número e data */
+      .oficio-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 24px;
+        padding-bottom: 12px;
+        border-bottom: 1px dashed #c8c2b4;
+      }
+
+      .oficio-numero {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 11pt;
+        font-weight: 600;
+        color: #1a2744;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .oficio-numero span {
+        color: #c9a84c;
+      }
+
+      .oficio-local-data {
+        font-size: 10pt;
+        color: #5a5040;
+        font-style: italic;
+      }
+
+      /* Destinatário */
+      .destinatario {
+        margin-bottom: 22px;
+        padding: 14px 18px;
+        border-left: 3px solid #1a2744;
+        background: #f3f1ec;
+      }
+
+      .destinatario p {
+        font-size: 10.5pt;
+        color: #2a2520;
+        line-height: 1.7;
+      }
+
+      .destinatario .label {
+        font-size: 8pt;
+        color: #7a7060;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 6px;
+        font-family: "Cormorant Garamond", serif;
+      }
+
+      /* Assunto */
+      .assunto {
+        margin-bottom: 22px;
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+      }
+
+      .assunto .label {
+        font-size: 9pt;
+        font-weight: 600;
+        color: #1a2744;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        white-space: nowrap;
+        font-family: "Cormorant Garamond", serif;
+      }
+
+      .assunto .texto {
+        font-size: 10.5pt;
+        color: #2a2520;
+        font-style: italic;
+        border-bottom: 1px solid #c8c2b4;
+        flex: 1;
+        padding-bottom: 2px;
+      }
+
+      /* Referência */
+      .referencia {
+        margin-bottom: 22px;
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+      }
+
+      .referencia .label {
+        font-size: 9pt;
+        font-weight: 600;
+        color: #1a2744;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        white-space: nowrap;
+        font-family: "Cormorant Garamond", serif;
+      }
+
+      .referencia .texto {
+        font-size: 10pt;
+        color: #5a5040;
+        flex: 1;
+      }
+
+      /* Corpo do texto */
+      .corpo {
+        flex: 1;
+        margin-bottom: 30px;
+      }
+
+      .corpo p {
+        font-size: 11pt;
+        color: #1e1a16;
+        line-height: 1.85;
+        text-align: justify;
+        margin-bottom: 14px;
+        text-indent: 35px;
+      }
+
+      .corpo p:first-child::first-letter {
+        font-size: 2.2em;
+        font-weight: 600;
+        color: #1a2744;
+        float: left;
+        line-height: 0.75;
+        margin-right: 5px;
+        margin-top: 6px;
+        font-family: "Cormorant Garamond", serif;
+      }
+
+      /* Fechamento */
+      .fechamento {
+        margin-bottom: 35px;
+        text-align: left;
+        padding-left: 35px;
+      }
+
+      .fechamento p {
+        font-size: 11pt;
+        color: #1e1a16;
+        line-height: 1.85;
+        font-style: italic;
+      }
+
+      /* Assinatura */
+      .assinatura {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 10px;
+      }
+
+      .assinatura-box {
+        text-align: center;
+        min-width: 220px;
+      }
+
+      .assinatura-linha {
+        border-top: 1px solid #1a2744;
+        margin-bottom: 8px;
+        width: 100%;
+      }
+
+      .assinante-nome {
+        font-size: 11pt;
+        font-weight: 600;
+        color: #1a2744;
+        font-family: "EB Garamond", serif;
+        letter-spacing: 0.3px;
+      }
+
+      .assinante-cargo {
+        font-size: 9pt;
+        color: #5a5040;
+        font-style: italic;
+        margin-top: 2px;
+      }
+
+      .assinante-oab {
+        font-size: 8.5pt;
+        color: #7a7060;
+        margin-top: 2px;
+        font-family: "Cormorant Garamond", serif;
+        letter-spacing: 1px;
+      }
+
+      /* ===== FOOTER ===== */
+      .footer-accent {
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          #1a2744 0%,
+          #c9a84c 40%,
+          #c9a84c 60%,
+          #1a2744 100%
+        );
+      }
+
+      .footer {
+        padding: 10px 45px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #f0ede6;
+        border-top: 1px solid #c8c2b4;
+      }
+
+      .footer-left {
+        font-size: 7.5pt;
+        color: #7a7060;
+        line-height: 1.6;
+        font-style: italic;
+      }
+
+      .footer-right {
+        font-size: 7.5pt;
+        color: #7a7060;
+        text-align: right;
+        line-height: 1.6;
+      }
+
+      .footer-center {
+        font-size: 8pt;
+        color: #9a9080;
+        font-family: "Cormorant Garamond", serif;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      /* Número da página */
+      .pagina-numero {
+        position: absolute;
+        bottom: 48px;
+        right: 45px;
+        font-size: 8pt;
+        color: #b0a890;
+        font-family: "Cormorant Garamond", serif;
+      }
+
+      @media print {
+        body {
+          background: none;
+          padding: 0;
+        }
+        .page {
+          box-shadow: none;
+          width: 210mm;
+          min-height: 297mm;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- HEADER -->
+      <div class="header">
+        <div class="logo-placeholder">OAB</div>
+
+        <div class="header-info">
+          <div class="orgao">Ordem dos Advogados do Brasil</div>
+          <div class="nome-empresa">OAB — Seccional Mato Grosso</div>
+          <div class="sub-info">
+            Subseção de Sinop &nbsp;|&nbsp; CNPJ: 31.571.209/0001-39<br />
+            Av. das Ruas Alamedas, 1250 — Centro — Sinop/MT — CEP 78.550-000<br />
+            (66) 9 9099-0909 &nbsp;|&nbsp; sinop@oabmt.org.br
+          </div>
+        </div>
+
+        <div class="logo-placeholder-right">LOGO<br />PARCEIRO</div>
+      </div>
+
+      <div class="header-accent"></div>
+
+      <!-- BODY -->
+      <div class="body">
+        <!-- Número e Local/Data -->
+        <div class="oficio-meta">
+          <div class="oficio-numero">
+            Ofício N.º <span>{{oficioNumero}}</span> OAB/MT/Sinop
+          </div>
+          <div class="oficio-local-data">Sinop, {{oficioData}}</div>
+        </div>
+
+        <!-- Destinatário -->
+        <div class="destinatario">
+          <div class="label">Destinatário:</div>
+          <p>
+            <strong>{{oficioDestinatarioTratamento}}</strong><br />
+            {{oficioDestinatarioNome}}<br />
+            {{oficioDestinatarioCargo}}<br />
+            {{oficioDestinatarioInstituicao}}
+          </p>
+        </div>
+
+        <!-- Assunto -->
+        <div class="assunto">
+          <span class="label">Assunto:</span>
+          <span class="texto">{{oficioAssunto}}</span>
+        </div>
+
+        <!-- Referência -->
+        <div class="referencia">
+          <span class="label">Referência:</span>
+          <span class="texto"
+            >Proc. n.º 1234.567/2026 — Ação de Cobrança — Vara Cível de
+            Sinop</span
+          >
+        </div>
+
+        <!-- Corpo -->
+        <div class="corpo">{{oficioCorpo}}</div>
+
+        <!-- Fechamento -->
+        <div class="fechamento">
+          <p>Nestes termos, pede deferimento.</p>
+        </div>
+
+        <!-- Assinatura -->
+        <div class="assinatura">
+          <div class="assinatura-box">
+            <div class="assinatura-linha"></div>
+            <div class="assinante-nome">Dr. Carlos Eduardo Mendes</div>
+            <div class="assinante-cargo">Presidente — OAB Subseção Sinop</div>
+            <div class="assinante-oab">OAB/MT 12.345</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Número da página -->
+      <div class="pagina-numero">1 / 1</div>
+
+      <!-- FOOTER -->
+      <div class="footer-accent"></div>
+      <div class="footer">
+        <div class="footer-left">
+          Av. das Ruas Alamedas, 1250 — Centro<br />
+          Sinop/MT — CEP 78.550-000
+        </div>
+        <div class="footer-center">OAB · Sinop</div>
+        <div class="footer-right">
+          (66) 9 9099-0909<br />
+          sinop@oabmt.org.br
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
