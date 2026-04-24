@@ -2,6 +2,7 @@ import puppeteer from "puppeteer";
 import fs from "fs";
 import path from "path";
 import { uploadPDFToS3 } from "./publishPDF";
+import publishToqueue from "./publisher";
 //"file:///C:/Users/Usuario/OneDrive/Desktop/MeusProjetos/SistemaOficios/pdfWorker/src/templates/index.html"
 
 type PDFData = {
@@ -12,6 +13,7 @@ type PDFData = {
   oficioDestinatarioInstituicao: string;
   oficioAssunto: string;
   oficioCorpo: string;
+  oficioDestinatario: string;
 };
 
 export async function generatePDF(data: string) {
@@ -56,5 +58,11 @@ export async function generatePDF(data: string) {
 
   await browser.close();
 
-  await uploadPDFToS3(`./pdfs/${pdfName}`, pdfName);
+  // await uploadPDFToS3(`./pdfs/${pdfName}`, pdfName);
+
+  await publishToqueue({
+    oficioAssunto: pdfData.oficioAssunto,
+    oficioDestinatario: pdfData.oficioDestinatario,
+    oficio: pdfName,
+  });
 }
