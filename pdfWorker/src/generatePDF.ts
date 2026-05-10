@@ -24,6 +24,10 @@ export async function generatePDF(data: string) {
     "utf-8",
   );
 
+  const pdfName = `oficio_${Date.now()}.pdf`;
+
+  const QRCode = `https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=${encodeURIComponent(`https://pub-1649ce4f14c84ed09aaca2bd47e12561.r2.dev/oficios/${pdfName}`)}`;
+
   html = html
     .replace("{{oficioNumero}}", pdfData.oficioNumero)
     .replace(
@@ -46,8 +50,6 @@ export async function generatePDF(data: string) {
   });
   const page = await browser.newPage();
   await page.setContent(html, { waitUntil: "networkidle0" });
-
-  const pdfName = `oficio_${Date.now()}.pdf`;
 
   await page.pdf({
     path: `./pdfs/${pdfName}`,

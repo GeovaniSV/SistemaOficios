@@ -16,14 +16,19 @@ services:
       - "3333:3333"
     env_file:
       - ./apiOficios/.env
+
+  pdfWorker:
+    build: ./pdfWorker
+    env_file:
+      - ./pdfWorker/.env
     depends_on:
       - rabbitmq:
         condition: service_healthy
 
-  worker:
-    build: ./workerOficios
+  emailWorker:
+    build: ./emailWorker
     env_file:
-      - ./pdfWorker/.env
+      - ./emailWorker/.env
     depends_on:
       - rabbitmq:
         condition: service_healthy

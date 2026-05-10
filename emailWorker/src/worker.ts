@@ -1,13 +1,6 @@
 import "dotenv/config";
 import amqp from "amqplib";
-import nodemailer from "nodemailer";
-import { transporter } from "./nodemailer";
-
-type DataType = {
-  oficioDestinatario: string;
-  oficioAssunto: string;
-  oficio: string;
-};
+import sendEmailWithRetry from "./sendEmail";
 
 const RABBITMQ_URL = process.env.RABBITMQ_URL;
 const queueName = "email_queue";
@@ -25,22 +18,7 @@ async function startWorker() {
         if (!msg) {
           return;
         }
-        const data: DataType = JSON.parse(msg.content.toString());
-
-        try {
-          const info = await transporter.sendMail({
-            from: "seu_nome@test-xkjn41mw9w04z781.mlsender.net", // sender address
-            to: data.oficioDestinatario, // list of recipients
-            subject: data.oficioAssunto, // subject line
-            text: "Um novo email ai", // plain text body
-          });
-
-          console.log("Message sent: %s", info.messageId);
-          // Preview URL is only available when using an Ethereal test account
-          console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-        } catch (err) {
-          console.error("Error while sending mail:", err);
-        }
+        await sendEmailWithRetry(msg);
       },
       {
         noAck: true,
