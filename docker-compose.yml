@@ -17,18 +17,18 @@ services:
     env_file:
       - ./apiOficios/.env
 
-  pdfWorker:
+  pdfworker:
     build: ./pdfWorker
     env_file:
       - ./pdfWorker/.env
     depends_on:
-      - rabbitmq:
+      rabbitmq:
         condition: service_healthy
 
-  emailWorker:
+  emailworker:
     build: ./emailWorker
     env_file:
       - ./emailWorker/.env
     depends_on:
-      - rabbitmq:
+      rabbitmq:
         condition: service_healthy
