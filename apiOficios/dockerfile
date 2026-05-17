@@ -2,12 +2,12 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-COPY package*.json ./
-COPY tsconfig.json ./
+COPY apiOficios/package*.json ./
+COPY apiOficios/tsconfig.json ./
 
 RUN npm install
 
-COPY src/ ./src/
+COPY apiOficios/src/ ./src/
 
 RUN npm run build
 

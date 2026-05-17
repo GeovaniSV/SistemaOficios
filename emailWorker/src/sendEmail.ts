@@ -15,16 +15,22 @@ async function sendEmail(msg: amqp.Message): Promise<void> {
     from: "seu_nome@test-xkjn41mw9w04z781.mlsender.net", // sender address
     to: data.oficioDestinatario, // list of recipients
     subject: data.oficioAssunto, // subject line
-    text: "Um novo email ai", // plain text body
+    text: `
+Prezados,
+
+Encaminhamos em anexo o ofício referente ao assunto em questão, para conhecimento e providências cabíveis.
+
+Atenciosamente,
+`,
     attachments: [
       {
-        filename: "oficio.pdf",
-        path: `../pdfWorker/pdfs/${data.oficio}`,
+        filename: data.oficio,
+        path: `./pdfs/${data.oficio}`,
       },
     ],
   });
 
-  fs.rm(`../pdfWorker/pdfs/${data.oficio}`, (err) => {
+  fs.rm(`./pdfs/${data.oficio}`, (err) => {
     if (err) {
       console.error("Error while deleting PDF:", err);
     } else {

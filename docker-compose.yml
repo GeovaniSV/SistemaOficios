@@ -11,24 +11,34 @@ services:
       retries: 5
 
   api:
-    build: ./apiOficios
+    build:
+      context: .
+      dockerfile: apiOficios/Dockerfile
     ports:
       - "3333:3333"
     env_file:
       - ./apiOficios/.env
 
   pdfworker:
-    build: ./pdfWorker
+    build:
+      context: .
+      dockerfile: pdfWorker/Dockerfile
     env_file:
       - ./pdfWorker/.env
+    volumes:
+      - ./pdfs:/app/pdfs
     depends_on:
       rabbitmq:
         condition: service_healthy
 
   emailworker:
-    build: ./emailWorker
+    build:
+      context: .
+      dockerfile: emailWorker/Dockerfile
     env_file:
       - ./emailWorker/.env
+    volumes:
+      - ./pdfs:/app/pdfs
     depends_on:
       rabbitmq:
         condition: service_healthy

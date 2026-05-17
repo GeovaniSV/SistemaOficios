@@ -207,7 +207,8 @@ export async function generatePDF(data: string) {
   };
 
   const pdfPath = `./pdfs/${hash}.pdf`;
-
+  console.log(process.cwd());
+  console.log(__dirname);
   pdfmake
     .createPdf(docDefinition)
     .write(pdfPath)
@@ -217,7 +218,7 @@ export async function generatePDF(data: string) {
         publishToqueue({
           oficioAssunto: pdfData.oficioAssunto,
           oficioDestinatario: pdfData.oficioDestinatario,
-          oficio: hash,
+          oficio: hash + ".pdf",
         });
       },
       (err: any) => {

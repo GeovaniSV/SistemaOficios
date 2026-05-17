@@ -2,12 +2,14 @@ FROM node:20-slim
 
 WORKDIR /app
 
-COPY package*.json ./
-COPY tsconfig.json ./
+COPY pdfWorker/package*.json ./
+COPY pdfWorker/tsconfig.json ./
+COPY pdfWorker/fonts ./fonts
+COPY pdfs ./pdfs
 
 RUN npm install
 
-COPY src/ ./src/
+COPY pdfWorker/src/ ./src/
 
 RUN npm run build
 

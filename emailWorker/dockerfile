@@ -2,11 +2,13 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY emailWorker/package*.json ./
+COPY emailWorker/tsconfig.json ./
+COPY pdfs ./pdfs
 
 RUN npm install
 
-COPY . .
+COPY emailWorker/src ./src
 
 RUN npm run build
 
