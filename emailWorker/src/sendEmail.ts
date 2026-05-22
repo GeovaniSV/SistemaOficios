@@ -12,9 +12,9 @@ type DataType = {
 async function sendEmail(msg: amqp.Message): Promise<void> {
   const data: DataType = JSON.parse(msg.content.toString());
   await transporter.sendMail({
-    from: "seu_nome@test-xkjn41mw9w04z781.mlsender.net", // sender address
-    to: data.oficioDestinatario, // list of recipients
-    subject: data.oficioAssunto, // subject line
+    from: "seu_nome@test-xkjn41mw9w04z781.mlsender.net",
+    to: data.oficioDestinatario,
+    subject: data.oficioAssunto,
     text: `
 Prezados,
 
@@ -48,7 +48,7 @@ async function sendEmailWithRetry(
     try {
       await sendEmail(msg);
       console.log("Email sent successfully");
-      return; // Exit the function if email is sent successfully
+      return;
     } catch (error: any) {
       console.error(`Attempt ${attempt} failed:`, error);
 
@@ -58,13 +58,13 @@ async function sendEmailWithRetry(
 
       if (mustRetry) {
         console.log(`Retrying in ${delay / 1000} seconds...`);
-        await new Promise((res) => setTimeout(res, delay)); // Wait before retrying
+        await new Promise((res) => setTimeout(res, delay));
       }
 
       if (!mustRetry) {
         console.error("All retry attempts failed. Email could not be sent.");
-        throw error;
         attempt = retries;
+        throw error;
       }
     }
   }
