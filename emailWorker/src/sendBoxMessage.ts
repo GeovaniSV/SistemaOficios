@@ -1,0 +1,27 @@
+type ErrorType = {
+  correlationId?: string;
+  code?: string;
+  message?: string;
+  status?: number;
+  queueName?: string;
+  eventType?: string;
+  metadata?: Record<string, any>;
+  userId?: string;
+};
+
+function logError(error: ErrorType) {
+  const logEntry = {
+    timestamp: new Date().toISOString(),
+    correlationId: error.correlationId,
+    code: error.code,
+    message: error.message,
+    status: error.status,
+    queueName: error.queueName,
+    eventType: error.eventType,
+    metadata: error.metadata,
+    userId: error.userId,
+  };
+  console.error(JSON.stringify(logEntry));
+}
+
+export default logError;

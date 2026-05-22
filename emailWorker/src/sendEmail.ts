@@ -7,6 +7,7 @@ type DataType = {
   oficioDestinatario: string;
   oficioAssunto: string;
   oficio: string;
+  userId: string;
 };
 
 async function sendEmail(msg: amqp.Message): Promise<void> {
@@ -45,6 +46,7 @@ async function sendEmailWithRetry(
   delay = 5000,
 ) {
   for (let attempt = 1; attempt <= retries; attempt++) {
+    const data: DataType = JSON.parse(msg.content.toString());
     try {
       await sendEmail(msg);
       console.log("Email sent successfully");
@@ -55,6 +57,23 @@ async function sendEmailWithRetry(
       const mustRetry =
         attempt < retries && ["ESOCKET", "ETIMEDOUT"].includes(error.code);
       console.log(mustRetry);
+
+      const errorCodes: Record<string, string> = {
+        ESOCKET: "Connection error",
+        ETIMEDOUT: "Connection timed out",
+      };
+
+      const errorLog = {
+        timestamp: new Date().toISOString(),
+        correlationId: msg.properties.correlationId,
+        code: error.code,
+        message: error.message,
+        status: error.status,
+        queueName: "email_queue",
+        eventType: errorCodes[error.code] || "Unknown error",
+        metadata: msg.properties.headers,
+        userId: data.userId,
+      };
 
       if (mustRetry) {
         console.log(`Retrying in ${delay / 1000} seconds...`);
