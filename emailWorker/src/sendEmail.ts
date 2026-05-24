@@ -2,7 +2,8 @@ import nodemailer from "nodemailer";
 import amqp from "amqplib";
 import fs from "fs";
 import { transporter } from "./nodemailer";
-import logError from "./sendBoxMessage";
+import logError from "./boxMessageLogger";
+import boxMessageLogger from "./boxMessageLogger";
 
 type DataType = {
   oficioDestinatario: string;
@@ -27,12 +28,12 @@ Atenciosamente,
     attachments: [
       {
         filename: data.oficio,
-        path: `../pdfs/${data.oficio}`,
+        path: `./pdfs/${data.oficio}`,
       },
     ],
   });
 
-  fs.rm(`../pdfs/${data.oficio}`, (err) => {
+  fs.rm(`./pdfs/${data.oficio}`, (err) => {
     if (err) {
       console.error("Error while deleting PDF:", err);
     } else {
@@ -51,6 +52,22 @@ async function sendEmailWithRetry(
     try {
       await sendEmail(msg);
       console.log("Email sent successfully");
+      const outbox = {
+        correlationId: msg.properties.correlationId,
+        code: "EMAIL_SENT",
+        message: "Email sent successfully",
+        status: 1,
+        queueName: "email_queue",
+        eventType: "Email sent",
+        metadata: {
+          attempt,
+          timestamp: new Date().toISOString(),
+        },
+        userId: data.userId,
+      };
+
+      console.log(outbox);
+      boxMessageLogger(outbox);
       return;
     } catch (error: any) {
       console.error(`Attempt ${attempt} failed:`, error);
@@ -102,7 +119,7 @@ async function sendEmailWithRetry(
 
       if (!mustRetry) {
         console.error("All retry attempts failed. Email could not be sent.");
-        logError(errorLog);
+        boxMessageLogger(errorLog);
         attempt = retries;
         throw error;
       }

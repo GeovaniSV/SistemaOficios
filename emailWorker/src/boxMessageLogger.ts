@@ -6,10 +6,10 @@ type ErrorType = {
   queueName?: string;
   eventType?: string;
   metadata?: Record<string, any>;
-  userId?: string;
+  userId?: number | string;
 };
 
-function logError(error: ErrorType) {
+function boxMessageLogger(error: ErrorType) {
   const logEntry = {
     correlationId: error.correlationId,
     code: error.code,
@@ -23,4 +23,4 @@ function logError(error: ErrorType) {
   console.error(JSON.stringify(logEntry));
 }
 
-export default logError;
+export default boxMessageLogger;

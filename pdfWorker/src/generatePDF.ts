@@ -1,10 +1,9 @@
 var pdfmake = require("pdfmake");
 import publishToqueue from "./publisher";
-import { uploadPDFToS3 } from "./publishPDF";
+import { uploadPDFWithRetry } from "./publishPDF";
 import crypto from "crypto";
-//"file:///C:/Users/Usuario/OneDrive/Desktop/MeusProjetos/SistemaOficios/pdfWorker/src/templates/index.html"
 
-type PDFData = {
+export type PDFData = {
   oficioNumero: string;
   oficioDestinatarioTratamento: string;
   oficioDestinatarioNome: string;
@@ -15,6 +14,7 @@ type PDFData = {
   oficioDestinatario: string;
   oficioAutor: string;
   oficioAutorCargo: string;
+  userId: number;
 };
 
 const fonts = {
@@ -52,6 +52,7 @@ export async function generatePDF(data: string) {
     oficioDestinatario: pdfData.oficioDestinatario,
     oficioAutor: "João Silva",
     oficioAutorCargo: "Diretoria",
+    userId: pdfData.userId,
   };
 
   const hash = `${Date.now()}${crypto.randomUUID()}`;
@@ -206,19 +207,18 @@ export async function generatePDF(data: string) {
     },
   };
 
-  const pdfPath = `../pdfs/${hash}.pdf`;
-  console.log(process.cwd());
-  console.log(__dirname);
+  const pdfPath = `./pdfs/${hash}.pdf`;
   pdfmake
     .createPdf(docDefinition)
     .write(pdfPath)
     .then(
       () => {
-        // uploadPDFToS3(pdfPath, `${hash}.pdf`);
+        // uploadPDFWithRetry(data, pdfPath, `${hash}.pdf`);
         publishToqueue({
           oficioAssunto: pdfData.oficioAssunto,
           oficioDestinatario: pdfData.oficioDestinatario,
           oficio: hash + ".pdf",
+          userId: pdfData.userId,
         });
       },
       (err: any) => {
