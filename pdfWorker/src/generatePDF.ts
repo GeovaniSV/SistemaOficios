@@ -206,7 +206,7 @@ export async function generatePDF(data: string) {
     },
   };
 
-  const pdfPath = `./pdfs/${hash}.pdf`;
+  const pdfPath = `../pdfs/${hash}.pdf`;
   console.log(process.cwd());
   console.log(__dirname);
   pdfmake

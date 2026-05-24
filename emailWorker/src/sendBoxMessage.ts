@@ -11,7 +11,6 @@ type ErrorType = {
 
 function logError(error: ErrorType) {
   const logEntry = {
-    timestamp: new Date().toISOString(),
     correlationId: error.correlationId,
     code: error.code,
     message: error.message,

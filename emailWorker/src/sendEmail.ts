@@ -2,6 +2,7 @@ import nodemailer from "nodemailer";
 import amqp from "amqplib";
 import fs from "fs";
 import { transporter } from "./nodemailer";
+import logError from "./sendBoxMessage";
 
 type DataType = {
   oficioDestinatario: string;
@@ -26,12 +27,12 @@ Atenciosamente,
     attachments: [
       {
         filename: data.oficio,
-        path: `./pdfs/${data.oficio}`,
+        path: `../pdfs/${data.oficio}`,
       },
     ],
   });
 
-  fs.rm(`./pdfs/${data.oficio}`, (err) => {
+  fs.rm(`../pdfs/${data.oficio}`, (err) => {
     if (err) {
       console.error("Error while deleting PDF:", err);
     } else {
@@ -55,23 +56,42 @@ async function sendEmailWithRetry(
       console.error(`Attempt ${attempt} failed:`, error);
 
       const mustRetry =
-        attempt < retries && ["ESOCKET", "ETIMEDOUT"].includes(error.code);
+        attempt < retries &&
+        [
+          "ESOCKET",
+          "ETIMEDOUT",
+          "EAUTH",
+          "EDNS",
+          "ETLS",
+          "ENOAUTH",
+          "EMESSAGE",
+          "EPROTOCOL",
+        ].includes(error.code);
       console.log(mustRetry);
 
       const errorCodes: Record<string, string> = {
         ESOCKET: "Connection error",
         ETIMEDOUT: "Connection timed out",
+        EAUTH: "Authentication failed",
+        EDNS: "DNS resolution failed",
+        ETLS: "TLS handshake or STARTTLS failed",
+        ENOAUTH: "Authentication not provided",
+        EMESSAGE: "Message delivery error",
+        EPROTOCOL: "Invalid SMTP server response",
       };
 
       const errorLog = {
-        timestamp: new Date().toISOString(),
         correlationId: msg.properties.correlationId,
         code: error.code,
         message: error.message,
         status: error.status,
         queueName: "email_queue",
         eventType: errorCodes[error.code] || "Unknown error",
-        metadata: msg.properties.headers,
+        metadata: {
+          attempt,
+          retries,
+          timestamp: new Date().toISOString(),
+        },
         userId: data.userId,
       };
 
@@ -82,6 +102,7 @@ async function sendEmailWithRetry(
 
       if (!mustRetry) {
         console.error("All retry attempts failed. Email could not be sent.");
+        logError(errorLog);
         attempt = retries;
         throw error;
       }

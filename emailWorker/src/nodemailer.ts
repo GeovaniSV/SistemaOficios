@@ -10,9 +10,9 @@ const mailer_password = process.env.mailer_password;
 export const transporter = nodemailer.createTransport({
   host: mailer_server,
   port: mailer_port,
-  secure: false, // use STARTTLS (upgrade connection to TLS after connecting)
+  secure: false,
   auth: {
-    user: mailer_user,
+    user: "",
     pass: mailer_password,
   },
 });
