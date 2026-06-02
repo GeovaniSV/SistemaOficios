@@ -1,30 +1,40 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ContactController;
-use App\Http\Controllers\Api\OficioController;
-use App\Http\Controllers\Api\SettingsController;
-use App\Http\Controllers\Api\OficioTemplateController;
 use App\Http\Controllers\Api\MessageController;
+use App\Http\Controllers\Api\OficioController;
+use App\Http\Controllers\Api\OficioTemplateController;
+use App\Http\Controllers\Api\SettingsController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\WorkerLogController;
+use Illuminate\Support\Facades\Route;
 
-Route::apiResource('contacts', ContactController::class)->except('destroy');
+Route::post('auth/login', [AuthController::class, 'login']);
 
-Route::get('contacts/{id}/responsibles', [ContactController::class, 'responsibles']);
+Route::middleware('auth:sanctum')->group(function () {
 
-Route::apiResource('oficios', OficioController::class)->except('destroy');
+    Route::post('auth/logout', [AuthController::class, 'logout']);
+    Route::post('auth/logout-all', [AuthController::class, 'logoutAll']);
+    Route::get('auth/me', [AuthController::class, 'me']);
 
-Route::post('oficios/{oficio}/send', [OficioController::class, 'send']);
+    Route::apiResource('users', UserController::class);
+    Route::patch('users/{user}/restore', [UserController::class, 'restore']);
 
-Route::apiResource('oficio-templates', OficioTemplateController::class)->except('destroy');
+    Route::apiResource('contacts', ContactController::class)->except('destroy');
+    Route::get('contacts/{id}/responsibles', [ContactController::class, 'responsibles']);
 
-Route::get('settings', [SettingsController::class, 'show']);
+    Route::apiResource('oficios', OficioController::class)->except('destroy');
+    Route::post('oficios/{oficio}/send', [OficioController::class, 'send']);
 
-Route::put('settings', [SettingsController::class, 'update']);
+    Route::apiResource('oficio-templates', OficioTemplateController::class)->except('destroy');
 
-Route::apiResource('messages', MessageController::class)->only(['index', 'show',]);
+    Route::get('settings', [SettingsController::class, 'show']);
+    Route::put('settings', [SettingsController::class, 'update']);
 
-Route::post('messages/{message}/send-broker', [MessageController::class, 'sendBroker']);
+    Route::apiResource('messages', MessageController::class)->only(['index', 'show']);
+    Route::post('messages/{message}/send-broker', [MessageController::class, 'sendBroker']);
 
-Route::get('worker-logs', [WorkerLogController::class, 'index']);
-Route::post('worker-logs', [WorkerLogController::class, 'store']);
+    Route::get('worker-logs', [WorkerLogController::class, 'index']);
+    Route::post('worker-logs', [WorkerLogController::class, 'store']);
+});

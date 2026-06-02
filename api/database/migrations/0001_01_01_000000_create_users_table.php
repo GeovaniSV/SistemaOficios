@@ -15,9 +15,24 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('role')->nullable();
-            /* $table->string('password'); */
+            $table->string('cpf', 11)->unique();
+
+            $table->foreignId('position_id')
+                ->nullable()
+                ->constrained('positions')
+                ->nullOnDelete();
+
+
+            $table->foreignId('role_id')
+                ->nullable()
+                ->constrained('roles')
+                ->nullOnDelete();
+
+            $table->boolean('is_active')->default(true);
+            $table->boolean('is_dev')->default(false);
+            $table->string('password');
             $table->rememberToken();
+            $table->timestamp('last_login')->nullable();
             $table->timestamps();
         });
 
