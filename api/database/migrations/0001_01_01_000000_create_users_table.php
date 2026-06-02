@@ -23,11 +23,6 @@ return new class extends Migration
                 ->nullOnDelete();
 
 
-            $table->foreignId('role_id')
-                ->nullable()
-                ->constrained('roles')
-                ->nullOnDelete();
-
             $table->boolean('is_active')->default(true);
             $table->boolean('is_dev')->default(false);
             $table->string('password');
