@@ -23,7 +23,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www
 
 # Copia apenas os arquivos necessários para instalar dependências
-COPY composer.json composer.lock ./
+COPY api/composer.json api/composer.lock ./
 
 RUN composer install \
     --no-dev \
@@ -31,7 +31,7 @@ RUN composer install \
     --no-interaction
 
 # Copia o restante do projeto
-COPY . .
+COPY api/ .
 
 # Permissões
 RUN chown -R www-data:www-data storage bootstrap/cache
