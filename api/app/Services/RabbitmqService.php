@@ -10,6 +10,7 @@ use PhpAmqpLib\Connection\AMQPStreamConnection;
 
 class RabbitmqService{
 
+
     protected ?AMQPStreamConnection $connection = null;
     protected ?AMQPChannel $channel = null;
 
@@ -18,6 +19,14 @@ class RabbitmqService{
         if ($this->connection !== null) {
             return;
         }
+
+        dd([
+            'host' => config('rabbitmq.host'),
+            'port' => config('rabbitmq.port'),
+            'user' => config('rabbitmq.user'),
+            'password' => config('rabbitmq.password'),
+            'vhost' => config('rabbitmq.vhost'),
+        ]);
 
         $this->connection = new AMQPStreamConnection(
             config('rabbitmq.host'),
