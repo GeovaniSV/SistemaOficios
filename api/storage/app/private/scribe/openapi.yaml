@@ -1,0 +1,1169 @@
+openapi: 3.0.3
+info:
+  title: 'Laravel API Documentation'
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost'
+tags:
+  -
+    name: Endpoints
+    description: ''
+components:
+  securitySchemes:
+    default:
+      type: http
+      scheme: bearer
+      description: 'Obtenha seu token via <b>POST /api/auth/login</b>.'
+security:
+  -
+    default: []
+paths:
+  /api/auth/login:
+    post:
+      summary: ''
+      operationId: postApiAuthLogin
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: gbailey@example.net
+                password:
+                  type: string
+                  description: ''
+                  example: '|]|{+-'
+              required:
+                - email
+                - password
+      security: []
+  /api/auth/logout:
+    post:
+      summary: ''
+      operationId: postApiAuthLogout
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+  /api/auth/logout-all:
+    post:
+      summary: ''
+      operationId: postApiAuthLogoutAll
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+  /api/auth/me:
+    get:
+      summary: ''
+      operationId: getApiAuthMe
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+  /api/users:
+    get:
+      summary: ''
+      operationId: getApiUsers
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+    post:
+      summary: ''
+      operationId: postApiUsers
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: b
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: zbailey@example.net
+                password:
+                  type: string
+                  description: 'Must be at least 8 characters.'
+                  example: '-0pBNvYgxw'
+                cpf:
+                  type: string
+                  description: 'Must match the regex /^\d{3}\.\d{3}\.\d{3}-\d{2}$|^\d{11}$/.'
+                  example: 559.314.232-68$|^22820492192
+                  nullable: true
+                position_id:
+                  type: integer
+                  description: 'The <code>id</code> of an existing record in the positions table.'
+                  example: 16
+                  nullable: true
+                role:
+                  type: string
+                  description: 'The <code>name</code> of an existing record in the roles table.'
+                  example: architecto
+                  nullable: true
+              required:
+                - name
+                - email
+                - password
+  '/api/users/{id}':
+    get:
+      summary: ''
+      operationId: getApiUsersId
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+    put:
+      summary: ''
+      operationId: putApiUsersId
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: b
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: zbailey@example.net
+                password:
+                  type: string
+                  description: 'Must be at least 8 characters.'
+                  example: '-0pBNvYgxw'
+                cpf:
+                  type: string
+                  description: 'Must match the regex /^\d{3}\.\d{3}\.\d{3}-\d{2}$|^\d{11}$/.'
+                  example: 559.314.232-68$|^22820492192
+                  nullable: true
+                position_id:
+                  type: integer
+                  description: 'The <code>id</code> of an existing record in the positions table.'
+                  example: 16
+                  nullable: true
+                role:
+                  type: string
+                  description: 'The <code>name</code> of an existing record in the roles table.'
+                  example: architecto
+                  nullable: true
+    delete:
+      summary: ''
+      operationId: deleteApiUsersId
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the user.'
+        example: 16
+        required: true
+        schema:
+          type: integer
+  '/api/users/{user_id}/restore':
+    patch:
+      summary: ''
+      operationId: patchApiUsersUser_idRestore
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: user_id
+        description: 'The ID of the user.'
+        example: 16
+        required: true
+        schema:
+          type: integer
+  /api/contacts:
+    get:
+      summary: ''
+      operationId: getApiContacts
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+    post:
+      summary: ''
+      operationId: postApiContacts
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  description: ''
+                  example: PJ
+                  enum:
+                    - PF
+                    - PJ
+                doc:
+                  type: string
+                  description: 'Must not be greater than 14 characters.'
+                  example: bngzmiyvdljnik
+                name:
+                  type: string
+                  description: 'Must not be greater than 191 characters.'
+                  example: h
+                address:
+                  type: object
+                  description: ''
+                  example: []
+                  properties:
+                    cep:
+                      type: string
+                      description: 'Must be 8 characters.'
+                      example: bngzmiyv
+                    logradouro:
+                      type: string
+                      description: ''
+                      example: architecto
+                    numero:
+                      type: string
+                      description: ''
+                      example: architecto
+                    bairro:
+                      type: string
+                      description: ''
+                      example: architecto
+                    cidade:
+                      type: string
+                      description: ''
+                      example: architecto
+                    estado:
+                      type: string
+                      description: 'Must be 2 characters.'
+                      example: ng
+                  required:
+                    - cep
+                    - logradouro
+                    - numero
+                    - bairro
+                    - cidade
+                    - estado
+                responsibles:
+                  type: array
+                  description: 'Must have at least 1 items.'
+                  example:
+                    - []
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        description: ''
+                        example: architecto
+                      email:
+                        type: string
+                        description: 'Must be a valid email address.'
+                        example: zbailey@example.net
+                      position:
+                        type: string
+                        description: ''
+                        example: architecto
+                        nullable: true
+                      department:
+                        type: string
+                        description: ''
+                        example: architecto
+                        nullable: true
+                    required:
+                      - name
+                      - email
+              required:
+                - type
+                - doc
+                - name
+                - address
+                - responsibles
+  '/api/contacts/{id}':
+    get:
+      summary: ''
+      operationId: getApiContactsId
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+    put:
+      summary: ''
+      operationId: putApiContactsId
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  description: ''
+                  example: PJ
+                  enum:
+                    - PF
+                    - PJ
+                doc:
+                  type: string
+                  description: 'Must not be greater than 14 characters.'
+                  example: bngzmiyvdljnik
+                name:
+                  type: string
+                  description: 'Must not be greater than 191 characters.'
+                  example: h
+                address:
+                  type: object
+                  description: ''
+                  example: []
+                  properties:
+                    cep:
+                      type: string
+                      description: 'Must be 8 characters.'
+                      example: bngzmiyv
+                    logradouro:
+                      type: string
+                      description: ''
+                      example: architecto
+                    numero:
+                      type: string
+                      description: ''
+                      example: architecto
+                    bairro:
+                      type: string
+                      description: ''
+                      example: architecto
+                    cidade:
+                      type: string
+                      description: ''
+                      example: architecto
+                    estado:
+                      type: string
+                      description: 'Must be 2 characters.'
+                      example: ng
+                  required:
+                    - cep
+                    - logradouro
+                    - numero
+                    - bairro
+                    - cidade
+                    - estado
+                responsibles:
+                  type: object
+                  description: 'Must have at least 1 items.'
+                  example: []
+                  properties: {  }
+              required:
+                - type
+                - doc
+                - name
+                - address
+                - responsibles
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the contact.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  '/api/contacts/{id}/responsibles':
+    get:
+      summary: ''
+      operationId: getApiContactsIdResponsibles
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the contact.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  /api/oficios:
+    get:
+      summary: ''
+      operationId: getApiOficios
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+    post:
+      summary: ''
+      operationId: postApiOficios
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                subject:
+                  type: string
+                  description: 'Must not be greater than 191 characters.'
+                  example: b
+                destination_contact_id:
+                  type: string
+                  description: 'The <code>id</code> of an existing record in the contacts table.'
+                  example: architecto
+                priority:
+                  type: string
+                  description: ''
+                  example: MEDIUM
+                  enum:
+                    - LOW
+                    - MEDIUM
+                    - HIGH
+                content:
+                  type: string
+                  description: ''
+                  example: architecto
+                responsibles:
+                  type: array
+                  description: 'The <code>id</code> of an existing record in the responsibles table.'
+                  example: null
+                  items:
+                    type: string
+              required:
+                - subject
+                - destination_contact_id
+                - priority
+                - content
+  '/api/oficios/{id}':
+    get:
+      summary: ''
+      operationId: getApiOficiosId
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+    put:
+      summary: ''
+      operationId: putApiOficiosId
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                subject:
+                  type: string
+                  description: 'Must not be greater than 191 characters.'
+                  example: b
+                destination_contact_id:
+                  type: string
+                  description: 'The <code>id</code> of an existing record in the contacts table.'
+                  example: architecto
+                priority:
+                  type: string
+                  description: ''
+                  example: MEDIUM
+                  enum:
+                    - LOW
+                    - MEDIUM
+                    - HIGH
+                content:
+                  type: string
+                  description: ''
+                  example: architecto
+                responsibles:
+                  type: array
+                  description: 'The <code>id</code> of an existing record in the responsibles table.'
+                  example: null
+                  items:
+                    type: string
+              required:
+                - subject
+                - destination_contact_id
+                - priority
+                - content
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the oficio.'
+        example: 16
+        required: true
+        schema:
+          type: integer
+  '/api/oficios/{oficio_id}/send':
+    post:
+      summary: ''
+      operationId: postApiOficiosOficio_idSend
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: oficio_id
+        description: 'The ID of the oficio.'
+        example: 16
+        required: true
+        schema:
+          type: integer
+  /api/oficio-templates:
+    get:
+      summary: ''
+      operationId: getApiOficioTemplates
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+    post:
+      summary: ''
+      operationId: postApiOficioTemplates
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 191 characters.'
+                  example: b
+                content:
+                  type: string
+                  description: ''
+                  example: architecto
+              required:
+                - name
+                - content
+  '/api/oficio-templates/{id}':
+    get:
+      summary: ''
+      operationId: getApiOficioTemplatesId
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+    put:
+      summary: ''
+      operationId: putApiOficioTemplatesId
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 191 characters.'
+                  example: b
+                content:
+                  type: string
+                  description: ''
+                  example: architecto
+              required:
+                - name
+                - content
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the oficio template.'
+        example: 16
+        required: true
+        schema:
+          type: integer
+  /api/settings:
+    get:
+      summary: ''
+      operationId: getApiSettings
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+    put:
+      summary: ''
+      operationId: putApiSettings
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                statement_text:
+                  type: string
+                  description: ''
+                  example: architecto
+              required:
+                - statement_text
+  /api/messages:
+    get:
+      summary: ''
+      operationId: getApiMessages
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+  '/api/messages/{id}':
+    get:
+      summary: ''
+      operationId: getApiMessagesId
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the message.'
+        example: 16
+        required: true
+        schema:
+          type: integer
+  '/api/messages/{message_id}/send-broker':
+    post:
+      summary: ''
+      operationId: postApiMessagesMessage_idSendBroker
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: message_id
+        description: 'The ID of the message.'
+        example: 16
+        required: true
+        schema:
+          type: integer
+  /api/worker-logs:
+    get:
+      summary: ''
+      operationId: getApiWorkerLogs
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+    post:
+      summary: ''
+      operationId: postApiWorkerLogs
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                correlationId:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: true
+                code:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: true
+                message:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: true
+                status:
+                  type: integer
+                  description: ''
+                  example: 16
+                  nullable: true
+                queueName:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: true
+                eventType:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: true
+                metadata:
+                  type: object
+                  description: ''
+                  example: null
+                  properties: {  }
+                  nullable: true
+                userId:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: true
