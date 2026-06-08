@@ -10,6 +10,7 @@ use PhpAmqpLib\Connection\AMQPStreamConnection;
 
 class RabbitmqService{
 
+
     protected ?AMQPStreamConnection $connection = null;
     protected ?AMQPChannel $channel = null;
 
