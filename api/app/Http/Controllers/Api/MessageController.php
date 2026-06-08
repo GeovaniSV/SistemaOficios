@@ -30,7 +30,9 @@ class MessageController extends Controller
         );
     }
 
-    public function sendBroker(
+    // Função para testes e debugs da conexão com o broker
+
+    /* public function sendBroker(
         Message $message
     ) {
 
@@ -39,5 +41,5 @@ class MessageController extends Controller
                 $message
             )
         );
-    }
+    } */
 }

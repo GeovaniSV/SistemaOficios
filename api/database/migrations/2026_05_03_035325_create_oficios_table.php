@@ -16,6 +16,10 @@ return new class extends Migration
 
             $table->string('subject');
 
+            $table->foreignId('author_id')
+                ->constrained('users')
+                ->onDelete('cascade');
+
             $table->foreignId('destination_contact_id')
                 ->constrained('contacts')
                 ->cascadeOnDelete();
@@ -29,10 +33,14 @@ return new class extends Migration
             $table->longText('content');
 
             $table->enum('status', [
+                OficioStatusEnum::DRAFT->value,
                 OficioStatusEnum::PENDING->value,
-                OficioStatusEnum::COMPLETED->value,
+                OficioStatusEnum::APPROVED->value,
+                OficioStatusEnum::SENT->value,
+                OficioStatusEnum::REJECTED->value,
+                OficioStatusEnum::RETURNED->value,
             ])->default(
-                OficioStatusEnum::PENDING->value
+                OficioStatusEnum::DRAFT->value
             );
 
             $table->timestamps();

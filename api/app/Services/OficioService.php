@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\DB;
 
 class OficioService
 {
+    public function __construct(
+        private MessageService $messageService
+    ) {}
     public function list()
     {
         return Oficio::with([
@@ -71,6 +74,17 @@ class OficioService
 
     public function send(Oficio $oficio): array
     {
+        if($oficio->status == OficioStatusEnum::SENT){
+            return [
+                'message' => 'O Ofício já foi enviado'
+            ];
+        }
+        if($oficio->status !== OficioStatusEnum::APPROVED){
+            return [
+                'message' => 'Ofício deve estar com status Aprovado'
+            ];
+        }
+
         return DB::transaction(function () use (
             $oficio
         ) {
@@ -78,6 +92,8 @@ class OficioService
             $oficio->load('responsibles');
 
             $messages = [];
+
+            $messagesSuccess = [];
 
             foreach (
                 $oficio->responsibles
@@ -88,16 +104,23 @@ class OficioService
                     'responsible_id' => $responsible->id,
                 ]);
 
+                $messageResponse = $this->messageService->sendBroker($message);
+
                 $messages[] = $message->id;
+
+                if($messageResponse['success'] === true){
+                    $messagesSuccess[] = $message->id;
+                }
             }
 
             $oficio->update([
-                'status' => OficioStatusEnum::COMPLETED
+                'status' => OficioStatusEnum::SENT
             ]);
 
             return [
                 'message' => 'Enviado',
                 'messages_created' => $messages,
+                'messages_success' => $messagesSuccess,
             ];
         });
     }

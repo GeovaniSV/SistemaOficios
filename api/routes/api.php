@@ -33,7 +33,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('settings', [SettingsController::class, 'update']);
 
     Route::apiResource('messages', MessageController::class)->only(['index', 'show']);
-    Route::post('messages/{message}/send-broker', [MessageController::class, 'sendBroker']);
 
     Route::get('worker-logs', [WorkerLogController::class, 'index']);
     Route::post('worker-logs', [WorkerLogController::class, 'store']);
