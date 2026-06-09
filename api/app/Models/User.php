@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use InvalidArgumentException;
@@ -68,5 +69,15 @@ class User extends Authenticatable
             '$1.$2.$3-$4',
             $cpf
         );
+    }
+
+    public function oficios(): HasMany
+    {
+        return $this->hasMany(Oficio::class, 'author_id');
+    }
+
+    public function rejectionInfos(): HasMany
+    {
+        return $this->hasMany(RejectionInfo::class, 'author_id');
     }
 }

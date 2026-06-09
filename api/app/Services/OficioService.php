@@ -15,7 +15,8 @@ class OficioService
     {
         return Oficio::with([
             'destinationContact',
-            'responsibles'
+            'responsibles',
+            'author'
         ])->paginate(20);
     }
 
@@ -23,7 +24,9 @@ class OficioService
     {
         return $oficio->load([
             'destinationContact',
-            'responsibles'
+            'responsibles',
+            'author',
+            'rejectionInfo'
         ]);
     }
 

@@ -16,9 +16,12 @@ class Oficio extends Model
     protected $fillable = [
         'subject',
         'destination_contact_id',
+        'author_id',
         'priority',
         'content',
         'status',
+        'department',
+        'rejection_info_id',
     ];
 
     protected $casts = [
@@ -45,5 +48,15 @@ class Oficio extends Model
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class);
+    }
+
+    public function author(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function rejectionInfo(): BelongsTo
+    {
+        return $this->belongsTo(RejectionInfo::class);
     }
 }

@@ -43,6 +43,13 @@ return new class extends Migration
                 OficioStatusEnum::DRAFT->value
             );
 
+            $table->string('department');
+
+            $table->foreignId('rejection_info_id')
+                ->nullable()
+                ->constrained('rejection_infos')
+                ->nullOnDelete();
+
             $table->timestamps();
         });
     }
