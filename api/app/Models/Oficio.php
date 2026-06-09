@@ -21,7 +21,6 @@ class Oficio extends Model
         'content',
         'status',
         'department',
-        'rejection_info_id',
     ];
 
     protected $casts = [
@@ -31,18 +30,17 @@ class Oficio extends Model
 
     public function destinationContact(): BelongsTo
     {
-        return $this->belongsTo(
-            Contact::class,
-            'destination_contact_id'
-        );
+        return $this->belongsTo(Contact::class, 'destination_contact_id');
+    }
+
+    public function author(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'author_id');
     }
 
     public function responsibles(): BelongsToMany
     {
-        return $this->belongsToMany(
-            Responsible::class,
-            'oficio_responsible'
-        );
+        return $this->belongsToMany(Responsible::class, 'oficio_responsible');
     }
 
     public function messages(): HasMany
@@ -50,13 +48,8 @@ class Oficio extends Model
         return $this->hasMany(Message::class);
     }
 
-    public function author(): BelongsTo
+    public function rejectionInfos(): HasMany
     {
-        return $this->belongsTo(User::class);
-    }
-
-    public function rejectionInfo(): BelongsTo
-    {
-        return $this->belongsTo(RejectionInfo::class);
+        return $this->hasMany(RejectionInfo::class);
     }
 }

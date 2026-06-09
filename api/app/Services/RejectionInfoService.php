@@ -14,11 +14,16 @@ class RejectionInfoService
         return $oficio->rejectionInfo;
     }
 
-    public function create(array $data, OficioStatusEnum $type): RejectionInfo
-    {
+
+    public function create(
+        Oficio $oficio,
+        string $reason,
+        OficioStatusEnum $type
+    ): RejectionInfo {
         return RejectionInfo::create([
-            'reason'    => $data['reason'],
+            'oficio_id' => $oficio->id,
             'author_id' => Auth::id(),
+            'reason'    => $reason,
             'type'      => $type,
         ]);
     }

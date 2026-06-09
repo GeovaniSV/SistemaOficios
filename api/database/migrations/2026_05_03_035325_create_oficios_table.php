@@ -11,9 +11,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('oficios', function (Blueprint $table) {
-
             $table->id();
-
             $table->string('subject');
 
             $table->foreignId('author_id')
@@ -31,6 +29,7 @@ return new class extends Migration
             ]);
 
             $table->longText('content');
+            $table->string('department');
 
             $table->enum('status', [
                 OficioStatusEnum::DRAFT->value,
@@ -39,16 +38,7 @@ return new class extends Migration
                 OficioStatusEnum::SENT->value,
                 OficioStatusEnum::REJECTED->value,
                 OficioStatusEnum::RETURNED->value,
-            ])->default(
-                OficioStatusEnum::DRAFT->value
-            );
-
-            $table->string('department');
-
-            $table->foreignId('rejection_info_id')
-                ->nullable()
-                ->constrained('rejection_infos')
-                ->nullOnDelete();
+            ])->default(OficioStatusEnum::DRAFT->value);
 
             $table->timestamps();
         });
