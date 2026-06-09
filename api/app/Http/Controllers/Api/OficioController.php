@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ReviewOficioRequest;
 use App\Http\Requests\StoreOficioRequest;
 use App\Http\Requests\UpdateOficioRequest;
 use App\Models\Oficio;
@@ -16,39 +17,33 @@ class OficioController extends Controller
 
     public function index()
     {
-        return response()->json(
-            $this->service->list()
-        );
+        return response()->json($this->service->list());
     }
 
     public function show(Oficio $oficio)
     {
-        return response()->json(
-            $this->service->getById($oficio)
-        );
+        return response()->json($this->service->getById($oficio));
     }
 
-    public function store(
-        StoreOficioRequest $request
-    ) {
+    public function store(StoreOficioRequest $request)
+    {
         return response()->json(
-            $this->service->create(
-                $request->validated()
-            ),
+            $this->service->create($request->validated()),
             201
         );
     }
 
-    public function update(
-        UpdateOficioRequest $request,
-        Oficio $oficio
-    ) {
-
+    public function update(UpdateOficioRequest $request, Oficio $oficio)
+    {
         return response()->json(
-            $this->service->update(
-                $oficio,
-                $request->validated()
-            )
+            $this->service->update($oficio, $request->validated())
+        );
+    }
+
+    public function review(ReviewOficioRequest $request, Oficio $oficio)
+    {
+        return response()->json(
+            $this->service->review($oficio, $request->validated())
         );
     }
 

@@ -25,7 +25,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('contacts/{id}/responsibles', [ContactController::class, 'responsibles']);
 
     Route::apiResource('oficios', OficioController::class)->except('destroy');
-    Route::post('oficios/{oficio}/send', [OficioController::class, 'send']);
+    Route::post('oficios/{oficio}/review', [OficioController::class, 'review']);
+    Route::post('oficios/{oficio}/send',   [OficioController::class, 'send']);
 
     Route::apiResource('oficio-templates', OficioTemplateController::class)->except('destroy');
 
@@ -33,7 +34,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('settings', [SettingsController::class, 'update']);
 
     Route::apiResource('messages', MessageController::class)->only(['index', 'show']);
-    Route::post('messages/{message}/send-broker', [MessageController::class, 'sendBroker']);
 
     Route::get('worker-logs', [WorkerLogController::class, 'index']);
     Route::post('worker-logs', [WorkerLogController::class, 'store']);

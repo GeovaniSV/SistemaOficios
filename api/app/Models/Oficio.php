@@ -16,9 +16,11 @@ class Oficio extends Model
     protected $fillable = [
         'subject',
         'destination_contact_id',
+        'author_id',
         'priority',
         'content',
         'status',
+        'department',
     ];
 
     protected $casts = [
@@ -28,22 +30,26 @@ class Oficio extends Model
 
     public function destinationContact(): BelongsTo
     {
-        return $this->belongsTo(
-            Contact::class,
-            'destination_contact_id'
-        );
+        return $this->belongsTo(Contact::class, 'destination_contact_id');
+    }
+
+    public function author(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'author_id');
     }
 
     public function responsibles(): BelongsToMany
     {
-        return $this->belongsToMany(
-            Responsible::class,
-            'oficio_responsible'
-        );
+        return $this->belongsToMany(Responsible::class, 'oficio_responsible');
     }
 
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class);
+    }
+
+    public function rejectionInfos(): HasMany
+    {
+        return $this->hasMany(RejectionInfo::class);
     }
 }

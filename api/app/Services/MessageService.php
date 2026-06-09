@@ -47,6 +47,7 @@ class MessageService
         ]);
 
         return [
+            'success' => true,
             'message' => 'Payload enviado',
         ];
     }

@@ -45,6 +45,18 @@ class UpdateOficioRequest extends FormRequest
             'responsibles.*' => [
                 'exists:responsibles,id'
             ],
+
+
+            'department' => [
+                'required',
+                'string',
+                'max:191'
+            ],
+
+            'submit' => [
+                'sometimes',
+                'boolean'
+            ],
         ];
     }
 }

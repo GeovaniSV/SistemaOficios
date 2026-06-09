@@ -36,6 +36,12 @@ class StoreOficioRequest extends FormRequest
                 'string'
             ],
 
+            'department'             => [
+                'required',
+                'string',
+                'max:191'
+            ],
+
             'responsibles' => [
                 'required',
                 'array',
