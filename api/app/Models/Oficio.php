@@ -15,6 +15,7 @@ class Oficio extends Model
 
     protected $fillable = [
         'subject',
+        'number',
         'destination_contact_id',
         'author_id',
         'priority',
