@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Address;
 use App\Models\Contact;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class ContactService
 {
@@ -52,6 +53,20 @@ class ContactService
         array $data
     ): Contact {
 
+        if (!empty($data['doc'])) {
+            $doc = preg_replace('/\D/', '', $data['doc']);
+
+            $docTaken = Contact::where('doc', $doc)
+                ->where('id', '!=', $id)
+                ->exists();
+
+            if ($docTaken) {
+                throw ValidationException::withMessages([
+                    'doc' => ['O documento já está em uso por outro contato.'],
+                ]);
+            }
+        }
+
         return DB::transaction(function () use (
             $id,
             $data
@@ -62,11 +77,16 @@ class ContactService
                 'responsibles'
             ])->findOrFail($id);
 
-            $contact->update([
+            $fields = [
                 'type' => $data['type'],
-                'doc' => $data['doc'],
                 'name' => $data['name'],
-            ]);
+            ];
+
+            if (!empty($data['doc'])) {
+                $fields['doc'] = $data['doc'];
+            }
+
+            $contact->update($fields);
 
             $contact->address->update(
                 $data['address']

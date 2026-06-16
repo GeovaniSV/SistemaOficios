@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class UpdateContactRequest extends FormRequest
 {
@@ -19,6 +18,13 @@ class UpdateContactRequest extends FormRequest
             'type' => [
                 'required',
                 'in:PF,PJ'
+            ],
+
+            'doc' => [
+                'sometimes',
+                'nullable',
+                'string',
+                'max:14',
             ],
 
             'name' => [

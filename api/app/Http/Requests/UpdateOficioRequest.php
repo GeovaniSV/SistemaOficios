@@ -48,7 +48,7 @@ class UpdateOficioRequest extends FormRequest
 
 
             'department' => [
-                'required',
+                'nullable',
                 'string',
                 'max:191'
             ],

@@ -36,8 +36,8 @@ class StoreOficioRequest extends FormRequest
                 'string'
             ],
 
-            'department'             => [
-                'required',
+            'department' => [
+                'nullable',
                 'string',
                 'max:191'
             ],
