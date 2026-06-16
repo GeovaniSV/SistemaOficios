@@ -14,21 +14,11 @@ class UpdateContactRequest extends FormRequest
 
     public function rules(): array
     {
-        $contactId = $this->route('id');
-
         return [
 
             'type' => [
                 'required',
                 'in:PF,PJ'
-            ],
-
-            'doc' => [
-                'required',
-                'string',
-                'max:14',
-                Rule::unique('contacts', 'doc')
-                    ->ignore($contactId)
             ],
 
             'name' => [
