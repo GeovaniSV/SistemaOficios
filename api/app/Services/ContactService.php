@@ -10,7 +10,7 @@ class ContactService
 {
     public function list()
     {
-        return Contact::with('address')->paginate(20);
+        return Contact::with('address', 'responsibles')->paginate(20);
     }
 
     public function getById(int $id): Contact{
