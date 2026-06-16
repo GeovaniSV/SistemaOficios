@@ -12,7 +12,7 @@ export const transporter = nodemailer.createTransport({
   port: mailer_port,
   secure: false,
   auth: {
-    user: "",
+    user: mailer_user,
     pass: mailer_password,
   },
 });

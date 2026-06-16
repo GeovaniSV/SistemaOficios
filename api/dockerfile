@@ -1,0 +1,37 @@
+FROM php:8.3-fpm
+
+# Dependências do sistema
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    zip \
+    libzip-dev \
+    && docker-php-ext-install \
+        pdo \
+        pdo_mysql \
+        zip \
+        sockets \
+    && apt-get clean
+
+# Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www
+
+# Copia o restante do projeto
+COPY api/ .
+
+# Copia apenas os arquivos necessários para instalar dependências
+COPY api/composer.json api/composer.lock ./
+
+RUN composer install \
+    --no-dev \
+    --optimize-autoloader \
+    --no-interaction
+
+# Permissões
+RUN chown -R www-data:www-data storage bootstrap/cache
+
+EXPOSE 9000
+
+CMD ["php-fpm"]

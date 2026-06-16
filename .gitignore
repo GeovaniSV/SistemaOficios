@@ -11,6 +11,7 @@ build/
 .env.development
 .env.production
 .env.test
+.phpstorm.meta.php
 
 # ===== LOGS =====
 logs/
@@ -39,3 +40,7 @@ desktop.ini
 # ===== DOCKER =====
 .dockerignore
 docker-compose.override.yml
+
+# Arquivos de Organização do Hugo
+
+*.hugo.md
