@@ -86,6 +86,11 @@ class StoreContactRequest extends FormRequest
                 'email'
             ],
 
+            'responsibles.*.treatment' => [
+                'nullable',
+                'string'
+            ],
+
             'responsibles.*.position' => [
                 'nullable',
                 'string'
