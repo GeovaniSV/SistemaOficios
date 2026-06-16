@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DestroyContactRequest;
 use App\Http\Requests\StoreContactRequest;
 use App\Http\Requests\UpdateContactRequest;
 use App\Services\ContactService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
@@ -14,10 +16,16 @@ class ContactController extends Controller
         private ContactService $service
     ) {}
 
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
+        $isActive = null;
+
+        if ($request->has('is_active')) {
+            $isActive = filter_var($request->input('is_active'), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        }
+
         return response()->json(
-            $this->service->list()
+            $this->service->list($isActive)
         );
     }
 
@@ -62,6 +70,18 @@ class ContactController extends Controller
             $id,
             $request->validated()
         );
+
+        return response()->json($contact);
+    }
+
+    public function destroy(
+        DestroyContactRequest $request,
+        int $id
+    ): JsonResponse {
+
+        $activate = filter_var($request->input('activate', false), FILTER_VALIDATE_BOOLEAN);
+
+        $contact = $this->service->toggleActive($id, $activate);
 
         return response()->json($contact);
     }
