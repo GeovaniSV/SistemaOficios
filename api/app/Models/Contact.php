@@ -16,10 +16,12 @@ class Contact extends Model
         'doc',
         'name',
         'address_id',
+        'is_active',
     ];
 
     protected $casts = [
-        'type' => TipoContatoEnum::class,
+        'type'      => TipoContatoEnum::class,
+        'is_active' => 'boolean',
     ];
 
     protected $appends = [

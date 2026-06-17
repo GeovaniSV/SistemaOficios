@@ -77,6 +77,31 @@ class UpdateContactRequest extends FormRequest
                 'array',
                 'min:1'
             ],
+
+            'responsibles.*.name' => [
+                'required',
+                'string'
+            ],
+
+            'responsibles.*.email' => [
+                'required',
+                'email'
+            ],
+
+            'responsibles.*.treatment' => [
+                'nullable',
+                'string'
+            ],
+
+            'responsibles.*.position' => [
+                'nullable',
+                'string'
+            ],
+
+            'responsibles.*.department' => [
+                'nullable',
+                'string'
+            ],
         ];
     }
 }

@@ -12,6 +12,7 @@ return new class extends Migration
     {
         Schema::create('oficios', function (Blueprint $table) {
             $table->id();
+            $table->string('number')->unique();
             $table->string('subject');
 
             $table->foreignId('author_id')
@@ -29,7 +30,7 @@ return new class extends Migration
             ]);
 
             $table->longText('content');
-            $table->string('department');
+            $table->string('department')->nullable();
 
             $table->enum('status', [
                 OficioStatusEnum::DRAFT->value,

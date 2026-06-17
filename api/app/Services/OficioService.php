@@ -44,11 +44,12 @@ class OficioService
     {
         return DB::transaction(function () use ($data) {
             $oficio = Oficio::create([
+                'number'                 => $this->generateNumber(),
                 'subject'                => $data['subject'],
                 'destination_contact_id' => $data['destination_contact_id'],
                 'priority'               => $data['priority'],
                 'content'                => $data['content'],
-                'department'             => $data['department'],
+                'department'             => $data['department'] ?? null,
                 'author_id'              => Auth::id(),
                 'status'                 => OficioStatusEnum::DRAFT,
             ]);
@@ -137,6 +138,13 @@ class OficioService
                 'messages_success' => $messagesSuccess,
             ];
         });
+    }
+
+    private function generateNumber(): string
+    {
+        $year  = now()->year;
+        $count = Oficio::whereYear('created_at', $year)->count();
+        return str_pad($count + 1, 3, '0', STR_PAD_LEFT) . '/' . $year;
     }
 
     private function updateMetadata(Oficio $oficio, array $data): void

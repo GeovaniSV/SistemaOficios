@@ -9,9 +9,15 @@ use Illuminate\Validation\ValidationException;
 
 class ContactService
 {
-    public function list()
+    public function list(?bool $isActive = null)
     {
-        return Contact::with('address', 'responsibles')->paginate(20);
+        $query = Contact::with('address', 'responsibles');
+
+        if ($isActive !== null) {
+            $query->where('is_active', $isActive);
+        }
+
+        return $query->paginate(20);
     }
 
     public function getById(int $id): Contact{
@@ -100,6 +106,13 @@ class ContactService
 
             return $this->getById($contact->id);
         });
+    }
+
+    public function toggleActive(int $id, bool $activate): Contact
+    {
+        $contact = Contact::findOrFail($id);
+        $contact->update(['is_active' => $activate]);
+        return $this->getById($id);
     }
 }
 

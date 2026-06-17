@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('users', UserController::class);
     Route::patch('users/{user}/restore', [UserController::class, 'restore']);
 
-    Route::apiResource('contacts', ContactController::class)->except('destroy');
+    Route::apiResource('contacts', ContactController::class);
     Route::get('contacts/{id}/responsibles', [ContactController::class, 'responsibles']);
 
     Route::apiResource('oficios', OficioController::class)->except('destroy');

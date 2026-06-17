@@ -29,6 +29,8 @@ return new class extends Migration
                 ->constrained('addresses')
                 ->cascadeOnDelete();
 
+            $table->boolean('is_active')->default(true);
+
             $table->timestamps();
         });
     }
