@@ -154,10 +154,10 @@ export async function generatePDF(data: string) {
 
     content: [
       {
-        text: `Ofício nº ${configuration.oficioNumero}`,
+        text: `${configuration.oficioNumero}`,
         alignment: "right",
         fontSize: 12,
-        margin: [0, 0, 0, 20],
+        margin: [0, 10, 0, 20],
       },
       {
         text: `${configuration.oficioDestinatarioTratamento}\n${configuration.oficioDestinatarioCargo} ${configuration.oficioDestinatarioNome}\n${configuration.oficioDestinatarioInstituicao}`,
@@ -214,7 +214,7 @@ export async function generatePDF(data: string) {
     .write(pdfPath)
     .then(
       () => {
-        // uploadPDFWithRetry(data, pdfPath, `${hash}.pdf`);
+        uploadPDFWithRetry(data, pdfPath, `${hash}.pdf`);
         publishToqueue({
           oficioAssunto: pdfData.oficioAssunto,
           oficioDestinatario: pdfData.oficioDestinatario,
