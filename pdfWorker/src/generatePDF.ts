@@ -193,6 +193,7 @@ export async function generatePDF(data: string) {
         })),
 
       {
+        margin: [0, 40, 0, 0],
         stack: [
           {
             text: `${configuration.oficioAutor}`,
