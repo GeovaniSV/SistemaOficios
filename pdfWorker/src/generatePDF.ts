@@ -160,8 +160,15 @@ export async function generatePDF(data: string) {
         margin: [0, 10, 0, 20],
       },
       {
-        text: `${configuration.oficioDestinatarioTratamento}\n${configuration.oficioDestinatarioCargo} ${configuration.oficioDestinatarioNome}\n${configuration.oficioDestinatarioInstituicao}`,
+        text: `${configuration.oficioDestinatarioTratamento}\n${configuration.oficioDestinatarioCargo}`,
         alignment: "left",
+        fontSize: 12,
+        margin: [0, 0, 0, 0],
+      },
+      {
+        text: `${configuration.oficioDestinatarioNome}`,
+        alignment: "left",
+        bold: true,
         fontSize: 12,
         margin: [0, 0, 0, 20],
       },
