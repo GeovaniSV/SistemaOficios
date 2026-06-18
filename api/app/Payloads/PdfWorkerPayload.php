@@ -27,7 +27,7 @@ final readonly class PdfWorkerPayload implements \JsonSerializable
         $responsible = $message->responsible;
 
         return new self(
-            oficioNumero:                 (string) $oficio->id,
+            oficioNumero:                 $oficio->number,
             oficioDestinatarioTratamento: $responsible->treatment ?? '',
             oficioDestinatarioNome:       $responsible->name,
             oficioDestinatarioCargo:      $responsible->position ?? '',
