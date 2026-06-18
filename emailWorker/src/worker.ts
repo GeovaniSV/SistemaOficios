@@ -2,6 +2,7 @@ import "dotenv/config";
 import amqp from "amqplib";
 import sendEmailWithRetry from "./sendEmail";
 import axios from "axios";
+import fs from "fs";
 import { EmailDataType } from "./sendEmail";
 
 type ConfigType = {
@@ -17,6 +18,10 @@ const queueName = "email_queue";
 //   const { data } = await axios.get(
 //     `${process.env.API_URL}api/broker/smtp-config`,
 //   );
+// await fs.promises.writeFile(
+//   "./smtp-config.conf",
+//   JSON.stringify(data)
+// );
 
 //   smtpConfig = data;
 // }
