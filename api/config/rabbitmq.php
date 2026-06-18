@@ -10,4 +10,5 @@ return [
     'queue' => env('RABBITMQ_QUEUE'),
     'exchange' => env('RABBITMQ_EXCHANGE'),
     'routing_key' => env('RABBITMQ_ROUTING_KEY'),
+    'email_queue' => env('RABBITMQ_EMAIL_QUEUE', 'email_queue'),
 ];
