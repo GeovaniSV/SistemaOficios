@@ -9,6 +9,7 @@ class OficioSetting extends Model
     protected $table = 'oficio_settings';
 
     protected $fillable = [
-        'statement_text',
+        'header',
+        'footer',
     ];
 }
