@@ -29,15 +29,15 @@ final readonly class PdfWorkerPayload implements \JsonSerializable
         return new self(
             oficioNumero:                 (string) $oficio->id,
             oficioDestinatarioTratamento: $responsible->treatment ?? '',
-            oficioDestinatarioNome:       $contact->name,
-            oficioDestinatarioCargo:      $contact->position ?? '',       // campo ainda não existe no Contact
-            oficioDestinatarioInstituicao:$contact->institution ?? '',    // campo ainda não existe no Contact
+            oficioDestinatarioNome:       $responsible->name,
+            oficioDestinatarioCargo:      $responsible->position ?? '',
+            oficioDestinatarioInstituicao:$contact->name ?? '',
             oficioAssunto:                $oficio->subject,
             oficioCorpo:                  $oficio->content,
             oficioDestinatario:           $responsible->email,
-            oficioAutor:                  $responsible->name,
-            oficioAutorCargo:             $responsible->position ?? '',
-            userId:                       $message->id,
+            oficioAutor:                  $oficio->author->name,
+            oficioAutorCargo:             $oficio->author->position->name ?? '',
+            userId:                       $oficio->author->id,
         );
     }
 
