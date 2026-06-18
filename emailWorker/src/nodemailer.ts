@@ -1,6 +1,10 @@
 import "dotenv/config";
 import nodemailer from "nodemailer";
 
+// const mailer_server = smtpConfig.host;
+// const mailer_port = smtpConfig.port;
+// const mailer_user = smtpConfig.user;
+// const mailer_password = smtpConfig.password;
 const mailer_server = process.env.mailer_server;
 const mailer_port = Number(process.env.mailer_port);
 const mailer_user = process.env.mailer_user;

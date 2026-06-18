@@ -1,9 +1,24 @@
 import "dotenv/config";
 import amqp from "amqplib";
 import sendEmailWithRetry from "./sendEmail";
+// import axios from "axios";
 
 const RABBITMQ_URL = process.env.RABBITMQ_URL;
 const queueName = "email_queue";
+
+// export let smtpConfig: any = null;
+
+// async function loadSMTP() {
+//   const { data } = await axios.get(`${process.env.API_URL}/broker/smtp-config`);
+
+//   smtpConfig = data;
+// }
+
+// async function bootstrap() {
+//   await loadSMTP();
+//   await startWorker();
+// }
+
 async function startWorker() {
   try {
     const connection = await amqp.connect(RABBITMQ_URL!);
