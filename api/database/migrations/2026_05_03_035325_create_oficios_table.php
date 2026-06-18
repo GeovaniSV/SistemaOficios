@@ -27,6 +27,7 @@ return new class extends Migration
                 OficioPriorityEnum::LOW->value,
                 OficioPriorityEnum::MEDIUM->value,
                 OficioPriorityEnum::HIGH->value,
+                OficioPriorityEnum::URGENT->value,
             ]);
 
             $table->longText('content');

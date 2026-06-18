@@ -28,7 +28,7 @@ class StoreOficioRequest extends FormRequest
 
             'priority' => [
                 'required',
-                'in:LOW,MEDIUM,HIGH'
+                'in:LOW,MEDIUM,HIGH,URGENT'
             ],
 
             'content' => [
