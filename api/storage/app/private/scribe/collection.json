@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Laravel API Documentation",
-        "_postman_id": "b92c5a31-9194-4241-9d5b-18da9b0aeef6",
+        "_postman_id": "878ab1d6-4519-41e7-a0af-504706c0d605",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -71,6 +71,51 @@
                     ]
                 },
                 {
+                    "name": "GET api\/broker\/smtp-config",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/broker\/smtp-config",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/broker\/smtp-config"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthorized\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
                     "name": "POST api\/auth\/logout",
                     "request": {
                         "url": {
@@ -109,8 +154,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 200,
-                            "body": "{\"message\":\"Logout realizado com sucesso.\"}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -154,8 +199,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 200,
-                            "body": "{\"message\":\"Todos os tokens revogados.\"}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -199,8 +244,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 200,
-                            "body": "{\"id\":1,\"name\":\"Dev\",\"email\":\"dev@dev.com\",\"cpf\":\"000.000.000-00\",\"position_id\":null,\"is_active\":true,\"is_dev\":true,\"last_login\":\"2026-06-16T06:04:13.000000Z\",\"created_at\":\"2026-06-16T05:55:44.000000Z\",\"updated_at\":\"2026-06-16T06:04:13.000000Z\"}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -244,8 +289,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 200,
-                            "body": "{\"current_page\":1,\"data\":[{\"id\":2,\"name\":\"Administrador\",\"email\":\"admin@admin.com\",\"cpf\":\"000.000.000-01\",\"position_id\":null,\"is_active\":true,\"is_dev\":false,\"last_login\":null,\"created_at\":\"2026-06-16T05:55:44.000000Z\",\"updated_at\":\"2026-06-16T05:55:44.000000Z\"}],\"first_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/users?page=1\",\"from\":1,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/users?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\\/\\\/localhost\\\/api\\\/users?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/localhost\\\/api\\\/users\",\"per_page\":20,\"prev_page_url\":null,\"to\":1,\"total\":1}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -292,8 +337,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 422,
-                            "body": "{\"message\":\"The cpf field format is invalid. (and 2 more errors)\",\"errors\":{\"cpf\":[\"The cpf field format is invalid.\"],\"position_id\":[\"The selected position id is invalid.\"],\"role\":[\"The selected role is invalid.\"]}}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -345,8 +390,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 404,
-                            "body": "{\n    \"message\": \"\"\n}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -401,8 +446,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 422,
-                            "body": "{\"message\":\"The cpf field format is invalid. (and 2 more errors)\",\"errors\":{\"cpf\":[\"The cpf field format is invalid.\"],\"position_id\":[\"The selected position id is invalid.\"],\"role\":[\"The selected role is invalid.\"]}}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -454,8 +499,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 404,
-                            "body": "{\n    \"message\": \"\"\n}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -507,8 +552,263 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 404,
-                            "body": "{\n    \"message\": \"\"\n}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET api\/positions",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/positions",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/positions"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "POST api\/positions",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/positions",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/positions"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"is_active\":true}"
+                        },
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET api\/positions\/{id}",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/positions\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/positions\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "16",
+                                    "description": "The ID of the position."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "PUT api\/positions\/{id}",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/positions\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/positions\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "16",
+                                    "description": "The ID of the position."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"is_active\":true}"
+                        },
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "DELETE api\/positions\/{id}",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/positions\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/positions\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "16",
+                                    "description": "The ID of the position."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -552,8 +852,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 200,
-                            "body": "{\"current_page\":1,\"data\":[{\"id\":1,\"type\":\"PJ\",\"doc\":\"12345678000195\",\"name\":\"Empresa Teste LTDA\",\"address_id\":1,\"is_active\":false,\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:59:02.000000Z\",\"formatted_doc\":\"12.345.678\\\/0001-95\",\"address\":{\"id\":1,\"cep\":\"01310100\",\"logradouro\":\"Avenida Paulista\",\"numero\":\"1000\",\"bairro\":\"Bela Vista\",\"cidade\":\"Sao Paulo\",\"estado\":\"SP\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},\"responsibles\":[{\"id\":1,\"contact_id\":1,\"name\":\"Joao Silva\",\"email\":\"joao.silva@empresateste.com\",\"treatment\":null,\"position\":\"Diretor Executivo\",\"department\":\"Diretoria\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},{\"id\":2,\"contact_id\":1,\"name\":\"Maria Souza\",\"email\":\"maria.souza@empresateste.com\",\"treatment\":null,\"position\":\"Gerente Juridica\",\"department\":\"Juridico\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"}]},{\"id\":2,\"type\":\"PJ\",\"doc\":\"98765432000100\",\"name\":\"Nova Empresa LTDA\",\"address_id\":2,\"is_active\":true,\"created_at\":\"2026-06-16T05:59:19.000000Z\",\"updated_at\":\"2026-06-16T05:59:19.000000Z\",\"formatted_doc\":\"98.765.432\\\/0001-00\",\"address\":{\"id\":2,\"cep\":\"20040020\",\"logradouro\":\"Avenida Rio Branco\",\"numero\":\"45\",\"bairro\":\"Centro\",\"cidade\":\"Rio de Janeiro\",\"estado\":\"RJ\",\"created_at\":\"2026-06-16T05:59:19.000000Z\",\"updated_at\":\"2026-06-16T05:59:19.000000Z\"},\"responsibles\":[{\"id\":3,\"contact_id\":2,\"name\":\"Joao Silva\",\"email\":\"joao.silva@novaempresa.com\",\"treatment\":\"Sr.\",\"position\":\"Diretor Executivo\",\"department\":\"Diretoria\",\"created_at\":\"2026-06-16T05:59:19.000000Z\",\"updated_at\":\"2026-06-16T05:59:19.000000Z\"},{\"id\":4,\"contact_id\":2,\"name\":\"Maria Souza\",\"email\":\"maria.souza@novaempresa.com\",\"treatment\":\"Dra.\",\"position\":\"Gerente Juridica\",\"department\":\"Juridico\",\"created_at\":\"2026-06-16T05:59:19.000000Z\",\"updated_at\":\"2026-06-16T05:59:19.000000Z\"}]},{\"id\":3,\"type\":\"PF\",\"doc\":\"04118035146\",\"name\":\"Hugo Moreira Barbosa\",\"address_id\":3,\"is_active\":true,\"created_at\":\"2026-06-16T06:05:45.000000Z\",\"updated_at\":\"2026-06-16T06:05:45.000000Z\",\"formatted_doc\":\"041.180.351-46\",\"address\":{\"id\":3,\"cep\":\"93848239\",\"logradouro\":\"Avenida dos Ing\\u00e1s\",\"numero\":\"2504\",\"bairro\":\"Jardim Imperial\",\"cidade\":\"Sinop\",\"estado\":\"MT\",\"created_at\":\"2026-06-16T06:05:45.000000Z\",\"updated_at\":\"2026-06-16T06:05:45.000000Z\"},\"responsibles\":[{\"id\":5,\"contact_id\":3,\"name\":\"Hugo Moreira\",\"email\":\"hugomoreirabarbosa2@gmail.com\",\"treatment\":\"Magn\\u00edfico\",\"position\":\"Sim\",\"department\":\"Isso\",\"created_at\":\"2026-06-16T06:05:45.000000Z\",\"updated_at\":\"2026-06-16T06:05:45.000000Z\"}]}],\"first_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/contacts?page=1\",\"from\":1,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/contacts?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\\/\\\/localhost\\\/api\\\/contacts?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/localhost\\\/api\\\/contacts\",\"per_page\":20,\"prev_page_url\":null,\"to\":3,\"total\":3}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -580,7 +880,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"type\":\"PF\",\"doc\":\"bngzmiyvdljnik\",\"name\":\"h\",\"address\":{\"cep\":\"bngzmiyv\",\"logradouro\":\"architecto\",\"numero\":\"architecto\",\"bairro\":\"architecto\",\"cidade\":\"architecto\",\"estado\":\"ng\"},\"responsibles\":[{\"name\":\"architecto\",\"email\":\"zbailey@example.net\",\"treatment\":\"architecto\",\"position\":\"architecto\",\"department\":\"architecto\"}]}"
+                            "raw": "{\"type\":\"PJ\",\"doc\":\"bngzmiyvdljnik\",\"name\":\"h\",\"address\":{\"cep\":\"bngzmiyv\",\"logradouro\":\"architecto\",\"numero\":\"architecto\",\"bairro\":\"architecto\",\"cidade\":\"architecto\",\"estado\":\"ng\"},\"responsibles\":[{\"name\":\"architecto\",\"email\":\"zbailey@example.net\",\"treatment\":\"architecto\",\"position\":\"architecto\",\"department\":\"architecto\"}]}"
                         },
                         "description": ""
                     },
@@ -600,8 +900,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 500,
-                            "body": "{\n    \"message\": \"Server Error\"\n}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -618,7 +918,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "1",
+                                    "value": "architecto",
                                     "description": "The ID of the contact."
                                 }
                             ]
@@ -653,8 +953,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 200,
-                            "body": "{\"id\":1,\"type\":\"PJ\",\"doc\":\"12345678000195\",\"name\":\"Empresa Teste LTDA\",\"address_id\":1,\"is_active\":false,\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:59:02.000000Z\",\"formatted_doc\":\"12.345.678\\\/0001-95\",\"address\":{\"id\":1,\"cep\":\"01310100\",\"logradouro\":\"Avenida Paulista\",\"numero\":\"1000\",\"bairro\":\"Bela Vista\",\"cidade\":\"Sao Paulo\",\"estado\":\"SP\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},\"responsibles\":[{\"id\":1,\"contact_id\":1,\"name\":\"Joao Silva\",\"email\":\"joao.silva@empresateste.com\",\"treatment\":null,\"position\":\"Diretor Executivo\",\"department\":\"Diretoria\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},{\"id\":2,\"contact_id\":1,\"name\":\"Maria Souza\",\"email\":\"maria.souza@empresateste.com\",\"treatment\":null,\"position\":\"Gerente Juridica\",\"department\":\"Juridico\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"}]}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -671,7 +971,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "1",
+                                    "value": "architecto",
                                     "description": "The ID of the contact."
                                 }
                             ]
@@ -709,8 +1009,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 500,
-                            "body": "{\n    \"message\": \"Server Error\"\n}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -727,7 +1027,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "1",
+                                    "value": "architecto",
                                     "description": "The ID of the contact."
                                 }
                             ]
@@ -745,7 +1045,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"activate\":true}"
+                            "raw": "{\"activate\":false}"
                         },
                         "description": ""
                     },
@@ -765,8 +1065,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 200,
-                            "body": "{\"id\":1,\"type\":\"PJ\",\"doc\":\"12345678000195\",\"name\":\"Empresa Teste LTDA\",\"address_id\":1,\"is_active\":true,\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-18T04:39:45.000000Z\",\"formatted_doc\":\"12.345.678\\\/0001-95\",\"address\":{\"id\":1,\"cep\":\"01310100\",\"logradouro\":\"Avenida Paulista\",\"numero\":\"1000\",\"bairro\":\"Bela Vista\",\"cidade\":\"Sao Paulo\",\"estado\":\"SP\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},\"responsibles\":[{\"id\":1,\"contact_id\":1,\"name\":\"Joao Silva\",\"email\":\"joao.silva@empresateste.com\",\"treatment\":null,\"position\":\"Diretor Executivo\",\"department\":\"Diretoria\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},{\"id\":2,\"contact_id\":1,\"name\":\"Maria Souza\",\"email\":\"maria.souza@empresateste.com\",\"treatment\":null,\"position\":\"Gerente Juridica\",\"department\":\"Juridico\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"}]}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -783,7 +1083,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "1",
+                                    "value": "architecto",
                                     "description": "The ID of the contact."
                                 }
                             ]
@@ -818,8 +1118,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 200,
-                            "body": "[{\"id\":1,\"contact_id\":1,\"name\":\"Joao Silva\",\"email\":\"joao.silva@empresateste.com\",\"treatment\":null,\"position\":\"Diretor Executivo\",\"department\":\"Diretoria\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},{\"id\":2,\"contact_id\":1,\"name\":\"Maria Souza\",\"email\":\"maria.souza@empresateste.com\",\"treatment\":null,\"position\":\"Gerente Juridica\",\"department\":\"Juridico\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"}]",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -863,8 +1163,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 200,
-                            "body": "{\"current_page\":1,\"data\":[{\"id\":1,\"number\":\"001\\\/2026\",\"subject\":\"sdghsdhsd\",\"author_id\":1,\"destination_contact_id\":3,\"priority\":\"MEDIUM\",\"content\":\"bvkgtfukgliygh\",\"department\":null,\"status\":\"DRAFT\",\"created_at\":\"2026-06-16T06:15:16.000000Z\",\"updated_at\":\"2026-06-16T06:15:16.000000Z\",\"destination_contact\":{\"id\":3,\"type\":\"PF\",\"doc\":\"04118035146\",\"name\":\"Hugo Moreira Barbosa\",\"address_id\":3,\"is_active\":true,\"created_at\":\"2026-06-16T06:05:45.000000Z\",\"updated_at\":\"2026-06-16T06:05:45.000000Z\",\"formatted_doc\":\"041.180.351-46\"},\"responsibles\":[{\"id\":5,\"contact_id\":3,\"name\":\"Hugo Moreira\",\"email\":\"hugomoreirabarbosa2@gmail.com\",\"treatment\":\"Magn\\u00edfico\",\"position\":\"Sim\",\"department\":\"Isso\",\"created_at\":\"2026-06-16T06:05:45.000000Z\",\"updated_at\":\"2026-06-16T06:05:45.000000Z\",\"pivot\":{\"oficio_id\":1,\"responsible_id\":5}}],\"author\":{\"id\":1,\"name\":\"Dev\",\"email\":\"dev@dev.com\",\"cpf\":\"000.000.000-00\",\"position_id\":null,\"is_active\":true,\"is_dev\":true,\"last_login\":\"2026-06-16T06:04:13.000000Z\",\"created_at\":\"2026-06-16T05:55:44.000000Z\",\"updated_at\":\"2026-06-16T06:04:13.000000Z\"}},{\"id\":2,\"number\":\"002\\\/2026\",\"subject\":\"sdghsdhsd\",\"author_id\":1,\"destination_contact_id\":3,\"priority\":\"LOW\",\"content\":\"gkugvugyhvhu\",\"department\":null,\"status\":\"DRAFT\",\"created_at\":\"2026-06-16T06:18:45.000000Z\",\"updated_at\":\"2026-06-16T06:18:45.000000Z\",\"destination_contact\":{\"id\":3,\"type\":\"PF\",\"doc\":\"04118035146\",\"name\":\"Hugo Moreira Barbosa\",\"address_id\":3,\"is_active\":true,\"created_at\":\"2026-06-16T06:05:45.000000Z\",\"updated_at\":\"2026-06-16T06:05:45.000000Z\",\"formatted_doc\":\"041.180.351-46\"},\"responsibles\":[{\"id\":5,\"contact_id\":3,\"name\":\"Hugo Moreira\",\"email\":\"hugomoreirabarbosa2@gmail.com\",\"treatment\":\"Magn\\u00edfico\",\"position\":\"Sim\",\"department\":\"Isso\",\"created_at\":\"2026-06-16T06:05:45.000000Z\",\"updated_at\":\"2026-06-16T06:05:45.000000Z\",\"pivot\":{\"oficio_id\":2,\"responsible_id\":5}}],\"author\":{\"id\":1,\"name\":\"Dev\",\"email\":\"dev@dev.com\",\"cpf\":\"000.000.000-00\",\"position_id\":null,\"is_active\":true,\"is_dev\":true,\"last_login\":\"2026-06-16T06:04:13.000000Z\",\"created_at\":\"2026-06-16T05:55:44.000000Z\",\"updated_at\":\"2026-06-16T06:04:13.000000Z\"}}],\"first_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/oficios?page=1\",\"from\":1,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/oficios?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\\/\\\/localhost\\\/api\\\/oficios?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/localhost\\\/api\\\/oficios\",\"per_page\":20,\"prev_page_url\":null,\"to\":2,\"total\":2}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -891,7 +1191,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"subject\":\"b\",\"destination_contact_id\":\"architecto\",\"priority\":\"MEDIUM\",\"content\":\"architecto\",\"department\":\"n\"}"
+                            "raw": "{\"subject\":\"b\",\"destination_contact_id\":\"architecto\",\"priority\":\"LOW\",\"content\":\"architecto\",\"department\":\"n\"}"
                         },
                         "description": ""
                     },
@@ -911,8 +1211,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 422,
-                            "body": "{\"message\":\"The selected destination contact id is invalid. (and 1 more error)\",\"errors\":{\"destination_contact_id\":[\"The selected destination contact id is invalid.\"],\"responsibles\":[\"The responsibles field is required.\"]}}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -964,8 +1264,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 200,
-                            "body": "{\"id\":1,\"number\":\"001\\\/2026\",\"subject\":\"sdghsdhsd\",\"author_id\":1,\"destination_contact_id\":3,\"priority\":\"MEDIUM\",\"content\":\"bvkgtfukgliygh\",\"department\":null,\"status\":\"DRAFT\",\"created_at\":\"2026-06-16T06:15:16.000000Z\",\"updated_at\":\"2026-06-16T06:15:16.000000Z\",\"destination_contact\":{\"id\":3,\"type\":\"PF\",\"doc\":\"04118035146\",\"name\":\"Hugo Moreira Barbosa\",\"address_id\":3,\"is_active\":true,\"created_at\":\"2026-06-16T06:05:45.000000Z\",\"updated_at\":\"2026-06-16T06:05:45.000000Z\",\"formatted_doc\":\"041.180.351-46\"},\"responsibles\":[{\"id\":5,\"contact_id\":3,\"name\":\"Hugo Moreira\",\"email\":\"hugomoreirabarbosa2@gmail.com\",\"treatment\":\"Magn\\u00edfico\",\"position\":\"Sim\",\"department\":\"Isso\",\"created_at\":\"2026-06-16T06:05:45.000000Z\",\"updated_at\":\"2026-06-16T06:05:45.000000Z\",\"pivot\":{\"oficio_id\":1,\"responsible_id\":5}}],\"author\":{\"id\":1,\"name\":\"Dev\",\"email\":\"dev@dev.com\",\"cpf\":\"000.000.000-00\",\"position_id\":null,\"is_active\":true,\"is_dev\":true,\"last_login\":\"2026-06-16T06:04:13.000000Z\",\"created_at\":\"2026-06-16T05:55:44.000000Z\",\"updated_at\":\"2026-06-16T06:04:13.000000Z\"},\"rejection_infos\":[]}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -1000,7 +1300,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"subject\":\"b\",\"destination_contact_id\":\"architecto\",\"priority\":\"LOW\",\"content\":\"architecto\",\"department\":\"n\",\"submit\":true}"
+                            "raw": "{\"subject\":\"b\",\"destination_contact_id\":\"architecto\",\"priority\":\"MEDIUM\",\"content\":\"architecto\",\"department\":\"n\",\"submit\":true}"
                         },
                         "description": ""
                     },
@@ -1020,8 +1320,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 422,
-                            "body": "{\"message\":\"The selected destination contact id is invalid. (and 1 more error)\",\"errors\":{\"destination_contact_id\":[\"The selected destination contact id is invalid.\"],\"responsibles\":[\"The responsibles field is required.\"]}}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -1056,7 +1356,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"status\":\"REJECTED\",\"reason\":\"architecto\",\"subject\":\"n\",\"priority\":\"HIGH\",\"content\":\"architecto\",\"department\":\"n\"}"
+                            "raw": "{\"status\":\"REJECTED\",\"reason\":\"architecto\",\"subject\":\"n\",\"priority\":\"LOW\",\"content\":\"architecto\",\"department\":\"n\"}"
                         },
                         "description": ""
                     },
@@ -1076,8 +1376,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 409,
-                            "body": "{\n    \"message\": \"Esta a\\u00e7\\u00e3o n\\u00e3o \\u00e9 permitida para o status atual do of\\u00edcio\"\n}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -1129,8 +1429,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 409,
-                            "body": "{\n    \"message\": \"Esta a\\u00e7\\u00e3o n\\u00e3o \\u00e9 permitida para o status atual do of\\u00edcio\"\n}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -1174,8 +1474,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 200,
-                            "body": "{\"current_page\":1,\"data\":[],\"first_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/oficio-templates?page=1\",\"from\":null,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/oficio-templates?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\\/\\\/localhost\\\/api\\\/oficio-templates?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/localhost\\\/api\\\/oficio-templates\",\"per_page\":20,\"prev_page_url\":null,\"to\":null,\"total\":0}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -1222,8 +1522,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 201,
-                            "body": "{\"name\":\"b\",\"content\":\"architecto\",\"updated_at\":\"2026-06-18T04:39:47.000000Z\",\"created_at\":\"2026-06-18T04:39:47.000000Z\",\"id\":1}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -1275,8 +1575,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 200,
-                            "body": "{\"id\":1,\"name\":\"b\",\"content\":\"architecto\",\"created_at\":\"2026-06-18T04:39:47.000000Z\",\"updated_at\":\"2026-06-18T04:39:47.000000Z\"}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -1331,8 +1631,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 200,
-                            "body": "{\"id\":1,\"name\":\"b\",\"content\":\"architecto\",\"created_at\":\"2026-06-18T04:39:47.000000Z\",\"updated_at\":\"2026-06-18T04:39:47.000000Z\"}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -1376,8 +1676,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 200,
-                            "body": "{}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -1424,8 +1724,101 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 200,
-                            "body": "{\"statement_text\":\"architecto\",\"updated_at\":\"2026-06-18T04:39:47.000000Z\",\"created_at\":\"2026-06-18T04:39:47.000000Z\",\"id\":1}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET api\/settings\/smtp",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/settings\/smtp",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/settings\/smtp"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "PUT api\/settings\/smtp",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/settings\/smtp",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/settings\/smtp"
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"host\":\"b\",\"port\":2,\"username\":\"g\",\"password\":\"|]|{+-\",\"from_name\":\"v\",\"from_email\":\"jdach@example.org\",\"use_tls\":false}"
+                        },
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -1469,8 +1862,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 200,
-                            "body": "{\"current_page\":1,\"data\":[],\"first_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/messages?page=1\",\"from\":null,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/messages?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\\/\\\/localhost\\\/api\\\/messages?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/localhost\\\/api\\\/messages\",\"per_page\":20,\"prev_page_url\":null,\"to\":null,\"total\":0}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -1522,8 +1915,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 404,
-                            "body": "{\n    \"message\": \"No query results for model [App\\\\Models\\\\Message] 16\"\n}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -1567,8 +1960,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 200,
-                            "body": "{\"current_page\":1,\"data\":[],\"first_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/worker-logs?page=1\",\"from\":null,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/worker-logs?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\\/\\\/localhost\\\/api\\\/worker-logs?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/localhost\\\/api\\\/worker-logs\",\"per_page\":20,\"prev_page_url\":null,\"to\":null,\"total\":0}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
@@ -1615,8 +2008,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 201,
-                            "body": "{\"correlation_id\":\"architecto\",\"code\":\"architecto\",\"message\":\"architecto\",\"status\":16,\"queue_name\":\"architecto\",\"event_type\":\"architecto\",\"metadata\":null,\"user_id\":\"architecto\",\"updated_at\":\"2026-06-18T04:39:47.000000Z\",\"created_at\":\"2026-06-18T04:39:47.000000Z\",\"id\":1}",
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
