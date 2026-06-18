@@ -50,8 +50,8 @@ export async function generatePDF(data: string) {
     oficioAssunto: pdfData.oficioAssunto,
     oficioCorpo: pdfData.oficioCorpo,
     oficioDestinatario: pdfData.oficioDestinatario,
-    oficioAutor: "João Silva",
-    oficioAutorCargo: "Diretoria",
+    oficioAutor: pdfData.oficioAutor,
+    oficioAutorCargo: pdfData.oficioAutorCargo,
     userId: pdfData.userId,
   };
 
@@ -59,7 +59,7 @@ export async function generatePDF(data: string) {
   // header
   const docDefinition: any = {
     pageSize: "A4",
-    pageMargins: [72, 180, 72, 120], // left, top, right, bottom
+    pageMargins: [85, 85, 57, 57],
 
     defaultStyle: {
       font: "Roboto",
@@ -80,21 +80,20 @@ export async function generatePDF(data: string) {
           },
           {
             text: "ORDEM DOS ADVOGADOS DO BRASIL",
-            fontSize: 16,
+            fontSize: 14,
             bold: true,
             alignment: "center",
-            margin: [0, 0, 0, 10],
           },
           {
             text: "SECCIONAL MATO GROSSO",
-            fontSize: 14,
+            fontSize: 12,
             medium: true,
             alignment: "center",
             margin: [0, 0, 0, 10],
           },
           {
             text: "6ª SUBSEÇÃO — SINOP",
-            fontSize: 12,
+            fontSize: 10,
             alignment: "center",
             margin: [0, 0, 0, 20],
           },
@@ -155,19 +154,19 @@ export async function generatePDF(data: string) {
       {
         text: `Ofício nº ${configuration.oficioNumero}`,
         alignment: "right",
-        fontSize: 12,
+        fontSize: 10,
         margin: [0, 0, 0, 20],
       },
       {
         text: `${configuration.oficioDestinatarioTratamento}\n${configuration.oficioDestinatarioCargo} ${configuration.oficioDestinatarioNome} (${configuration.oficioDestinatarioInstituicao}`,
         alignment: "left",
-        fontSize: 12,
+        fontSize: 10,
         margin: [0, 0, 0, 20],
       },
       {
         text: `Assunto: ${configuration.oficioAssunto}`,
         bold: true,
-        fontSize: 12,
+        fontSize: 10,
         margin: [0, 0, 0, 20],
       },
 
@@ -177,7 +176,7 @@ export async function generatePDF(data: string) {
         .map((p) => ({
           text: p.trim().replace(/-/g, "\u2011"),
           alignment: "justify" as const,
-          fontSize: 12,
+          fontSize: 10,
           margin: [0, 0, 0, 12],
           noWrap: false,
           preserveLeadingSpaces: true,
@@ -190,12 +189,12 @@ export async function generatePDF(data: string) {
             text: `${configuration.oficioAutor}`,
             alignment: "center",
             bold: true,
-            fontSize: 12,
+            fontSize: 10,
           },
           {
             text: `${configuration.oficioAutorCargo}`,
             alignment: "center",
-            fontSize: 12,
+            fontSize: 10,
           },
         ],
         absolutePosition: { x: 72, y: 680 }, // ← y fixo, ajusta conforme necessário

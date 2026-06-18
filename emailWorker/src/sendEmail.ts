@@ -53,7 +53,7 @@ async function sendEmailWithRetry(
       await sendEmail(msg);
       console.log("Email sent successfully");
       const outbox = {
-        correlationId: msg.properties.correlationId,
+        correlationId: msg.properties.timestamp,
         code: "EMAIL_SENT",
         message: "Email sent successfully",
         status: 1,
