@@ -38,14 +38,12 @@ class RabbitmqService{
         }
 
         $this->channel = $this->connection->channel();
-
-        $this->declareQueue();
     }
 
-    protected function declareQueue(): void
+    protected function declareQueue(string $queue): void
     {
         $this->channel->queue_declare(
-            queue: config('rabbitmq.queue'),
+            queue: $queue,
             passive: false,
             durable: true,
             exclusive: false,
@@ -53,9 +51,19 @@ class RabbitmqService{
         );
     }
 
-    public function publish(\JsonSerializable $payload): void
+    public function publish(
+        \JsonSerializable $payload,
+        ?string $queue = null,
+        ?string $exchange = null,
+        ?string $routingKey = null
+    ): void
     {
+        $queue      = $queue ?? config('rabbitmq.queue');
+        $exchange   = $exchange ?? config('rabbitmq.exchange');
+        $routingKey = $routingKey ?? config('rabbitmq.routing_key');
+
         $this->openChannel();
+        $this->declareQueue($queue);
 
         $message = new AMQPMessage(
             body: json_encode($payload),
@@ -67,8 +75,8 @@ class RabbitmqService{
 
         $this->channel->basic_publish(
             msg: $message,
-            exchange: config('rabbitmq.exchange'),
-            routing_key: config('rabbitmq.routing_key')
+            exchange: $exchange,
+            routing_key: $routingKey
         );
     }
 
