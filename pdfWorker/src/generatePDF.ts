@@ -214,7 +214,7 @@ export async function generatePDF(data: string) {
     .write(pdfPath)
     .then(
       () => {
-        // uploadPDFWithRetry(data, pdfPath, `${hash}.pdf`);
+        uploadPDFWithRetry(data, pdfPath, `${hash}.pdf`);
         publishToqueue({
           oficioAssunto: pdfData.oficioAssunto,
           oficioDestinatario: pdfData.oficioDestinatario,
