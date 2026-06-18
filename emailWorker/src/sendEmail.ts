@@ -5,7 +5,7 @@ import { transporter } from "./nodemailer";
 import logError from "./boxMessageLogger";
 import boxMessageLogger from "./boxMessageLogger";
 
-type DataType = {
+export type EmailDataType = {
   oficioDestinatario: string;
   oficioAssunto: string;
   oficio: string;
@@ -13,7 +13,7 @@ type DataType = {
 };
 
 async function sendEmail(msg: amqp.Message): Promise<void> {
-  const data: DataType = JSON.parse(msg.content.toString());
+  const data: EmailDataType = JSON.parse(msg.content.toString());
   await transporter.sendMail({
     from: "seu_nome@test-xkjn41mw9w04z781.mlsender.net",
     to: data.oficioDestinatario,
@@ -48,7 +48,7 @@ async function sendEmailWithRetry(
   delay = 5000,
 ) {
   for (let attempt = 1; attempt <= retries; attempt++) {
-    const data: DataType = JSON.parse(msg.content.toString());
+    const data: EmailDataType = JSON.parse(msg.content.toString());
     try {
       await sendEmail(msg);
       console.log("Email sent successfully");
