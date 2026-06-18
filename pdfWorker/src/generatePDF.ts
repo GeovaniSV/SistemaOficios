@@ -50,8 +50,8 @@ export async function generatePDF(data: string) {
     oficioAssunto: pdfData.oficioAssunto,
     oficioCorpo: pdfData.oficioCorpo,
     oficioDestinatario: pdfData.oficioDestinatario,
-    oficioAutor: "João Silva",
-    oficioAutorCargo: "Diretoria",
+    oficioAutor: pdfData.oficioAutor,
+    oficioAutorCargo: pdfData.oficioAutorCargo,
     userId: pdfData.userId,
   };
 
@@ -64,6 +64,7 @@ export async function generatePDF(data: string) {
     defaultStyle: {
       font: "Roboto",
       fontSize: 12,
+      lineHeight: 1.5,
     },
 
     patterns: [],
@@ -76,27 +77,27 @@ export async function generatePDF(data: string) {
             width: 50,
             height: 25,
             alignment: "center",
-            margin: [0, 0, 0, 20],
+            margin: [0, 0, 0, 10],
           },
           {
             text: "ORDEM DOS ADVOGADOS DO BRASIL",
-            fontSize: 16,
+            fontSize: 14,
             bold: true,
             alignment: "center",
-            margin: [0, 0, 0, 10],
+            margin: [0, 0, 0, 5],
           },
           {
             text: "SECCIONAL MATO GROSSO",
-            fontSize: 14,
+            fontSize: 12,
             medium: true,
             alignment: "center",
-            margin: [0, 0, 0, 10],
+            margin: [0, 0, 0, 5],
           },
           {
             text: "6ª SUBSEÇÃO — SINOP",
-            fontSize: 12,
+            fontSize: 11,
             alignment: "center",
-            margin: [0, 0, 0, 20],
+            margin: [0, 0, 0, 5],
           },
           {
             canvas: [
@@ -153,14 +154,21 @@ export async function generatePDF(data: string) {
 
     content: [
       {
-        text: `Ofício nº ${configuration.oficioNumero}`,
+        text: `${configuration.oficioNumero}`,
         alignment: "right",
         fontSize: 12,
-        margin: [0, 0, 0, 20],
+        margin: [0, 10, 0, 20],
       },
       {
-        text: `${configuration.oficioDestinatarioTratamento}\n${configuration.oficioDestinatarioCargo} ${configuration.oficioDestinatarioNome} (${configuration.oficioDestinatarioInstituicao}`,
+        text: `${configuration.oficioDestinatarioTratamento}`,
         alignment: "left",
+        fontSize: 12,
+        margin: [0, 0, 0, 0],
+      },
+      {
+        text: `${configuration.oficioDestinatarioCargo} ${configuration.oficioDestinatarioNome} (${configuration.oficioDestinatarioInstituicao})`,
+        alignment: "left",
+        bold: true,
         fontSize: 12,
         margin: [0, 0, 0, 20],
       },
@@ -213,7 +221,7 @@ export async function generatePDF(data: string) {
     .write(pdfPath)
     .then(
       () => {
-        // uploadPDFWithRetry(data, pdfPath, `${hash}.pdf`);
+        uploadPDFWithRetry(data, pdfPath, `${hash}.pdf`);
         publishToqueue({
           oficioAssunto: pdfData.oficioAssunto,
           oficioDestinatario: pdfData.oficioDestinatario,

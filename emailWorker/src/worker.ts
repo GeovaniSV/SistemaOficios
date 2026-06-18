@@ -1,9 +1,36 @@
 import "dotenv/config";
 import amqp from "amqplib";
 import sendEmailWithRetry from "./sendEmail";
+import axios from "axios";
+import fs from "fs";
+import { EmailDataType } from "./sendEmail";
+
+type ConfigType = {
+  event: "SMTP_CONFIG_UPDATED";
+};
 
 const RABBITMQ_URL = process.env.RABBITMQ_URL;
 const queueName = "email_queue";
+
+// export let smtpConfig: any = null;
+
+// async function loadSMTP() {
+//   const { data } = await axios.get(
+//     `${process.env.API_URL}api/broker/smtp-config`,
+//   );
+// await fs.promises.writeFile(
+//   "./smtp-config.conf",
+//   JSON.stringify(data)
+// );
+
+//   smtpConfig = data;
+// }
+
+// async function bootstrap() {
+//   await loadSMTP();
+//   await startWorker();
+// }
+
 async function startWorker() {
   try {
     const connection = await amqp.connect(RABBITMQ_URL!);
@@ -18,6 +45,10 @@ async function startWorker() {
         if (!msg) {
           return;
         }
+
+        const msgParser: EmailDataType | ConfigType = JSON.parse(
+          msg.content.toString(),
+        );
         await sendEmailWithRetry(msg);
       },
       {
