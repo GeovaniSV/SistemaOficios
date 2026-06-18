@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ReviewOficioRequest;
+use App\Http\Requests\SendOficioRequest;
 use App\Http\Requests\StoreOficioRequest;
 use App\Http\Requests\UpdateOficioRequest;
 use App\Models\Oficio;
@@ -47,7 +48,7 @@ class OficioController extends Controller
         );
     }
 
-    public function send(Oficio $oficio)
+    public function send(SendOficioRequest $request, Oficio $oficio)
     {
         return response()->json(
             $this->service->send($oficio)

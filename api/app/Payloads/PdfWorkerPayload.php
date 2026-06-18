@@ -3,6 +3,7 @@
 namespace App\Payloads;
 
 use App\Models\Message;
+use App\Models\OficioSetting;
 
 final readonly class PdfWorkerPayload implements \JsonSerializable
 {
@@ -17,6 +18,8 @@ final readonly class PdfWorkerPayload implements \JsonSerializable
         public string $oficioDestinatario,
         public string $oficioAutor,
         public string $oficioAutorCargo,
+        public string $oficioHeader,
+        public string $oficioFooter,
         public int    $userId,
     ) {}
 
@@ -25,6 +28,7 @@ final readonly class PdfWorkerPayload implements \JsonSerializable
         $oficio      = $message->oficio;
         $contact     = $oficio->destinationContact;
         $responsible = $message->responsible;
+        $setting = OficioSetting::first();
 
         return new self(
             oficioNumero:                 $oficio->number,
@@ -37,6 +41,8 @@ final readonly class PdfWorkerPayload implements \JsonSerializable
             oficioDestinatario:           $responsible->email,
             oficioAutor:                  $oficio->author->name,
             oficioAutorCargo:             $oficio->author->position->name ?? '',
+            oficioHeader:                 $setting?->header ?? '',
+            oficioFooter:                 $setting?->footer ?? '',
             userId:                       $oficio->author->id,
         );
     }
@@ -55,6 +61,8 @@ final readonly class PdfWorkerPayload implements \JsonSerializable
             'oficioAutor'                   => $this->oficioAutor,
             'oficioAutorCargo'              => $this->oficioAutorCargo,
             'userId'                        => $this->userId,
+            'oficioHeader'                  => $this->oficioHeader,
+            'oficioFooter'                  => $this->oficioFooter,
         ];
     }
 }

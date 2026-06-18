@@ -72,6 +72,27 @@ paths:
                 - email
                 - password
       security: []
+  /api/broker/smtp-config:
+    get:
+      summary: ''
+      operationId: getApiBrokerSmtpConfig
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorized
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+      tags:
+        - Endpoints
   /api/auth/logout:
     post:
       summary: ''
@@ -128,29 +149,29 @@ paths:
               schema:
                 type: object
                 example:
-                  id: 1
-                  name: Dev
-                  email: dev@dev.com
-                  cpf: 000.000.000-00
+                  id: 2
+                  name: Administrador
+                  email: admin@admin.com
+                  cpf: 000.000.000-01
                   position_id: null
                   is_active: true
-                  is_dev: true
-                  last_login: '2026-06-16T06:04:13.000000Z'
+                  is_dev: false
+                  last_login: null
                   created_at: '2026-06-16T05:55:44.000000Z'
-                  updated_at: '2026-06-16T06:04:13.000000Z'
+                  updated_at: '2026-06-16T05:55:44.000000Z'
                 properties:
                   id:
                     type: integer
-                    example: 1
+                    example: 2
                   name:
                     type: string
-                    example: Dev
+                    example: Administrador
                   email:
                     type: string
-                    example: dev@dev.com
+                    example: admin@admin.com
                   cpf:
                     type: string
-                    example: 000.000.000-00
+                    example: 000.000.000-01
                   position_id:
                     type: string
                     example: null
@@ -160,16 +181,17 @@ paths:
                     example: true
                   is_dev:
                     type: boolean
-                    example: true
+                    example: false
                   last_login:
                     type: string
-                    example: '2026-06-16T06:04:13.000000Z'
+                    example: null
+                    nullable: true
                   created_at:
                     type: string
                     example: '2026-06-16T05:55:44.000000Z'
                   updated_at:
                     type: string
-                    example: '2026-06-16T06:04:13.000000Z'
+                    example: '2026-06-16T05:55:44.000000Z'
       tags:
         - Endpoints
   /api/users:
@@ -595,6 +617,313 @@ paths:
         required: true
         schema:
           type: integer
+  /api/positions:
+    get:
+      summary: ''
+      operationId: getApiPositions
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  current_page: 1
+                  data: []
+                  first_page_url: 'http://localhost/api/positions?page=1'
+                  from: null
+                  last_page: 1
+                  last_page_url: 'http://localhost/api/positions?page=1'
+                  links:
+                    -
+                      url: null
+                      label: '&laquo; Previous'
+                      page: null
+                      active: false
+                    -
+                      url: 'http://localhost/api/positions?page=1'
+                      label: '1'
+                      page: 1
+                      active: true
+                    -
+                      url: null
+                      label: 'Next &raquo;'
+                      page: null
+                      active: false
+                  next_page_url: null
+                  path: 'http://localhost/api/positions'
+                  per_page: 20
+                  prev_page_url: null
+                  to: null
+                  total: 0
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    example: []
+                  first_page_url:
+                    type: string
+                    example: 'http://localhost/api/positions?page=1'
+                  from:
+                    type: string
+                    example: null
+                    nullable: true
+                  last_page:
+                    type: integer
+                    example: 1
+                  last_page_url:
+                    type: string
+                    example: 'http://localhost/api/positions?page=1'
+                  links:
+                    type: array
+                    example:
+                      -
+                        url: null
+                        label: '&laquo; Previous'
+                        page: null
+                        active: false
+                      -
+                        url: 'http://localhost/api/positions?page=1'
+                        label: '1'
+                        page: 1
+                        active: true
+                      -
+                        url: null
+                        label: 'Next &raquo;'
+                        page: null
+                        active: false
+                    items:
+                      type: object
+                      properties:
+                        url:
+                          type: string
+                          example: null
+                          nullable: true
+                        label:
+                          type: string
+                          example: '&laquo; Previous'
+                        page:
+                          type: string
+                          example: null
+                          nullable: true
+                        active:
+                          type: boolean
+                          example: false
+                  next_page_url:
+                    type: string
+                    example: null
+                    nullable: true
+                  path:
+                    type: string
+                    example: 'http://localhost/api/positions'
+                  per_page:
+                    type: integer
+                    example: 20
+                  prev_page_url:
+                    type: string
+                    example: null
+                    nullable: true
+                  to:
+                    type: string
+                    example: null
+                    nullable: true
+                  total:
+                    type: integer
+                    example: 0
+      tags:
+        - Endpoints
+    post:
+      summary: ''
+      operationId: postApiPositions
+      description: ''
+      parameters: []
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: b
+                  description: 'Et animi quos velit et fugiat.'
+                  is_active: true
+                  updated_at: '2026-06-18T06:52:16.000000Z'
+                  created_at: '2026-06-18T06:52:16.000000Z'
+                  id: 1
+                properties:
+                  name:
+                    type: string
+                    example: b
+                  description:
+                    type: string
+                    example: 'Et animi quos velit et fugiat.'
+                  is_active:
+                    type: boolean
+                    example: true
+                  updated_at:
+                    type: string
+                    example: '2026-06-18T06:52:16.000000Z'
+                  created_at:
+                    type: string
+                    example: '2026-06-18T06:52:16.000000Z'
+                  id:
+                    type: integer
+                    example: 1
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 191 characters.'
+                  example: b
+                description:
+                  type: string
+                  description: 'Must not be greater than 191 characters.'
+                  example: 'Et animi quos velit et fugiat.'
+                  nullable: true
+                is_active:
+                  type: boolean
+                  description: ''
+                  example: true
+              required:
+                - name
+  '/api/positions/{id}':
+    get:
+      summary: ''
+      operationId: getApiPositionsId
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 1
+                  name: b
+                  description: 'Et animi quos velit et fugiat.'
+                  is_active: true
+                  created_at: '2026-06-18T06:52:16.000000Z'
+                  updated_at: '2026-06-18T06:52:16.000000Z'
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: b
+                  description:
+                    type: string
+                    example: 'Et animi quos velit et fugiat.'
+                  is_active:
+                    type: boolean
+                    example: true
+                  created_at:
+                    type: string
+                    example: '2026-06-18T06:52:16.000000Z'
+                  updated_at:
+                    type: string
+                    example: '2026-06-18T06:52:16.000000Z'
+      tags:
+        - Endpoints
+    put:
+      summary: ''
+      operationId: putApiPositionsId
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 1
+                  name: b
+                  description: 'Et animi quos velit et fugiat.'
+                  is_active: true
+                  created_at: '2026-06-18T06:52:16.000000Z'
+                  updated_at: '2026-06-18T06:52:16.000000Z'
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: b
+                  description:
+                    type: string
+                    example: 'Et animi quos velit et fugiat.'
+                  is_active:
+                    type: boolean
+                    example: true
+                  created_at:
+                    type: string
+                    example: '2026-06-18T06:52:16.000000Z'
+                  updated_at:
+                    type: string
+                    example: '2026-06-18T06:52:16.000000Z'
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 191 characters.'
+                  example: b
+                description:
+                  type: string
+                  description: 'Must not be greater than 191 characters.'
+                  example: 'Et animi quos velit et fugiat.'
+                  nullable: true
+                is_active:
+                  type: boolean
+                  description: ''
+                  example: true
+    delete:
+      summary: ''
+      operationId: deleteApiPositionsId
+      description: ''
+      parameters: []
+      responses:
+        204:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: ''
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the position.'
+        example: 1
+        required: true
+        schema:
+          type: integer
   /api/contacts:
     get:
       summary: ''
@@ -617,9 +946,9 @@ paths:
                       doc: '12345678000195'
                       name: 'Empresa Teste LTDA'
                       address_id: 1
-                      is_active: false
+                      is_active: true
                       created_at: '2026-06-16T05:57:37.000000Z'
-                      updated_at: '2026-06-16T05:59:02.000000Z'
+                      updated_at: '2026-06-18T04:39:45.000000Z'
                       formatted_doc: 12.345.678/0001-95
                       address:
                         id: 1
@@ -763,9 +1092,9 @@ paths:
                         doc: '12345678000195'
                         name: 'Empresa Teste LTDA'
                         address_id: 1
-                        is_active: false
+                        is_active: true
                         created_at: '2026-06-16T05:57:37.000000Z'
-                        updated_at: '2026-06-16T05:59:02.000000Z'
+                        updated_at: '2026-06-18T04:39:45.000000Z'
                         formatted_doc: 12.345.678/0001-95
                         address:
                           id: 1
@@ -890,13 +1219,13 @@ paths:
                           example: 1
                         is_active:
                           type: boolean
-                          example: false
+                          example: true
                         created_at:
                           type: string
                           example: '2026-06-16T05:57:37.000000Z'
                         updated_at:
                           type: string
-                          example: '2026-06-16T05:59:02.000000Z'
+                          example: '2026-06-18T04:39:45.000000Z'
                         formatted_doc:
                           type: string
                           example: 12.345.678/0001-95
@@ -1083,7 +1412,7 @@ paths:
                 type:
                   type: string
                   description: ''
-                  example: PF
+                  example: PJ
                   enum:
                     - PF
                     - PJ
@@ -1175,291 +1504,6 @@ paths:
     get:
       summary: ''
       operationId: getApiContactsId
-      description: ''
-      parameters: []
-      responses:
-        200:
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  id: 1
-                  type: PJ
-                  doc: '12345678000195'
-                  name: 'Empresa Teste LTDA'
-                  address_id: 1
-                  is_active: false
-                  created_at: '2026-06-16T05:57:37.000000Z'
-                  updated_at: '2026-06-16T05:59:02.000000Z'
-                  formatted_doc: 12.345.678/0001-95
-                  address:
-                    id: 1
-                    cep: '01310100'
-                    logradouro: 'Avenida Paulista'
-                    numero: '1000'
-                    bairro: 'Bela Vista'
-                    cidade: 'Sao Paulo'
-                    estado: SP
-                    created_at: '2026-06-16T05:57:37.000000Z'
-                    updated_at: '2026-06-16T05:57:37.000000Z'
-                  responsibles:
-                    -
-                      id: 1
-                      contact_id: 1
-                      name: 'Joao Silva'
-                      email: joao.silva@empresateste.com
-                      treatment: null
-                      position: 'Diretor Executivo'
-                      department: Diretoria
-                      created_at: '2026-06-16T05:57:37.000000Z'
-                      updated_at: '2026-06-16T05:57:37.000000Z'
-                    -
-                      id: 2
-                      contact_id: 1
-                      name: 'Maria Souza'
-                      email: maria.souza@empresateste.com
-                      treatment: null
-                      position: 'Gerente Juridica'
-                      department: Juridico
-                      created_at: '2026-06-16T05:57:37.000000Z'
-                      updated_at: '2026-06-16T05:57:37.000000Z'
-                properties:
-                  id:
-                    type: integer
-                    example: 1
-                  type:
-                    type: string
-                    example: PJ
-                  doc:
-                    type: string
-                    example: '12345678000195'
-                  name:
-                    type: string
-                    example: 'Empresa Teste LTDA'
-                  address_id:
-                    type: integer
-                    example: 1
-                  is_active:
-                    type: boolean
-                    example: false
-                  created_at:
-                    type: string
-                    example: '2026-06-16T05:57:37.000000Z'
-                  updated_at:
-                    type: string
-                    example: '2026-06-16T05:59:02.000000Z'
-                  formatted_doc:
-                    type: string
-                    example: 12.345.678/0001-95
-                  address:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                        example: 1
-                      cep:
-                        type: string
-                        example: '01310100'
-                      logradouro:
-                        type: string
-                        example: 'Avenida Paulista'
-                      numero:
-                        type: string
-                        example: '1000'
-                      bairro:
-                        type: string
-                        example: 'Bela Vista'
-                      cidade:
-                        type: string
-                        example: 'Sao Paulo'
-                      estado:
-                        type: string
-                        example: SP
-                      created_at:
-                        type: string
-                        example: '2026-06-16T05:57:37.000000Z'
-                      updated_at:
-                        type: string
-                        example: '2026-06-16T05:57:37.000000Z'
-                  responsibles:
-                    type: array
-                    example:
-                      -
-                        id: 1
-                        contact_id: 1
-                        name: 'Joao Silva'
-                        email: joao.silva@empresateste.com
-                        treatment: null
-                        position: 'Diretor Executivo'
-                        department: Diretoria
-                        created_at: '2026-06-16T05:57:37.000000Z'
-                        updated_at: '2026-06-16T05:57:37.000000Z'
-                      -
-                        id: 2
-                        contact_id: 1
-                        name: 'Maria Souza'
-                        email: maria.souza@empresateste.com
-                        treatment: null
-                        position: 'Gerente Juridica'
-                        department: Juridico
-                        created_at: '2026-06-16T05:57:37.000000Z'
-                        updated_at: '2026-06-16T05:57:37.000000Z'
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                          example: 1
-                        contact_id:
-                          type: integer
-                          example: 1
-                        name:
-                          type: string
-                          example: 'Joao Silva'
-                        email:
-                          type: string
-                          example: joao.silva@empresateste.com
-                        treatment:
-                          type: string
-                          example: null
-                          nullable: true
-                        position:
-                          type: string
-                          example: 'Diretor Executivo'
-                        department:
-                          type: string
-                          example: Diretoria
-                        created_at:
-                          type: string
-                          example: '2026-06-16T05:57:37.000000Z'
-                        updated_at:
-                          type: string
-                          example: '2026-06-16T05:57:37.000000Z'
-      tags:
-        - Endpoints
-    put:
-      summary: ''
-      operationId: putApiContactsId
-      description: ''
-      parameters: []
-      responses:
-        500:
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  message: 'Server Error'
-                properties:
-                  message:
-                    type: string
-                    example: 'Server Error'
-      tags:
-        - Endpoints
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                type:
-                  type: string
-                  description: ''
-                  example: PJ
-                  enum:
-                    - PF
-                    - PJ
-                doc:
-                  type: string
-                  description: 'Must not be greater than 14 characters.'
-                  example: bngzmiyvdljnik
-                  nullable: true
-                name:
-                  type: string
-                  description: 'Must not be greater than 191 characters.'
-                  example: h
-                address:
-                  type: object
-                  description: ''
-                  example: []
-                  properties:
-                    cep:
-                      type: string
-                      description: 'Must be 8 characters.'
-                      example: bngzmiyv
-                    logradouro:
-                      type: string
-                      description: ''
-                      example: architecto
-                    numero:
-                      type: string
-                      description: ''
-                      example: architecto
-                    bairro:
-                      type: string
-                      description: ''
-                      example: architecto
-                    cidade:
-                      type: string
-                      description: ''
-                      example: architecto
-                    estado:
-                      type: string
-                      description: 'Must be 2 characters.'
-                      example: ng
-                  required:
-                    - cep
-                    - logradouro
-                    - numero
-                    - bairro
-                    - cidade
-                    - estado
-                responsibles:
-                  type: array
-                  description: 'Must have at least 1 items.'
-                  example:
-                    - []
-                  items:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                        description: ''
-                        example: architecto
-                      email:
-                        type: string
-                        description: 'Must be a valid email address.'
-                        example: zbailey@example.net
-                      treatment:
-                        type: string
-                        description: ''
-                        example: architecto
-                        nullable: true
-                      position:
-                        type: string
-                        description: ''
-                        example: architecto
-                        nullable: true
-                      department:
-                        type: string
-                        description: ''
-                        example: architecto
-                        nullable: true
-                    required:
-                      - name
-                      - email
-              required:
-                - type
-                - name
-                - address
-                - responsibles
-    delete:
-      summary: ''
-      operationId: deleteApiContactsId
       description: ''
       parameters: []
       responses:
@@ -1624,6 +1668,291 @@ paths:
                           example: '2026-06-16T05:57:37.000000Z'
       tags:
         - Endpoints
+    put:
+      summary: ''
+      operationId: putApiContactsId
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  description: ''
+                  example: PF
+                  enum:
+                    - PF
+                    - PJ
+                doc:
+                  type: string
+                  description: 'Must not be greater than 14 characters.'
+                  example: bngzmiyvdljnik
+                  nullable: true
+                name:
+                  type: string
+                  description: 'Must not be greater than 191 characters.'
+                  example: h
+                address:
+                  type: object
+                  description: ''
+                  example: []
+                  properties:
+                    cep:
+                      type: string
+                      description: 'Must be 8 characters.'
+                      example: bngzmiyv
+                    logradouro:
+                      type: string
+                      description: ''
+                      example: architecto
+                    numero:
+                      type: string
+                      description: ''
+                      example: architecto
+                    bairro:
+                      type: string
+                      description: ''
+                      example: architecto
+                    cidade:
+                      type: string
+                      description: ''
+                      example: architecto
+                    estado:
+                      type: string
+                      description: 'Must be 2 characters.'
+                      example: ng
+                  required:
+                    - cep
+                    - logradouro
+                    - numero
+                    - bairro
+                    - cidade
+                    - estado
+                responsibles:
+                  type: array
+                  description: 'Must have at least 1 items.'
+                  example:
+                    - []
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        description: ''
+                        example: architecto
+                      email:
+                        type: string
+                        description: 'Must be a valid email address.'
+                        example: zbailey@example.net
+                      treatment:
+                        type: string
+                        description: ''
+                        example: architecto
+                        nullable: true
+                      position:
+                        type: string
+                        description: ''
+                        example: architecto
+                        nullable: true
+                      department:
+                        type: string
+                        description: ''
+                        example: architecto
+                        nullable: true
+                    required:
+                      - name
+                      - email
+              required:
+                - type
+                - name
+                - address
+                - responsibles
+    delete:
+      summary: ''
+      operationId: deleteApiContactsId
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 1
+                  type: PJ
+                  doc: '12345678000195'
+                  name: 'Empresa Teste LTDA'
+                  address_id: 1
+                  is_active: false
+                  created_at: '2026-06-16T05:57:37.000000Z'
+                  updated_at: '2026-06-18T06:52:17.000000Z'
+                  formatted_doc: 12.345.678/0001-95
+                  address:
+                    id: 1
+                    cep: '01310100'
+                    logradouro: 'Avenida Paulista'
+                    numero: '1000'
+                    bairro: 'Bela Vista'
+                    cidade: 'Sao Paulo'
+                    estado: SP
+                    created_at: '2026-06-16T05:57:37.000000Z'
+                    updated_at: '2026-06-16T05:57:37.000000Z'
+                  responsibles:
+                    -
+                      id: 1
+                      contact_id: 1
+                      name: 'Joao Silva'
+                      email: joao.silva@empresateste.com
+                      treatment: null
+                      position: 'Diretor Executivo'
+                      department: Diretoria
+                      created_at: '2026-06-16T05:57:37.000000Z'
+                      updated_at: '2026-06-16T05:57:37.000000Z'
+                    -
+                      id: 2
+                      contact_id: 1
+                      name: 'Maria Souza'
+                      email: maria.souza@empresateste.com
+                      treatment: null
+                      position: 'Gerente Juridica'
+                      department: Juridico
+                      created_at: '2026-06-16T05:57:37.000000Z'
+                      updated_at: '2026-06-16T05:57:37.000000Z'
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  type:
+                    type: string
+                    example: PJ
+                  doc:
+                    type: string
+                    example: '12345678000195'
+                  name:
+                    type: string
+                    example: 'Empresa Teste LTDA'
+                  address_id:
+                    type: integer
+                    example: 1
+                  is_active:
+                    type: boolean
+                    example: false
+                  created_at:
+                    type: string
+                    example: '2026-06-16T05:57:37.000000Z'
+                  updated_at:
+                    type: string
+                    example: '2026-06-18T06:52:17.000000Z'
+                  formatted_doc:
+                    type: string
+                    example: 12.345.678/0001-95
+                  address:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      cep:
+                        type: string
+                        example: '01310100'
+                      logradouro:
+                        type: string
+                        example: 'Avenida Paulista'
+                      numero:
+                        type: string
+                        example: '1000'
+                      bairro:
+                        type: string
+                        example: 'Bela Vista'
+                      cidade:
+                        type: string
+                        example: 'Sao Paulo'
+                      estado:
+                        type: string
+                        example: SP
+                      created_at:
+                        type: string
+                        example: '2026-06-16T05:57:37.000000Z'
+                      updated_at:
+                        type: string
+                        example: '2026-06-16T05:57:37.000000Z'
+                  responsibles:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        contact_id: 1
+                        name: 'Joao Silva'
+                        email: joao.silva@empresateste.com
+                        treatment: null
+                        position: 'Diretor Executivo'
+                        department: Diretoria
+                        created_at: '2026-06-16T05:57:37.000000Z'
+                        updated_at: '2026-06-16T05:57:37.000000Z'
+                      -
+                        id: 2
+                        contact_id: 1
+                        name: 'Maria Souza'
+                        email: maria.souza@empresateste.com
+                        treatment: null
+                        position: 'Gerente Juridica'
+                        department: Juridico
+                        created_at: '2026-06-16T05:57:37.000000Z'
+                        updated_at: '2026-06-16T05:57:37.000000Z'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        contact_id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: 'Joao Silva'
+                        email:
+                          type: string
+                          example: joao.silva@empresateste.com
+                        treatment:
+                          type: string
+                          example: null
+                          nullable: true
+                        position:
+                          type: string
+                          example: 'Diretor Executivo'
+                        department:
+                          type: string
+                          example: Diretoria
+                        created_at:
+                          type: string
+                          example: '2026-06-16T05:57:37.000000Z'
+                        updated_at:
+                          type: string
+                          example: '2026-06-16T05:57:37.000000Z'
+      tags:
+        - Endpoints
       requestBody:
         required: false
         content:
@@ -1634,7 +1963,7 @@ paths:
                 activate:
                   type: boolean
                   description: ''
-                  example: true
+                  example: false
     parameters:
       -
         in: path
@@ -2245,6 +2574,7 @@ paths:
                     - LOW
                     - MEDIUM
                     - HIGH
+                    - URGENT
                 content:
                   type: string
                   description: ''
@@ -2543,7 +2873,7 @@ paths:
                 priority:
                   type: string
                   description: ''
-                  example: LOW
+                  example: MEDIUM
                   enum:
                     - LOW
                     - MEDIUM
@@ -2612,7 +2942,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: REJECTED
+                  example: APPROVED
                   enum:
                     - APPROVED
                     - REJECTED
@@ -2708,9 +3038,15 @@ paths:
                 type: object
                 example:
                   current_page: 1
-                  data: []
+                  data:
+                    -
+                      id: 1
+                      name: b
+                      content: architecto
+                      created_at: '2026-06-18T04:39:47.000000Z'
+                      updated_at: '2026-06-18T04:39:47.000000Z'
                   first_page_url: 'http://localhost/api/oficio-templates?page=1'
-                  from: null
+                  from: 1
                   last_page: 1
                   last_page_url: 'http://localhost/api/oficio-templates?page=1'
                   links:
@@ -2733,22 +3069,45 @@ paths:
                   path: 'http://localhost/api/oficio-templates'
                   per_page: 20
                   prev_page_url: null
-                  to: null
-                  total: 0
+                  to: 1
+                  total: 1
                 properties:
                   current_page:
                     type: integer
                     example: 1
                   data:
                     type: array
-                    example: []
+                    example:
+                      -
+                        id: 1
+                        name: b
+                        content: architecto
+                        created_at: '2026-06-18T04:39:47.000000Z'
+                        updated_at: '2026-06-18T04:39:47.000000Z'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: b
+                        content:
+                          type: string
+                          example: architecto
+                        created_at:
+                          type: string
+                          example: '2026-06-18T04:39:47.000000Z'
+                        updated_at:
+                          type: string
+                          example: '2026-06-18T04:39:47.000000Z'
                   first_page_url:
                     type: string
                     example: 'http://localhost/api/oficio-templates?page=1'
                   from:
-                    type: string
-                    example: null
-                    nullable: true
+                    type: integer
+                    example: 1
                   last_page:
                     type: integer
                     example: 1
@@ -2805,12 +3164,11 @@ paths:
                     example: null
                     nullable: true
                   to:
-                    type: string
-                    example: null
-                    nullable: true
+                    type: integer
+                    example: 1
                   total:
                     type: integer
-                    example: 0
+                    example: 1
       tags:
         - Endpoints
     post:
@@ -2828,9 +3186,9 @@ paths:
                 example:
                   name: b
                   content: architecto
-                  updated_at: '2026-06-18T04:39:47.000000Z'
-                  created_at: '2026-06-18T04:39:47.000000Z'
-                  id: 1
+                  updated_at: '2026-06-18T06:52:18.000000Z'
+                  created_at: '2026-06-18T06:52:18.000000Z'
+                  id: 2
                 properties:
                   name:
                     type: string
@@ -2840,13 +3198,13 @@ paths:
                     example: architecto
                   updated_at:
                     type: string
-                    example: '2026-06-18T04:39:47.000000Z'
+                    example: '2026-06-18T06:52:18.000000Z'
                   created_at:
                     type: string
-                    example: '2026-06-18T04:39:47.000000Z'
+                    example: '2026-06-18T06:52:18.000000Z'
                   id:
                     type: integer
-                    example: 1
+                    example: 2
       tags:
         - Endpoints
       requestBody:
@@ -2980,8 +3338,24 @@ paths:
             application/json:
               schema:
                 type: object
-                example: {  }
-                properties: {  }
+                example:
+                  id: 1
+                  statement_text: architecto
+                  created_at: '2026-06-18T04:39:47.000000Z'
+                  updated_at: '2026-06-18T04:39:47.000000Z'
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  statement_text:
+                    type: string
+                    example: architecto
+                  created_at:
+                    type: string
+                    example: '2026-06-18T04:39:47.000000Z'
+                  updated_at:
+                    type: string
+                    example: '2026-06-18T04:39:47.000000Z'
       tags:
         - Endpoints
     put:
@@ -2997,23 +3371,23 @@ paths:
               schema:
                 type: object
                 example:
-                  statement_text: architecto
-                  updated_at: '2026-06-18T04:39:47.000000Z'
-                  created_at: '2026-06-18T04:39:47.000000Z'
                   id: 1
+                  statement_text: architecto
+                  created_at: '2026-06-18T04:39:47.000000Z'
+                  updated_at: '2026-06-18T04:39:47.000000Z'
                 properties:
-                  statement_text:
-                    type: string
-                    example: architecto
-                  updated_at:
-                    type: string
-                    example: '2026-06-18T04:39:47.000000Z'
-                  created_at:
-                    type: string
-                    example: '2026-06-18T04:39:47.000000Z'
                   id:
                     type: integer
                     example: 1
+                  statement_text:
+                    type: string
+                    example: architecto
+                  created_at:
+                    type: string
+                    example: '2026-06-18T04:39:47.000000Z'
+                  updated_at:
+                    type: string
+                    example: '2026-06-18T04:39:47.000000Z'
       tags:
         - Endpoints
       requestBody:
@@ -3029,6 +3403,119 @@ paths:
                   example: architecto
               required:
                 - statement_text
+  /api/settings/smtp:
+    get:
+      summary: ''
+      operationId: getApiSettingsSmtp
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  host: null
+                  port: null
+                  username: null
+                  from_name: null
+                  from_email: null
+                  use_tls: false
+                  has_password: false
+                properties:
+                  host:
+                    type: string
+                    example: null
+                    nullable: true
+                  port:
+                    type: string
+                    example: null
+                    nullable: true
+                  username:
+                    type: string
+                    example: null
+                    nullable: true
+                  from_name:
+                    type: string
+                    example: null
+                    nullable: true
+                  from_email:
+                    type: string
+                    example: null
+                    nullable: true
+                  use_tls:
+                    type: boolean
+                    example: false
+                  has_password:
+                    type: boolean
+                    example: false
+      tags:
+        - Endpoints
+    put:
+      summary: ''
+      operationId: putApiSettingsSmtp
+      description: ''
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                host:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: b
+                port:
+                  type: integer
+                  description: 'Must be between 1 and 65535.'
+                  example: 2
+                username:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: g
+                password:
+                  type: string
+                  description: ''
+                  example: '|]|{+-'
+                  nullable: true
+                from_name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: v
+                from_email:
+                  type: string
+                  description: 'Must be a valid email address. Must not be greater than 255 characters.'
+                  example: jdach@example.org
+                use_tls:
+                  type: boolean
+                  description: ''
+                  example: false
+              required:
+                - host
+                - port
+                - username
+                - from_name
+                - from_email
+                - use_tls
   /api/messages:
     get:
       summary: ''
@@ -3194,9 +3681,21 @@ paths:
                 type: object
                 example:
                   current_page: 1
-                  data: []
+                  data:
+                    -
+                      id: 1
+                      correlation_id: architecto
+                      code: architecto
+                      message: architecto
+                      status: 16
+                      queue_name: architecto
+                      event_type: architecto
+                      metadata: null
+                      user_id: architecto
+                      created_at: '2026-06-18T04:39:47.000000Z'
+                      updated_at: '2026-06-18T04:39:47.000000Z'
                   first_page_url: 'http://localhost/api/worker-logs?page=1'
-                  from: null
+                  from: 1
                   last_page: 1
                   last_page_url: 'http://localhost/api/worker-logs?page=1'
                   links:
@@ -3219,22 +3718,70 @@ paths:
                   path: 'http://localhost/api/worker-logs'
                   per_page: 20
                   prev_page_url: null
-                  to: null
-                  total: 0
+                  to: 1
+                  total: 1
                 properties:
                   current_page:
                     type: integer
                     example: 1
                   data:
                     type: array
-                    example: []
+                    example:
+                      -
+                        id: 1
+                        correlation_id: architecto
+                        code: architecto
+                        message: architecto
+                        status: 16
+                        queue_name: architecto
+                        event_type: architecto
+                        metadata: null
+                        user_id: architecto
+                        created_at: '2026-06-18T04:39:47.000000Z'
+                        updated_at: '2026-06-18T04:39:47.000000Z'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        correlation_id:
+                          type: string
+                          example: architecto
+                        code:
+                          type: string
+                          example: architecto
+                        message:
+                          type: string
+                          example: architecto
+                        status:
+                          type: integer
+                          example: 16
+                        queue_name:
+                          type: string
+                          example: architecto
+                        event_type:
+                          type: string
+                          example: architecto
+                        metadata:
+                          type: string
+                          example: null
+                          nullable: true
+                        user_id:
+                          type: string
+                          example: architecto
+                        created_at:
+                          type: string
+                          example: '2026-06-18T04:39:47.000000Z'
+                        updated_at:
+                          type: string
+                          example: '2026-06-18T04:39:47.000000Z'
                   first_page_url:
                     type: string
                     example: 'http://localhost/api/worker-logs?page=1'
                   from:
-                    type: string
-                    example: null
-                    nullable: true
+                    type: integer
+                    example: 1
                   last_page:
                     type: integer
                     example: 1
@@ -3291,12 +3838,11 @@ paths:
                     example: null
                     nullable: true
                   to:
-                    type: string
-                    example: null
-                    nullable: true
+                    type: integer
+                    example: 1
                   total:
                     type: integer
-                    example: 0
+                    example: 1
       tags:
         - Endpoints
     post:
@@ -3320,9 +3866,9 @@ paths:
                   event_type: architecto
                   metadata: null
                   user_id: architecto
-                  updated_at: '2026-06-18T04:39:47.000000Z'
-                  created_at: '2026-06-18T04:39:47.000000Z'
-                  id: 1
+                  updated_at: '2026-06-18T06:52:21.000000Z'
+                  created_at: '2026-06-18T06:52:21.000000Z'
+                  id: 2
                 properties:
                   correlation_id:
                     type: string
@@ -3351,13 +3897,13 @@ paths:
                     example: architecto
                   updated_at:
                     type: string
-                    example: '2026-06-18T04:39:47.000000Z'
+                    example: '2026-06-18T06:52:21.000000Z'
                   created_at:
                     type: string
-                    example: '2026-06-18T04:39:47.000000Z'
+                    example: '2026-06-18T06:52:21.000000Z'
                   id:
                     type: integer
-                    example: 1
+                    example: 2
       tags:
         - Endpoints
       requestBody:

@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Laravel API Documentation",
-        "_postman_id": "b92c5a31-9194-4241-9d5b-18da9b0aeef6",
+        "_postman_id": "1b358fca-4309-48af-9f4d-29b5d6c8195d",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -66,6 +66,51 @@
                             ],
                             "code": 422,
                             "body": "{\"message\":\"Credenciais inv\\u00e1lidas.\",\"errors\":{\"email\":[\"Credenciais inv\\u00e1lidas.\"]}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET api\/broker\/smtp-config",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/broker\/smtp-config",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/broker\/smtp-config"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthorized\"}",
                             "name": ""
                         }
                     ]
@@ -200,7 +245,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"id\":1,\"name\":\"Dev\",\"email\":\"dev@dev.com\",\"cpf\":\"000.000.000-00\",\"position_id\":null,\"is_active\":true,\"is_dev\":true,\"last_login\":\"2026-06-16T06:04:13.000000Z\",\"created_at\":\"2026-06-16T05:55:44.000000Z\",\"updated_at\":\"2026-06-16T06:04:13.000000Z\"}",
+                            "body": "{\"id\":2,\"name\":\"Administrador\",\"email\":\"admin@admin.com\",\"cpf\":\"000.000.000-01\",\"position_id\":null,\"is_active\":true,\"is_dev\":false,\"last_login\":null,\"created_at\":\"2026-06-16T05:55:44.000000Z\",\"updated_at\":\"2026-06-16T05:55:44.000000Z\"}",
                             "name": ""
                         }
                     ]
@@ -514,6 +559,257 @@
                     ]
                 },
                 {
+                    "name": "GET api\/positions",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/positions",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/positions"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"current_page\":1,\"data\":[],\"first_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/positions?page=1\",\"from\":null,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/positions?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\\/\\\/localhost\\\/api\\\/positions?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/localhost\\\/api\\\/positions\",\"per_page\":20,\"prev_page_url\":null,\"to\":null,\"total\":0}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "POST api\/positions",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/positions",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/positions"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"is_active\":true}"
+                        },
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 201,
+                            "body": "{\"name\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"is_active\":true,\"updated_at\":\"2026-06-18T06:52:16.000000Z\",\"created_at\":\"2026-06-18T06:52:16.000000Z\",\"id\":1}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET api\/positions\/{id}",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/positions\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/positions\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the position."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"id\":1,\"name\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"is_active\":true,\"created_at\":\"2026-06-18T06:52:16.000000Z\",\"updated_at\":\"2026-06-18T06:52:16.000000Z\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "PUT api\/positions\/{id}",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/positions\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/positions\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the position."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"is_active\":true}"
+                        },
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"id\":1,\"name\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"is_active\":true,\"created_at\":\"2026-06-18T06:52:16.000000Z\",\"updated_at\":\"2026-06-18T06:52:16.000000Z\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "DELETE api\/positions\/{id}",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/positions\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/positions\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the position."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 204,
+                            "body": "",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
                     "name": "GET api\/contacts",
                     "request": {
                         "url": {
@@ -553,7 +849,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"current_page\":1,\"data\":[{\"id\":1,\"type\":\"PJ\",\"doc\":\"12345678000195\",\"name\":\"Empresa Teste LTDA\",\"address_id\":1,\"is_active\":false,\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:59:02.000000Z\",\"formatted_doc\":\"12.345.678\\\/0001-95\",\"address\":{\"id\":1,\"cep\":\"01310100\",\"logradouro\":\"Avenida Paulista\",\"numero\":\"1000\",\"bairro\":\"Bela Vista\",\"cidade\":\"Sao Paulo\",\"estado\":\"SP\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},\"responsibles\":[{\"id\":1,\"contact_id\":1,\"name\":\"Joao Silva\",\"email\":\"joao.silva@empresateste.com\",\"treatment\":null,\"position\":\"Diretor Executivo\",\"department\":\"Diretoria\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},{\"id\":2,\"contact_id\":1,\"name\":\"Maria Souza\",\"email\":\"maria.souza@empresateste.com\",\"treatment\":null,\"position\":\"Gerente Juridica\",\"department\":\"Juridico\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"}]},{\"id\":2,\"type\":\"PJ\",\"doc\":\"98765432000100\",\"name\":\"Nova Empresa LTDA\",\"address_id\":2,\"is_active\":true,\"created_at\":\"2026-06-16T05:59:19.000000Z\",\"updated_at\":\"2026-06-16T05:59:19.000000Z\",\"formatted_doc\":\"98.765.432\\\/0001-00\",\"address\":{\"id\":2,\"cep\":\"20040020\",\"logradouro\":\"Avenida Rio Branco\",\"numero\":\"45\",\"bairro\":\"Centro\",\"cidade\":\"Rio de Janeiro\",\"estado\":\"RJ\",\"created_at\":\"2026-06-16T05:59:19.000000Z\",\"updated_at\":\"2026-06-16T05:59:19.000000Z\"},\"responsibles\":[{\"id\":3,\"contact_id\":2,\"name\":\"Joao Silva\",\"email\":\"joao.silva@novaempresa.com\",\"treatment\":\"Sr.\",\"position\":\"Diretor Executivo\",\"department\":\"Diretoria\",\"created_at\":\"2026-06-16T05:59:19.000000Z\",\"updated_at\":\"2026-06-16T05:59:19.000000Z\"},{\"id\":4,\"contact_id\":2,\"name\":\"Maria Souza\",\"email\":\"maria.souza@novaempresa.com\",\"treatment\":\"Dra.\",\"position\":\"Gerente Juridica\",\"department\":\"Juridico\",\"created_at\":\"2026-06-16T05:59:19.000000Z\",\"updated_at\":\"2026-06-16T05:59:19.000000Z\"}]},{\"id\":3,\"type\":\"PF\",\"doc\":\"04118035146\",\"name\":\"Hugo Moreira Barbosa\",\"address_id\":3,\"is_active\":true,\"created_at\":\"2026-06-16T06:05:45.000000Z\",\"updated_at\":\"2026-06-16T06:05:45.000000Z\",\"formatted_doc\":\"041.180.351-46\",\"address\":{\"id\":3,\"cep\":\"93848239\",\"logradouro\":\"Avenida dos Ing\\u00e1s\",\"numero\":\"2504\",\"bairro\":\"Jardim Imperial\",\"cidade\":\"Sinop\",\"estado\":\"MT\",\"created_at\":\"2026-06-16T06:05:45.000000Z\",\"updated_at\":\"2026-06-16T06:05:45.000000Z\"},\"responsibles\":[{\"id\":5,\"contact_id\":3,\"name\":\"Hugo Moreira\",\"email\":\"hugomoreirabarbosa2@gmail.com\",\"treatment\":\"Magn\\u00edfico\",\"position\":\"Sim\",\"department\":\"Isso\",\"created_at\":\"2026-06-16T06:05:45.000000Z\",\"updated_at\":\"2026-06-16T06:05:45.000000Z\"}]}],\"first_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/contacts?page=1\",\"from\":1,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/contacts?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\\/\\\/localhost\\\/api\\\/contacts?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/localhost\\\/api\\\/contacts\",\"per_page\":20,\"prev_page_url\":null,\"to\":3,\"total\":3}",
+                            "body": "{\"current_page\":1,\"data\":[{\"id\":1,\"type\":\"PJ\",\"doc\":\"12345678000195\",\"name\":\"Empresa Teste LTDA\",\"address_id\":1,\"is_active\":true,\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-18T04:39:45.000000Z\",\"formatted_doc\":\"12.345.678\\\/0001-95\",\"address\":{\"id\":1,\"cep\":\"01310100\",\"logradouro\":\"Avenida Paulista\",\"numero\":\"1000\",\"bairro\":\"Bela Vista\",\"cidade\":\"Sao Paulo\",\"estado\":\"SP\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},\"responsibles\":[{\"id\":1,\"contact_id\":1,\"name\":\"Joao Silva\",\"email\":\"joao.silva@empresateste.com\",\"treatment\":null,\"position\":\"Diretor Executivo\",\"department\":\"Diretoria\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},{\"id\":2,\"contact_id\":1,\"name\":\"Maria Souza\",\"email\":\"maria.souza@empresateste.com\",\"treatment\":null,\"position\":\"Gerente Juridica\",\"department\":\"Juridico\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"}]},{\"id\":2,\"type\":\"PJ\",\"doc\":\"98765432000100\",\"name\":\"Nova Empresa LTDA\",\"address_id\":2,\"is_active\":true,\"created_at\":\"2026-06-16T05:59:19.000000Z\",\"updated_at\":\"2026-06-16T05:59:19.000000Z\",\"formatted_doc\":\"98.765.432\\\/0001-00\",\"address\":{\"id\":2,\"cep\":\"20040020\",\"logradouro\":\"Avenida Rio Branco\",\"numero\":\"45\",\"bairro\":\"Centro\",\"cidade\":\"Rio de Janeiro\",\"estado\":\"RJ\",\"created_at\":\"2026-06-16T05:59:19.000000Z\",\"updated_at\":\"2026-06-16T05:59:19.000000Z\"},\"responsibles\":[{\"id\":3,\"contact_id\":2,\"name\":\"Joao Silva\",\"email\":\"joao.silva@novaempresa.com\",\"treatment\":\"Sr.\",\"position\":\"Diretor Executivo\",\"department\":\"Diretoria\",\"created_at\":\"2026-06-16T05:59:19.000000Z\",\"updated_at\":\"2026-06-16T05:59:19.000000Z\"},{\"id\":4,\"contact_id\":2,\"name\":\"Maria Souza\",\"email\":\"maria.souza@novaempresa.com\",\"treatment\":\"Dra.\",\"position\":\"Gerente Juridica\",\"department\":\"Juridico\",\"created_at\":\"2026-06-16T05:59:19.000000Z\",\"updated_at\":\"2026-06-16T05:59:19.000000Z\"}]},{\"id\":3,\"type\":\"PF\",\"doc\":\"04118035146\",\"name\":\"Hugo Moreira Barbosa\",\"address_id\":3,\"is_active\":true,\"created_at\":\"2026-06-16T06:05:45.000000Z\",\"updated_at\":\"2026-06-16T06:05:45.000000Z\",\"formatted_doc\":\"041.180.351-46\",\"address\":{\"id\":3,\"cep\":\"93848239\",\"logradouro\":\"Avenida dos Ing\\u00e1s\",\"numero\":\"2504\",\"bairro\":\"Jardim Imperial\",\"cidade\":\"Sinop\",\"estado\":\"MT\",\"created_at\":\"2026-06-16T06:05:45.000000Z\",\"updated_at\":\"2026-06-16T06:05:45.000000Z\"},\"responsibles\":[{\"id\":5,\"contact_id\":3,\"name\":\"Hugo Moreira\",\"email\":\"hugomoreirabarbosa2@gmail.com\",\"treatment\":\"Magn\\u00edfico\",\"position\":\"Sim\",\"department\":\"Isso\",\"created_at\":\"2026-06-16T06:05:45.000000Z\",\"updated_at\":\"2026-06-16T06:05:45.000000Z\"}]}],\"first_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/contacts?page=1\",\"from\":1,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/contacts?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\\/\\\/localhost\\\/api\\\/contacts?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/localhost\\\/api\\\/contacts\",\"per_page\":20,\"prev_page_url\":null,\"to\":3,\"total\":3}",
                             "name": ""
                         }
                     ]
@@ -580,7 +876,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"type\":\"PF\",\"doc\":\"bngzmiyvdljnik\",\"name\":\"h\",\"address\":{\"cep\":\"bngzmiyv\",\"logradouro\":\"architecto\",\"numero\":\"architecto\",\"bairro\":\"architecto\",\"cidade\":\"architecto\",\"estado\":\"ng\"},\"responsibles\":[{\"name\":\"architecto\",\"email\":\"zbailey@example.net\",\"treatment\":\"architecto\",\"position\":\"architecto\",\"department\":\"architecto\"}]}"
+                            "raw": "{\"type\":\"PJ\",\"doc\":\"bngzmiyvdljnik\",\"name\":\"h\",\"address\":{\"cep\":\"bngzmiyv\",\"logradouro\":\"architecto\",\"numero\":\"architecto\",\"bairro\":\"architecto\",\"cidade\":\"architecto\",\"estado\":\"ng\"},\"responsibles\":[{\"name\":\"architecto\",\"email\":\"zbailey@example.net\",\"treatment\":\"architecto\",\"position\":\"architecto\",\"department\":\"architecto\"}]}"
                         },
                         "description": ""
                     },
@@ -654,7 +950,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"id\":1,\"type\":\"PJ\",\"doc\":\"12345678000195\",\"name\":\"Empresa Teste LTDA\",\"address_id\":1,\"is_active\":false,\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:59:02.000000Z\",\"formatted_doc\":\"12.345.678\\\/0001-95\",\"address\":{\"id\":1,\"cep\":\"01310100\",\"logradouro\":\"Avenida Paulista\",\"numero\":\"1000\",\"bairro\":\"Bela Vista\",\"cidade\":\"Sao Paulo\",\"estado\":\"SP\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},\"responsibles\":[{\"id\":1,\"contact_id\":1,\"name\":\"Joao Silva\",\"email\":\"joao.silva@empresateste.com\",\"treatment\":null,\"position\":\"Diretor Executivo\",\"department\":\"Diretoria\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},{\"id\":2,\"contact_id\":1,\"name\":\"Maria Souza\",\"email\":\"maria.souza@empresateste.com\",\"treatment\":null,\"position\":\"Gerente Juridica\",\"department\":\"Juridico\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"}]}",
+                            "body": "{\"id\":1,\"type\":\"PJ\",\"doc\":\"12345678000195\",\"name\":\"Empresa Teste LTDA\",\"address_id\":1,\"is_active\":true,\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-18T04:39:45.000000Z\",\"formatted_doc\":\"12.345.678\\\/0001-95\",\"address\":{\"id\":1,\"cep\":\"01310100\",\"logradouro\":\"Avenida Paulista\",\"numero\":\"1000\",\"bairro\":\"Bela Vista\",\"cidade\":\"Sao Paulo\",\"estado\":\"SP\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},\"responsibles\":[{\"id\":1,\"contact_id\":1,\"name\":\"Joao Silva\",\"email\":\"joao.silva@empresateste.com\",\"treatment\":null,\"position\":\"Diretor Executivo\",\"department\":\"Diretoria\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},{\"id\":2,\"contact_id\":1,\"name\":\"Maria Souza\",\"email\":\"maria.souza@empresateste.com\",\"treatment\":null,\"position\":\"Gerente Juridica\",\"department\":\"Juridico\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"}]}",
                             "name": ""
                         }
                     ]
@@ -689,7 +985,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"type\":\"PJ\",\"doc\":\"bngzmiyvdljnik\",\"name\":\"h\",\"address\":{\"cep\":\"bngzmiyv\",\"logradouro\":\"architecto\",\"numero\":\"architecto\",\"bairro\":\"architecto\",\"cidade\":\"architecto\",\"estado\":\"ng\"},\"responsibles\":[{\"name\":\"architecto\",\"email\":\"zbailey@example.net\",\"treatment\":\"architecto\",\"position\":\"architecto\",\"department\":\"architecto\"}]}"
+                            "raw": "{\"type\":\"PF\",\"doc\":\"bngzmiyvdljnik\",\"name\":\"h\",\"address\":{\"cep\":\"bngzmiyv\",\"logradouro\":\"architecto\",\"numero\":\"architecto\",\"bairro\":\"architecto\",\"cidade\":\"architecto\",\"estado\":\"ng\"},\"responsibles\":[{\"name\":\"architecto\",\"email\":\"zbailey@example.net\",\"treatment\":\"architecto\",\"position\":\"architecto\",\"department\":\"architecto\"}]}"
                         },
                         "description": ""
                     },
@@ -745,7 +1041,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"activate\":true}"
+                            "raw": "{\"activate\":false}"
                         },
                         "description": ""
                     },
@@ -766,7 +1062,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"id\":1,\"type\":\"PJ\",\"doc\":\"12345678000195\",\"name\":\"Empresa Teste LTDA\",\"address_id\":1,\"is_active\":true,\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-18T04:39:45.000000Z\",\"formatted_doc\":\"12.345.678\\\/0001-95\",\"address\":{\"id\":1,\"cep\":\"01310100\",\"logradouro\":\"Avenida Paulista\",\"numero\":\"1000\",\"bairro\":\"Bela Vista\",\"cidade\":\"Sao Paulo\",\"estado\":\"SP\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},\"responsibles\":[{\"id\":1,\"contact_id\":1,\"name\":\"Joao Silva\",\"email\":\"joao.silva@empresateste.com\",\"treatment\":null,\"position\":\"Diretor Executivo\",\"department\":\"Diretoria\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},{\"id\":2,\"contact_id\":1,\"name\":\"Maria Souza\",\"email\":\"maria.souza@empresateste.com\",\"treatment\":null,\"position\":\"Gerente Juridica\",\"department\":\"Juridico\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"}]}",
+                            "body": "{\"id\":1,\"type\":\"PJ\",\"doc\":\"12345678000195\",\"name\":\"Empresa Teste LTDA\",\"address_id\":1,\"is_active\":false,\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-18T06:52:17.000000Z\",\"formatted_doc\":\"12.345.678\\\/0001-95\",\"address\":{\"id\":1,\"cep\":\"01310100\",\"logradouro\":\"Avenida Paulista\",\"numero\":\"1000\",\"bairro\":\"Bela Vista\",\"cidade\":\"Sao Paulo\",\"estado\":\"SP\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},\"responsibles\":[{\"id\":1,\"contact_id\":1,\"name\":\"Joao Silva\",\"email\":\"joao.silva@empresateste.com\",\"treatment\":null,\"position\":\"Diretor Executivo\",\"department\":\"Diretoria\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},{\"id\":2,\"contact_id\":1,\"name\":\"Maria Souza\",\"email\":\"maria.souza@empresateste.com\",\"treatment\":null,\"position\":\"Gerente Juridica\",\"department\":\"Juridico\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"}]}",
                             "name": ""
                         }
                     ]
@@ -1000,7 +1296,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"subject\":\"b\",\"destination_contact_id\":\"architecto\",\"priority\":\"LOW\",\"content\":\"architecto\",\"department\":\"n\",\"submit\":true}"
+                            "raw": "{\"subject\":\"b\",\"destination_contact_id\":\"architecto\",\"priority\":\"MEDIUM\",\"content\":\"architecto\",\"department\":\"n\",\"submit\":true}"
                         },
                         "description": ""
                     },
@@ -1056,7 +1352,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"status\":\"REJECTED\",\"reason\":\"architecto\",\"subject\":\"n\",\"priority\":\"HIGH\",\"content\":\"architecto\",\"department\":\"n\"}"
+                            "raw": "{\"status\":\"APPROVED\",\"reason\":\"architecto\",\"subject\":\"n\",\"priority\":\"HIGH\",\"content\":\"architecto\",\"department\":\"n\"}"
                         },
                         "description": ""
                     },
@@ -1175,7 +1471,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"current_page\":1,\"data\":[],\"first_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/oficio-templates?page=1\",\"from\":null,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/oficio-templates?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\\/\\\/localhost\\\/api\\\/oficio-templates?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/localhost\\\/api\\\/oficio-templates\",\"per_page\":20,\"prev_page_url\":null,\"to\":null,\"total\":0}",
+                            "body": "{\"current_page\":1,\"data\":[{\"id\":1,\"name\":\"b\",\"content\":\"architecto\",\"created_at\":\"2026-06-18T04:39:47.000000Z\",\"updated_at\":\"2026-06-18T04:39:47.000000Z\"}],\"first_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/oficio-templates?page=1\",\"from\":1,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/oficio-templates?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\\/\\\/localhost\\\/api\\\/oficio-templates?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/localhost\\\/api\\\/oficio-templates\",\"per_page\":20,\"prev_page_url\":null,\"to\":1,\"total\":1}",
                             "name": ""
                         }
                     ]
@@ -1223,7 +1519,7 @@
                                 }
                             ],
                             "code": 201,
-                            "body": "{\"name\":\"b\",\"content\":\"architecto\",\"updated_at\":\"2026-06-18T04:39:47.000000Z\",\"created_at\":\"2026-06-18T04:39:47.000000Z\",\"id\":1}",
+                            "body": "{\"name\":\"b\",\"content\":\"architecto\",\"updated_at\":\"2026-06-18T06:52:18.000000Z\",\"created_at\":\"2026-06-18T06:52:18.000000Z\",\"id\":2}",
                             "name": ""
                         }
                     ]
@@ -1377,7 +1673,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{}",
+                            "body": "{\"id\":1,\"statement_text\":\"architecto\",\"created_at\":\"2026-06-18T04:39:47.000000Z\",\"updated_at\":\"2026-06-18T04:39:47.000000Z\"}",
                             "name": ""
                         }
                     ]
@@ -1425,7 +1721,100 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"statement_text\":\"architecto\",\"updated_at\":\"2026-06-18T04:39:47.000000Z\",\"created_at\":\"2026-06-18T04:39:47.000000Z\",\"id\":1}",
+                            "body": "{\"id\":1,\"statement_text\":\"architecto\",\"created_at\":\"2026-06-18T04:39:47.000000Z\",\"updated_at\":\"2026-06-18T04:39:47.000000Z\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET api\/settings\/smtp",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/settings\/smtp",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/settings\/smtp"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"host\":null,\"port\":null,\"username\":null,\"from_name\":null,\"from_email\":null,\"use_tls\":false,\"has_password\":false}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "PUT api\/settings\/smtp",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/settings\/smtp",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/settings\/smtp"
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"host\":\"b\",\"port\":2,\"username\":\"g\",\"password\":\"|]|{+-\",\"from_name\":\"v\",\"from_email\":\"jdach@example.org\",\"use_tls\":false}"
+                        },
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 500,
+                            "body": "{\n    \"message\": \"Server Error\"\n}",
                             "name": ""
                         }
                     ]
@@ -1568,7 +1957,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"current_page\":1,\"data\":[],\"first_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/worker-logs?page=1\",\"from\":null,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/worker-logs?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\\/\\\/localhost\\\/api\\\/worker-logs?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/localhost\\\/api\\\/worker-logs\",\"per_page\":20,\"prev_page_url\":null,\"to\":null,\"total\":0}",
+                            "body": "{\"current_page\":1,\"data\":[{\"id\":1,\"correlation_id\":\"architecto\",\"code\":\"architecto\",\"message\":\"architecto\",\"status\":16,\"queue_name\":\"architecto\",\"event_type\":\"architecto\",\"metadata\":null,\"user_id\":\"architecto\",\"created_at\":\"2026-06-18T04:39:47.000000Z\",\"updated_at\":\"2026-06-18T04:39:47.000000Z\"}],\"first_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/worker-logs?page=1\",\"from\":1,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/worker-logs?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\\/\\\/localhost\\\/api\\\/worker-logs?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/localhost\\\/api\\\/worker-logs\",\"per_page\":20,\"prev_page_url\":null,\"to\":1,\"total\":1}",
                             "name": ""
                         }
                     ]
@@ -1616,7 +2005,7 @@
                                 }
                             ],
                             "code": 201,
-                            "body": "{\"correlation_id\":\"architecto\",\"code\":\"architecto\",\"message\":\"architecto\",\"status\":16,\"queue_name\":\"architecto\",\"event_type\":\"architecto\",\"metadata\":null,\"user_id\":\"architecto\",\"updated_at\":\"2026-06-18T04:39:47.000000Z\",\"created_at\":\"2026-06-18T04:39:47.000000Z\",\"id\":1}",
+                            "body": "{\"correlation_id\":\"architecto\",\"code\":\"architecto\",\"message\":\"architecto\",\"status\":16,\"queue_name\":\"architecto\",\"event_type\":\"architecto\",\"metadata\":null,\"user_id\":\"architecto\",\"updated_at\":\"2026-06-18T06:52:21.000000Z\",\"created_at\":\"2026-06-18T06:52:21.000000Z\",\"id\":2}",
                             "name": ""
                         }
                     ]

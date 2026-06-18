@@ -10,7 +10,7 @@ class UserService
 {
     public function list(): LengthAwarePaginator
     {
-        return User::where('is_dev', false)->paginate(20);
+        return User::with('position')->where('is_dev', false)->paginate(20);
     }
 
     public function getById(User $user): User

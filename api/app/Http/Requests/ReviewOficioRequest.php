@@ -10,7 +10,7 @@ class ReviewOficioRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can('sign-oficios');
     }
 
     public function rules(): array
