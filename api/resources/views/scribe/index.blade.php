@@ -577,7 +577,7 @@ fetch(url, {
 
 <span id="example-responses-POSTapi-auth-logout">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -589,7 +589,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;message&quot;: &quot;Logout realizado com sucesso.&quot;
 }</code>
  </pre>
     </span>
@@ -719,7 +719,7 @@ fetch(url, {
 
 <span id="example-responses-POSTapi-auth-logout-all">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -731,7 +731,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;message&quot;: &quot;Todos os tokens revogados.&quot;
 }</code>
  </pre>
     </span>
@@ -861,7 +861,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-auth-me">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -873,7 +873,16 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;id&quot;: 2,
+    &quot;name&quot;: &quot;Administrador&quot;,
+    &quot;email&quot;: &quot;admin@admin.com&quot;,
+    &quot;cpf&quot;: &quot;000.000.000-01&quot;,
+    &quot;position_id&quot;: null,
+    &quot;is_active&quot;: true,
+    &quot;is_dev&quot;: false,
+    &quot;last_login&quot;: null,
+    &quot;created_at&quot;: &quot;2026-06-16T05:55:44.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2026-06-16T05:55:44.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -1003,7 +1012,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-users">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -1015,7 +1024,51 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;current_page&quot;: 1,
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 2,
+            &quot;name&quot;: &quot;Administrador&quot;,
+            &quot;email&quot;: &quot;admin@admin.com&quot;,
+            &quot;cpf&quot;: &quot;000.000.000-01&quot;,
+            &quot;position_id&quot;: null,
+            &quot;is_active&quot;: true,
+            &quot;is_dev&quot;: false,
+            &quot;last_login&quot;: null,
+            &quot;created_at&quot;: &quot;2026-06-16T05:55:44.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2026-06-16T05:55:44.000000Z&quot;
+        }
+    ],
+    &quot;first_page_url&quot;: &quot;http://localhost/api/users?page=1&quot;,
+    &quot;from&quot;: 1,
+    &quot;last_page&quot;: 1,
+    &quot;last_page_url&quot;: &quot;http://localhost/api/users?page=1&quot;,
+    &quot;links&quot;: [
+        {
+            &quot;url&quot;: null,
+            &quot;label&quot;: &quot;&amp;laquo; Previous&quot;,
+            &quot;page&quot;: null,
+            &quot;active&quot;: false
+        },
+        {
+            &quot;url&quot;: &quot;http://localhost/api/users?page=1&quot;,
+            &quot;label&quot;: &quot;1&quot;,
+            &quot;page&quot;: 1,
+            &quot;active&quot;: true
+        },
+        {
+            &quot;url&quot;: null,
+            &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
+            &quot;page&quot;: null,
+            &quot;active&quot;: false
+        }
+    ],
+    &quot;next_page_url&quot;: null,
+    &quot;path&quot;: &quot;http://localhost/api/users&quot;,
+    &quot;per_page&quot;: 20,
+    &quot;prev_page_url&quot;: null,
+    &quot;to&quot;: 1,
+    &quot;total&quot;: 1
 }</code>
  </pre>
     </span>
@@ -1163,7 +1216,7 @@ fetch(url, {
 
 <span id="example-responses-POSTapi-users">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (422):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -1175,7 +1228,18 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;message&quot;: &quot;The cpf field format is invalid. (and 2 more errors)&quot;,
+    &quot;errors&quot;: {
+        &quot;cpf&quot;: [
+            &quot;The cpf field format is invalid.&quot;
+        ],
+        &quot;position_id&quot;: [
+            &quot;The selected position id is invalid.&quot;
+        ],
+        &quot;role&quot;: [
+            &quot;The selected role is invalid.&quot;
+        ]
+    }
 }</code>
  </pre>
     </span>
@@ -1378,7 +1442,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-users--id-">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (404):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -1390,7 +1454,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;message&quot;: &quot;&quot;
 }</code>
  </pre>
     </span>
@@ -1551,7 +1615,7 @@ fetch(url, {
 
 <span id="example-responses-PUTapi-users--id-">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (422):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -1563,7 +1627,18 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;message&quot;: &quot;The cpf field format is invalid. (and 2 more errors)&quot;,
+    &quot;errors&quot;: {
+        &quot;cpf&quot;: [
+            &quot;The cpf field format is invalid.&quot;
+        ],
+        &quot;position_id&quot;: [
+            &quot;The selected position id is invalid.&quot;
+        ],
+        &quot;role&quot;: [
+            &quot;The selected role is invalid.&quot;
+        ]
+    }
 }</code>
  </pre>
     </span>
@@ -1783,7 +1858,7 @@ fetch(url, {
 
 <span id="example-responses-DELETEapi-users--id-">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (404):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -1795,7 +1870,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;message&quot;: &quot;&quot;
 }</code>
  </pre>
     </span>
@@ -1938,7 +2013,7 @@ fetch(url, {
 
 <span id="example-responses-PATCHapi-users--user_id--restore">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (404):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -1950,7 +2025,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;message&quot;: &quot;&quot;
 }</code>
  </pre>
     </span>
@@ -2093,7 +2168,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-positions">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -2105,7 +2180,38 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;current_page&quot;: 1,
+    &quot;data&quot;: [],
+    &quot;first_page_url&quot;: &quot;http://localhost/api/positions?page=1&quot;,
+    &quot;from&quot;: null,
+    &quot;last_page&quot;: 1,
+    &quot;last_page_url&quot;: &quot;http://localhost/api/positions?page=1&quot;,
+    &quot;links&quot;: [
+        {
+            &quot;url&quot;: null,
+            &quot;label&quot;: &quot;&amp;laquo; Previous&quot;,
+            &quot;page&quot;: null,
+            &quot;active&quot;: false
+        },
+        {
+            &quot;url&quot;: &quot;http://localhost/api/positions?page=1&quot;,
+            &quot;label&quot;: &quot;1&quot;,
+            &quot;page&quot;: 1,
+            &quot;active&quot;: true
+        },
+        {
+            &quot;url&quot;: null,
+            &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
+            &quot;page&quot;: null,
+            &quot;active&quot;: false
+        }
+    ],
+    &quot;next_page_url&quot;: null,
+    &quot;path&quot;: &quot;http://localhost/api/positions&quot;,
+    &quot;per_page&quot;: 20,
+    &quot;prev_page_url&quot;: null,
+    &quot;to&quot;: null,
+    &quot;total&quot;: 0
 }</code>
  </pre>
     </span>
@@ -2247,7 +2353,7 @@ fetch(url, {
 
 <span id="example-responses-POSTapi-positions">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (201):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -2259,7 +2365,12 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;name&quot;: &quot;b&quot;,
+    &quot;description&quot;: &quot;Et animi quos velit et fugiat.&quot;,
+    &quot;is_active&quot;: true,
+    &quot;updated_at&quot;: &quot;2026-06-18T06:52:16.000000Z&quot;,
+    &quot;created_at&quot;: &quot;2026-06-18T06:52:16.000000Z&quot;,
+    &quot;id&quot;: 1
 }</code>
  </pre>
     </span>
@@ -2409,7 +2520,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/positions/16" \
+    --get "http://localhost/api/positions/1" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -2417,7 +2528,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/positions/16"
+    "http://localhost/api/positions/1"
 );
 
 const headers = {
@@ -2436,7 +2547,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-positions--id-">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -2448,7 +2559,12 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;id&quot;: 1,
+    &quot;name&quot;: &quot;b&quot;,
+    &quot;description&quot;: &quot;Et animi quos velit et fugiat.&quot;,
+    &quot;is_active&quot;: true,
+    &quot;created_at&quot;: &quot;2026-06-18T06:52:16.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2026-06-18T06:52:16.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -2543,10 +2659,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-positions--id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the position. Example: <code>16</code></p>
+<p>The ID of the position. Example: <code>1</code></p>
             </div>
                     </form>
 
@@ -2564,7 +2680,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost/api/positions/16" \
+    "http://localhost/api/positions/1" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -2578,7 +2694,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/positions/16"
+    "http://localhost/api/positions/1"
 );
 
 const headers = {
@@ -2603,7 +2719,7 @@ fetch(url, {
 
 <span id="example-responses-PUTapi-positions--id-">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -2615,7 +2731,12 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;id&quot;: 1,
+    &quot;name&quot;: &quot;b&quot;,
+    &quot;description&quot;: &quot;Et animi quos velit et fugiat.&quot;,
+    &quot;is_active&quot;: true,
+    &quot;created_at&quot;: &quot;2026-06-18T06:52:16.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2026-06-18T06:52:16.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -2714,10 +2835,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="PUTapi-positions--id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the position. Example: <code>16</code></p>
+<p>The ID of the position. Example: <code>1</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -2782,7 +2903,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost/api/positions/16" \
+    "http://localhost/api/positions/1" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -2790,7 +2911,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/positions/16"
+    "http://localhost/api/positions/1"
 );
 
 const headers = {
@@ -2809,20 +2930,16 @@ fetch(url, {
 
 <span id="example-responses-DELETEapi-positions--id-">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (204):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
 access-control-allow-origin: *
  </code></pre></details>         <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
-}</code>
+<code>Empty response</code>
  </pre>
     </span>
 <span id="execution-results-DELETEapi-positions--id-" hidden>
@@ -2916,10 +3033,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="DELETEapi-positions--id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the position. Example: <code>16</code></p>
+<p>The ID of the position. Example: <code>1</code></p>
             </div>
                     </form>
 
@@ -2964,7 +3081,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-contacts">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -2976,7 +3093,166 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;current_page&quot;: 1,
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 1,
+            &quot;type&quot;: &quot;PJ&quot;,
+            &quot;doc&quot;: &quot;12345678000195&quot;,
+            &quot;name&quot;: &quot;Empresa Teste LTDA&quot;,
+            &quot;address_id&quot;: 1,
+            &quot;is_active&quot;: true,
+            &quot;created_at&quot;: &quot;2026-06-16T05:57:37.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2026-06-18T04:39:45.000000Z&quot;,
+            &quot;formatted_doc&quot;: &quot;12.345.678/0001-95&quot;,
+            &quot;address&quot;: {
+                &quot;id&quot;: 1,
+                &quot;cep&quot;: &quot;01310100&quot;,
+                &quot;logradouro&quot;: &quot;Avenida Paulista&quot;,
+                &quot;numero&quot;: &quot;1000&quot;,
+                &quot;bairro&quot;: &quot;Bela Vista&quot;,
+                &quot;cidade&quot;: &quot;Sao Paulo&quot;,
+                &quot;estado&quot;: &quot;SP&quot;,
+                &quot;created_at&quot;: &quot;2026-06-16T05:57:37.000000Z&quot;,
+                &quot;updated_at&quot;: &quot;2026-06-16T05:57:37.000000Z&quot;
+            },
+            &quot;responsibles&quot;: [
+                {
+                    &quot;id&quot;: 1,
+                    &quot;contact_id&quot;: 1,
+                    &quot;name&quot;: &quot;Joao Silva&quot;,
+                    &quot;email&quot;: &quot;joao.silva@empresateste.com&quot;,
+                    &quot;treatment&quot;: null,
+                    &quot;position&quot;: &quot;Diretor Executivo&quot;,
+                    &quot;department&quot;: &quot;Diretoria&quot;,
+                    &quot;created_at&quot;: &quot;2026-06-16T05:57:37.000000Z&quot;,
+                    &quot;updated_at&quot;: &quot;2026-06-16T05:57:37.000000Z&quot;
+                },
+                {
+                    &quot;id&quot;: 2,
+                    &quot;contact_id&quot;: 1,
+                    &quot;name&quot;: &quot;Maria Souza&quot;,
+                    &quot;email&quot;: &quot;maria.souza@empresateste.com&quot;,
+                    &quot;treatment&quot;: null,
+                    &quot;position&quot;: &quot;Gerente Juridica&quot;,
+                    &quot;department&quot;: &quot;Juridico&quot;,
+                    &quot;created_at&quot;: &quot;2026-06-16T05:57:37.000000Z&quot;,
+                    &quot;updated_at&quot;: &quot;2026-06-16T05:57:37.000000Z&quot;
+                }
+            ]
+        },
+        {
+            &quot;id&quot;: 2,
+            &quot;type&quot;: &quot;PJ&quot;,
+            &quot;doc&quot;: &quot;98765432000100&quot;,
+            &quot;name&quot;: &quot;Nova Empresa LTDA&quot;,
+            &quot;address_id&quot;: 2,
+            &quot;is_active&quot;: true,
+            &quot;created_at&quot;: &quot;2026-06-16T05:59:19.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2026-06-16T05:59:19.000000Z&quot;,
+            &quot;formatted_doc&quot;: &quot;98.765.432/0001-00&quot;,
+            &quot;address&quot;: {
+                &quot;id&quot;: 2,
+                &quot;cep&quot;: &quot;20040020&quot;,
+                &quot;logradouro&quot;: &quot;Avenida Rio Branco&quot;,
+                &quot;numero&quot;: &quot;45&quot;,
+                &quot;bairro&quot;: &quot;Centro&quot;,
+                &quot;cidade&quot;: &quot;Rio de Janeiro&quot;,
+                &quot;estado&quot;: &quot;RJ&quot;,
+                &quot;created_at&quot;: &quot;2026-06-16T05:59:19.000000Z&quot;,
+                &quot;updated_at&quot;: &quot;2026-06-16T05:59:19.000000Z&quot;
+            },
+            &quot;responsibles&quot;: [
+                {
+                    &quot;id&quot;: 3,
+                    &quot;contact_id&quot;: 2,
+                    &quot;name&quot;: &quot;Joao Silva&quot;,
+                    &quot;email&quot;: &quot;joao.silva@novaempresa.com&quot;,
+                    &quot;treatment&quot;: &quot;Sr.&quot;,
+                    &quot;position&quot;: &quot;Diretor Executivo&quot;,
+                    &quot;department&quot;: &quot;Diretoria&quot;,
+                    &quot;created_at&quot;: &quot;2026-06-16T05:59:19.000000Z&quot;,
+                    &quot;updated_at&quot;: &quot;2026-06-16T05:59:19.000000Z&quot;
+                },
+                {
+                    &quot;id&quot;: 4,
+                    &quot;contact_id&quot;: 2,
+                    &quot;name&quot;: &quot;Maria Souza&quot;,
+                    &quot;email&quot;: &quot;maria.souza@novaempresa.com&quot;,
+                    &quot;treatment&quot;: &quot;Dra.&quot;,
+                    &quot;position&quot;: &quot;Gerente Juridica&quot;,
+                    &quot;department&quot;: &quot;Juridico&quot;,
+                    &quot;created_at&quot;: &quot;2026-06-16T05:59:19.000000Z&quot;,
+                    &quot;updated_at&quot;: &quot;2026-06-16T05:59:19.000000Z&quot;
+                }
+            ]
+        },
+        {
+            &quot;id&quot;: 3,
+            &quot;type&quot;: &quot;PF&quot;,
+            &quot;doc&quot;: &quot;04118035146&quot;,
+            &quot;name&quot;: &quot;Hugo Moreira Barbosa&quot;,
+            &quot;address_id&quot;: 3,
+            &quot;is_active&quot;: true,
+            &quot;created_at&quot;: &quot;2026-06-16T06:05:45.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2026-06-16T06:05:45.000000Z&quot;,
+            &quot;formatted_doc&quot;: &quot;041.180.351-46&quot;,
+            &quot;address&quot;: {
+                &quot;id&quot;: 3,
+                &quot;cep&quot;: &quot;93848239&quot;,
+                &quot;logradouro&quot;: &quot;Avenida dos Ing&aacute;s&quot;,
+                &quot;numero&quot;: &quot;2504&quot;,
+                &quot;bairro&quot;: &quot;Jardim Imperial&quot;,
+                &quot;cidade&quot;: &quot;Sinop&quot;,
+                &quot;estado&quot;: &quot;MT&quot;,
+                &quot;created_at&quot;: &quot;2026-06-16T06:05:45.000000Z&quot;,
+                &quot;updated_at&quot;: &quot;2026-06-16T06:05:45.000000Z&quot;
+            },
+            &quot;responsibles&quot;: [
+                {
+                    &quot;id&quot;: 5,
+                    &quot;contact_id&quot;: 3,
+                    &quot;name&quot;: &quot;Hugo Moreira&quot;,
+                    &quot;email&quot;: &quot;hugomoreirabarbosa2@gmail.com&quot;,
+                    &quot;treatment&quot;: &quot;Magn&iacute;fico&quot;,
+                    &quot;position&quot;: &quot;Sim&quot;,
+                    &quot;department&quot;: &quot;Isso&quot;,
+                    &quot;created_at&quot;: &quot;2026-06-16T06:05:45.000000Z&quot;,
+                    &quot;updated_at&quot;: &quot;2026-06-16T06:05:45.000000Z&quot;
+                }
+            ]
+        }
+    ],
+    &quot;first_page_url&quot;: &quot;http://localhost/api/contacts?page=1&quot;,
+    &quot;from&quot;: 1,
+    &quot;last_page&quot;: 1,
+    &quot;last_page_url&quot;: &quot;http://localhost/api/contacts?page=1&quot;,
+    &quot;links&quot;: [
+        {
+            &quot;url&quot;: null,
+            &quot;label&quot;: &quot;&amp;laquo; Previous&quot;,
+            &quot;page&quot;: null,
+            &quot;active&quot;: false
+        },
+        {
+            &quot;url&quot;: &quot;http://localhost/api/contacts?page=1&quot;,
+            &quot;label&quot;: &quot;1&quot;,
+            &quot;page&quot;: 1,
+            &quot;active&quot;: true
+        },
+        {
+            &quot;url&quot;: null,
+            &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
+            &quot;page&quot;: null,
+            &quot;active&quot;: false
+        }
+    ],
+    &quot;next_page_url&quot;: null,
+    &quot;path&quot;: &quot;http://localhost/api/contacts&quot;,
+    &quot;per_page&quot;: 20,
+    &quot;prev_page_url&quot;: null,
+    &quot;to&quot;: 3,
+    &quot;total&quot;: 3
 }</code>
  </pre>
     </span>
@@ -3152,7 +3428,7 @@ fetch(url, {
 
 <span id="example-responses-POSTapi-contacts">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (500):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -3164,7 +3440,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;message&quot;: &quot;Server Error&quot;
 }</code>
  </pre>
     </span>
@@ -3462,7 +3738,7 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/contacts/architecto" \
+    --get "http://localhost/api/contacts/1" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -3470,7 +3746,7 @@ Must be one of:
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/contacts/architecto"
+    "http://localhost/api/contacts/1"
 );
 
 const headers = {
@@ -3489,7 +3765,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-contacts--id-">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -3501,7 +3777,50 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;id&quot;: 1,
+    &quot;type&quot;: &quot;PJ&quot;,
+    &quot;doc&quot;: &quot;12345678000195&quot;,
+    &quot;name&quot;: &quot;Empresa Teste LTDA&quot;,
+    &quot;address_id&quot;: 1,
+    &quot;is_active&quot;: true,
+    &quot;created_at&quot;: &quot;2026-06-16T05:57:37.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2026-06-18T04:39:45.000000Z&quot;,
+    &quot;formatted_doc&quot;: &quot;12.345.678/0001-95&quot;,
+    &quot;address&quot;: {
+        &quot;id&quot;: 1,
+        &quot;cep&quot;: &quot;01310100&quot;,
+        &quot;logradouro&quot;: &quot;Avenida Paulista&quot;,
+        &quot;numero&quot;: &quot;1000&quot;,
+        &quot;bairro&quot;: &quot;Bela Vista&quot;,
+        &quot;cidade&quot;: &quot;Sao Paulo&quot;,
+        &quot;estado&quot;: &quot;SP&quot;,
+        &quot;created_at&quot;: &quot;2026-06-16T05:57:37.000000Z&quot;,
+        &quot;updated_at&quot;: &quot;2026-06-16T05:57:37.000000Z&quot;
+    },
+    &quot;responsibles&quot;: [
+        {
+            &quot;id&quot;: 1,
+            &quot;contact_id&quot;: 1,
+            &quot;name&quot;: &quot;Joao Silva&quot;,
+            &quot;email&quot;: &quot;joao.silva@empresateste.com&quot;,
+            &quot;treatment&quot;: null,
+            &quot;position&quot;: &quot;Diretor Executivo&quot;,
+            &quot;department&quot;: &quot;Diretoria&quot;,
+            &quot;created_at&quot;: &quot;2026-06-16T05:57:37.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2026-06-16T05:57:37.000000Z&quot;
+        },
+        {
+            &quot;id&quot;: 2,
+            &quot;contact_id&quot;: 1,
+            &quot;name&quot;: &quot;Maria Souza&quot;,
+            &quot;email&quot;: &quot;maria.souza@empresateste.com&quot;,
+            &quot;treatment&quot;: null,
+            &quot;position&quot;: &quot;Gerente Juridica&quot;,
+            &quot;department&quot;: &quot;Juridico&quot;,
+            &quot;created_at&quot;: &quot;2026-06-16T05:57:37.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2026-06-16T05:57:37.000000Z&quot;
+        }
+    ]
 }</code>
  </pre>
     </span>
@@ -3591,15 +3910,15 @@ You can check the Dev Tools console for debugging information.</code></pre>
                         <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
+<small>integer</small>&nbsp;
  &nbsp;
  &nbsp;
-                <input type="text" style="display: none"
-                              name="id"                data-endpoint="GETapi-contacts--id-"
-               value="architecto"
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="GETapi-contacts--id-"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the contact. Example: <code>architecto</code></p>
+<p>The ID of the contact. Example: <code>1</code></p>
             </div>
                     </form>
 
@@ -3617,12 +3936,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost/api/contacts/architecto" \
+    "http://localhost/api/contacts/1" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"type\": \"PJ\",
+    \"type\": \"PF\",
     \"doc\": \"bngzmiyvdljnik\",
     \"name\": \"h\",
     \"address\": {
@@ -3648,7 +3967,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/contacts/architecto"
+    "http://localhost/api/contacts/1"
 );
 
 const headers = {
@@ -3658,7 +3977,7 @@ const headers = {
 };
 
 let body = {
-    "type": "PJ",
+    "type": "PF",
     "doc": "bngzmiyvdljnik",
     "name": "h",
     "address": {
@@ -3690,7 +4009,7 @@ fetch(url, {
 
 <span id="example-responses-PUTapi-contacts--id-">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (500):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -3702,7 +4021,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;message&quot;: &quot;Server Error&quot;
 }</code>
  </pre>
     </span>
@@ -3796,15 +4115,15 @@ You can check the Dev Tools console for debugging information.</code></pre>
                         <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
+<small>integer</small>&nbsp;
  &nbsp;
  &nbsp;
-                <input type="text" style="display: none"
-                              name="id"                data-endpoint="PUTapi-contacts--id-"
-               value="architecto"
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="PUTapi-contacts--id-"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the contact. Example: <code>architecto</code></p>
+<p>The ID of the contact. Example: <code>1</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -3814,10 +4133,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="type"                data-endpoint="PUTapi-contacts--id-"
-               value="PJ"
+               value="PF"
                data-component="body">
     <br>
-<p>Example: <code>PJ</code></p>
+<p>Example: <code>PF</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>PF</code></li> <li><code>PJ</code></li></ul>
         </div>
@@ -4017,7 +4336,7 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost/api/contacts/architecto" \
+    "http://localhost/api/contacts/1" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -4029,7 +4348,7 @@ Must be one of:
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/contacts/architecto"
+    "http://localhost/api/contacts/1"
 );
 
 const headers = {
@@ -4052,7 +4371,7 @@ fetch(url, {
 
 <span id="example-responses-DELETEapi-contacts--id-">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -4064,7 +4383,50 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;id&quot;: 1,
+    &quot;type&quot;: &quot;PJ&quot;,
+    &quot;doc&quot;: &quot;12345678000195&quot;,
+    &quot;name&quot;: &quot;Empresa Teste LTDA&quot;,
+    &quot;address_id&quot;: 1,
+    &quot;is_active&quot;: false,
+    &quot;created_at&quot;: &quot;2026-06-16T05:57:37.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2026-06-18T06:52:17.000000Z&quot;,
+    &quot;formatted_doc&quot;: &quot;12.345.678/0001-95&quot;,
+    &quot;address&quot;: {
+        &quot;id&quot;: 1,
+        &quot;cep&quot;: &quot;01310100&quot;,
+        &quot;logradouro&quot;: &quot;Avenida Paulista&quot;,
+        &quot;numero&quot;: &quot;1000&quot;,
+        &quot;bairro&quot;: &quot;Bela Vista&quot;,
+        &quot;cidade&quot;: &quot;Sao Paulo&quot;,
+        &quot;estado&quot;: &quot;SP&quot;,
+        &quot;created_at&quot;: &quot;2026-06-16T05:57:37.000000Z&quot;,
+        &quot;updated_at&quot;: &quot;2026-06-16T05:57:37.000000Z&quot;
+    },
+    &quot;responsibles&quot;: [
+        {
+            &quot;id&quot;: 1,
+            &quot;contact_id&quot;: 1,
+            &quot;name&quot;: &quot;Joao Silva&quot;,
+            &quot;email&quot;: &quot;joao.silva@empresateste.com&quot;,
+            &quot;treatment&quot;: null,
+            &quot;position&quot;: &quot;Diretor Executivo&quot;,
+            &quot;department&quot;: &quot;Diretoria&quot;,
+            &quot;created_at&quot;: &quot;2026-06-16T05:57:37.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2026-06-16T05:57:37.000000Z&quot;
+        },
+        {
+            &quot;id&quot;: 2,
+            &quot;contact_id&quot;: 1,
+            &quot;name&quot;: &quot;Maria Souza&quot;,
+            &quot;email&quot;: &quot;maria.souza@empresateste.com&quot;,
+            &quot;treatment&quot;: null,
+            &quot;position&quot;: &quot;Gerente Juridica&quot;,
+            &quot;department&quot;: &quot;Juridico&quot;,
+            &quot;created_at&quot;: &quot;2026-06-16T05:57:37.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2026-06-16T05:57:37.000000Z&quot;
+        }
+    ]
 }</code>
  </pre>
     </span>
@@ -4154,15 +4516,15 @@ You can check the Dev Tools console for debugging information.</code></pre>
                         <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
+<small>integer</small>&nbsp;
  &nbsp;
  &nbsp;
-                <input type="text" style="display: none"
-                              name="id"                data-endpoint="DELETEapi-contacts--id-"
-               value="architecto"
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="DELETEapi-contacts--id-"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the contact. Example: <code>architecto</code></p>
+<p>The ID of the contact. Example: <code>1</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -4203,7 +4565,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/contacts/architecto/responsibles" \
+    --get "http://localhost/api/contacts/1/responsibles" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -4211,7 +4573,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/contacts/architecto/responsibles"
+    "http://localhost/api/contacts/1/responsibles"
 );
 
 const headers = {
@@ -4230,7 +4592,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-contacts--id--responsibles">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -4241,9 +4603,30 @@ content-type: application/json
 access-control-allow-origin: *
  </code></pre></details>         <pre>
 
-<code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
-}</code>
+<code class="language-json" style="max-height: 300px;">[
+    {
+        &quot;id&quot;: 1,
+        &quot;contact_id&quot;: 1,
+        &quot;name&quot;: &quot;Joao Silva&quot;,
+        &quot;email&quot;: &quot;joao.silva@empresateste.com&quot;,
+        &quot;treatment&quot;: null,
+        &quot;position&quot;: &quot;Diretor Executivo&quot;,
+        &quot;department&quot;: &quot;Diretoria&quot;,
+        &quot;created_at&quot;: &quot;2026-06-16T05:57:37.000000Z&quot;,
+        &quot;updated_at&quot;: &quot;2026-06-16T05:57:37.000000Z&quot;
+    },
+    {
+        &quot;id&quot;: 2,
+        &quot;contact_id&quot;: 1,
+        &quot;name&quot;: &quot;Maria Souza&quot;,
+        &quot;email&quot;: &quot;maria.souza@empresateste.com&quot;,
+        &quot;treatment&quot;: null,
+        &quot;position&quot;: &quot;Gerente Juridica&quot;,
+        &quot;department&quot;: &quot;Juridico&quot;,
+        &quot;created_at&quot;: &quot;2026-06-16T05:57:37.000000Z&quot;,
+        &quot;updated_at&quot;: &quot;2026-06-16T05:57:37.000000Z&quot;
+    }
+]</code>
  </pre>
     </span>
 <span id="execution-results-GETapi-contacts--id--responsibles" hidden>
@@ -4332,15 +4715,15 @@ You can check the Dev Tools console for debugging information.</code></pre>
                         <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
+<small>integer</small>&nbsp;
  &nbsp;
  &nbsp;
-                <input type="text" style="display: none"
-                              name="id"                data-endpoint="GETapi-contacts--id--responsibles"
-               value="architecto"
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="GETapi-contacts--id--responsibles"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the contact. Example: <code>architecto</code></p>
+<p>The ID of the contact. Example: <code>1</code></p>
             </div>
                     </form>
 
@@ -4385,7 +4768,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-oficios">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -4397,7 +4780,145 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;current_page&quot;: 1,
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 1,
+            &quot;number&quot;: &quot;001/2026&quot;,
+            &quot;subject&quot;: &quot;sdghsdhsd&quot;,
+            &quot;author_id&quot;: 1,
+            &quot;destination_contact_id&quot;: 3,
+            &quot;priority&quot;: &quot;MEDIUM&quot;,
+            &quot;content&quot;: &quot;bvkgtfukgliygh&quot;,
+            &quot;department&quot;: null,
+            &quot;status&quot;: &quot;DRAFT&quot;,
+            &quot;created_at&quot;: &quot;2026-06-16T06:15:16.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2026-06-16T06:15:16.000000Z&quot;,
+            &quot;destination_contact&quot;: {
+                &quot;id&quot;: 3,
+                &quot;type&quot;: &quot;PF&quot;,
+                &quot;doc&quot;: &quot;04118035146&quot;,
+                &quot;name&quot;: &quot;Hugo Moreira Barbosa&quot;,
+                &quot;address_id&quot;: 3,
+                &quot;is_active&quot;: true,
+                &quot;created_at&quot;: &quot;2026-06-16T06:05:45.000000Z&quot;,
+                &quot;updated_at&quot;: &quot;2026-06-16T06:05:45.000000Z&quot;,
+                &quot;formatted_doc&quot;: &quot;041.180.351-46&quot;
+            },
+            &quot;responsibles&quot;: [
+                {
+                    &quot;id&quot;: 5,
+                    &quot;contact_id&quot;: 3,
+                    &quot;name&quot;: &quot;Hugo Moreira&quot;,
+                    &quot;email&quot;: &quot;hugomoreirabarbosa2@gmail.com&quot;,
+                    &quot;treatment&quot;: &quot;Magn&iacute;fico&quot;,
+                    &quot;position&quot;: &quot;Sim&quot;,
+                    &quot;department&quot;: &quot;Isso&quot;,
+                    &quot;created_at&quot;: &quot;2026-06-16T06:05:45.000000Z&quot;,
+                    &quot;updated_at&quot;: &quot;2026-06-16T06:05:45.000000Z&quot;,
+                    &quot;pivot&quot;: {
+                        &quot;oficio_id&quot;: 1,
+                        &quot;responsible_id&quot;: 5
+                    }
+                }
+            ],
+            &quot;author&quot;: {
+                &quot;id&quot;: 1,
+                &quot;name&quot;: &quot;Dev&quot;,
+                &quot;email&quot;: &quot;dev@dev.com&quot;,
+                &quot;cpf&quot;: &quot;000.000.000-00&quot;,
+                &quot;position_id&quot;: null,
+                &quot;is_active&quot;: true,
+                &quot;is_dev&quot;: true,
+                &quot;last_login&quot;: &quot;2026-06-16T06:04:13.000000Z&quot;,
+                &quot;created_at&quot;: &quot;2026-06-16T05:55:44.000000Z&quot;,
+                &quot;updated_at&quot;: &quot;2026-06-16T06:04:13.000000Z&quot;
+            }
+        },
+        {
+            &quot;id&quot;: 2,
+            &quot;number&quot;: &quot;002/2026&quot;,
+            &quot;subject&quot;: &quot;sdghsdhsd&quot;,
+            &quot;author_id&quot;: 1,
+            &quot;destination_contact_id&quot;: 3,
+            &quot;priority&quot;: &quot;LOW&quot;,
+            &quot;content&quot;: &quot;gkugvugyhvhu&quot;,
+            &quot;department&quot;: null,
+            &quot;status&quot;: &quot;DRAFT&quot;,
+            &quot;created_at&quot;: &quot;2026-06-16T06:18:45.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2026-06-16T06:18:45.000000Z&quot;,
+            &quot;destination_contact&quot;: {
+                &quot;id&quot;: 3,
+                &quot;type&quot;: &quot;PF&quot;,
+                &quot;doc&quot;: &quot;04118035146&quot;,
+                &quot;name&quot;: &quot;Hugo Moreira Barbosa&quot;,
+                &quot;address_id&quot;: 3,
+                &quot;is_active&quot;: true,
+                &quot;created_at&quot;: &quot;2026-06-16T06:05:45.000000Z&quot;,
+                &quot;updated_at&quot;: &quot;2026-06-16T06:05:45.000000Z&quot;,
+                &quot;formatted_doc&quot;: &quot;041.180.351-46&quot;
+            },
+            &quot;responsibles&quot;: [
+                {
+                    &quot;id&quot;: 5,
+                    &quot;contact_id&quot;: 3,
+                    &quot;name&quot;: &quot;Hugo Moreira&quot;,
+                    &quot;email&quot;: &quot;hugomoreirabarbosa2@gmail.com&quot;,
+                    &quot;treatment&quot;: &quot;Magn&iacute;fico&quot;,
+                    &quot;position&quot;: &quot;Sim&quot;,
+                    &quot;department&quot;: &quot;Isso&quot;,
+                    &quot;created_at&quot;: &quot;2026-06-16T06:05:45.000000Z&quot;,
+                    &quot;updated_at&quot;: &quot;2026-06-16T06:05:45.000000Z&quot;,
+                    &quot;pivot&quot;: {
+                        &quot;oficio_id&quot;: 2,
+                        &quot;responsible_id&quot;: 5
+                    }
+                }
+            ],
+            &quot;author&quot;: {
+                &quot;id&quot;: 1,
+                &quot;name&quot;: &quot;Dev&quot;,
+                &quot;email&quot;: &quot;dev@dev.com&quot;,
+                &quot;cpf&quot;: &quot;000.000.000-00&quot;,
+                &quot;position_id&quot;: null,
+                &quot;is_active&quot;: true,
+                &quot;is_dev&quot;: true,
+                &quot;last_login&quot;: &quot;2026-06-16T06:04:13.000000Z&quot;,
+                &quot;created_at&quot;: &quot;2026-06-16T05:55:44.000000Z&quot;,
+                &quot;updated_at&quot;: &quot;2026-06-16T06:04:13.000000Z&quot;
+            }
+        }
+    ],
+    &quot;first_page_url&quot;: &quot;http://localhost/api/oficios?page=1&quot;,
+    &quot;from&quot;: 1,
+    &quot;last_page&quot;: 1,
+    &quot;last_page_url&quot;: &quot;http://localhost/api/oficios?page=1&quot;,
+    &quot;links&quot;: [
+        {
+            &quot;url&quot;: null,
+            &quot;label&quot;: &quot;&amp;laquo; Previous&quot;,
+            &quot;page&quot;: null,
+            &quot;active&quot;: false
+        },
+        {
+            &quot;url&quot;: &quot;http://localhost/api/oficios?page=1&quot;,
+            &quot;label&quot;: &quot;1&quot;,
+            &quot;page&quot;: 1,
+            &quot;active&quot;: true
+        },
+        {
+            &quot;url&quot;: null,
+            &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
+            &quot;page&quot;: null,
+            &quot;active&quot;: false
+        }
+    ],
+    &quot;next_page_url&quot;: null,
+    &quot;path&quot;: &quot;http://localhost/api/oficios&quot;,
+    &quot;per_page&quot;: 20,
+    &quot;prev_page_url&quot;: null,
+    &quot;to&quot;: 2,
+    &quot;total&quot;: 2
 }</code>
  </pre>
     </span>
@@ -4507,7 +5028,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"subject\": \"b\",
     \"destination_contact_id\": \"architecto\",
-    \"priority\": \"LOW\",
+    \"priority\": \"MEDIUM\",
     \"content\": \"architecto\",
     \"department\": \"n\"
 }"
@@ -4528,7 +5049,7 @@ const headers = {
 let body = {
     "subject": "b",
     "destination_contact_id": "architecto",
-    "priority": "LOW",
+    "priority": "MEDIUM",
     "content": "architecto",
     "department": "n"
 };
@@ -4543,7 +5064,7 @@ fetch(url, {
 
 <span id="example-responses-POSTapi-oficios">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (422):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -4555,7 +5076,15 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;message&quot;: &quot;The selected destination contact id is invalid. (and 1 more error)&quot;,
+    &quot;errors&quot;: {
+        &quot;destination_contact_id&quot;: [
+            &quot;The selected destination contact id is invalid.&quot;
+        ],
+        &quot;responsibles&quot;: [
+            &quot;The responsibles field is required.&quot;
+        ]
+    }
 }</code>
  </pre>
     </span>
@@ -4674,10 +5203,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="priority"                data-endpoint="POSTapi-oficios"
-               value="LOW"
+               value="MEDIUM"
                data-component="body">
     <br>
-<p>Example: <code>LOW</code></p>
+<p>Example: <code>MEDIUM</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>LOW</code></li> <li><code>MEDIUM</code></li> <li><code>HIGH</code></li> <li><code>URGENT</code></li></ul>
         </div>
@@ -4762,7 +5291,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-oficios--id-">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -4774,7 +5303,58 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;id&quot;: 1,
+    &quot;number&quot;: &quot;001/2026&quot;,
+    &quot;subject&quot;: &quot;sdghsdhsd&quot;,
+    &quot;author_id&quot;: 1,
+    &quot;destination_contact_id&quot;: 3,
+    &quot;priority&quot;: &quot;MEDIUM&quot;,
+    &quot;content&quot;: &quot;bvkgtfukgliygh&quot;,
+    &quot;department&quot;: null,
+    &quot;status&quot;: &quot;DRAFT&quot;,
+    &quot;created_at&quot;: &quot;2026-06-16T06:15:16.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2026-06-16T06:15:16.000000Z&quot;,
+    &quot;destination_contact&quot;: {
+        &quot;id&quot;: 3,
+        &quot;type&quot;: &quot;PF&quot;,
+        &quot;doc&quot;: &quot;04118035146&quot;,
+        &quot;name&quot;: &quot;Hugo Moreira Barbosa&quot;,
+        &quot;address_id&quot;: 3,
+        &quot;is_active&quot;: true,
+        &quot;created_at&quot;: &quot;2026-06-16T06:05:45.000000Z&quot;,
+        &quot;updated_at&quot;: &quot;2026-06-16T06:05:45.000000Z&quot;,
+        &quot;formatted_doc&quot;: &quot;041.180.351-46&quot;
+    },
+    &quot;responsibles&quot;: [
+        {
+            &quot;id&quot;: 5,
+            &quot;contact_id&quot;: 3,
+            &quot;name&quot;: &quot;Hugo Moreira&quot;,
+            &quot;email&quot;: &quot;hugomoreirabarbosa2@gmail.com&quot;,
+            &quot;treatment&quot;: &quot;Magn&iacute;fico&quot;,
+            &quot;position&quot;: &quot;Sim&quot;,
+            &quot;department&quot;: &quot;Isso&quot;,
+            &quot;created_at&quot;: &quot;2026-06-16T06:05:45.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2026-06-16T06:05:45.000000Z&quot;,
+            &quot;pivot&quot;: {
+                &quot;oficio_id&quot;: 1,
+                &quot;responsible_id&quot;: 5
+            }
+        }
+    ],
+    &quot;author&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;Dev&quot;,
+        &quot;email&quot;: &quot;dev@dev.com&quot;,
+        &quot;cpf&quot;: &quot;000.000.000-00&quot;,
+        &quot;position_id&quot;: null,
+        &quot;is_active&quot;: true,
+        &quot;is_dev&quot;: true,
+        &quot;last_login&quot;: &quot;2026-06-16T06:04:13.000000Z&quot;,
+        &quot;created_at&quot;: &quot;2026-06-16T05:55:44.000000Z&quot;,
+        &quot;updated_at&quot;: &quot;2026-06-16T06:04:13.000000Z&quot;
+    },
+    &quot;rejection_infos&quot;: []
 }</code>
  </pre>
     </span>
@@ -4935,7 +5515,7 @@ fetch(url, {
 
 <span id="example-responses-PUTapi-oficios--id-">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (422):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -4947,7 +5527,15 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;message&quot;: &quot;The selected destination contact id is invalid. (and 1 more error)&quot;,
+    &quot;errors&quot;: {
+        &quot;destination_contact_id&quot;: [
+            &quot;The selected destination contact id is invalid.&quot;
+        ],
+        &quot;responsibles&quot;: [
+            &quot;The responsibles field is required.&quot;
+        ]
+    }
 }</code>
  </pre>
     </span>
@@ -5171,10 +5759,10 @@ Must be one of:
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"status\": \"REJECTED\",
+    \"status\": \"APPROVED\",
     \"reason\": \"architecto\",
     \"subject\": \"n\",
-    \"priority\": \"LOW\",
+    \"priority\": \"HIGH\",
     \"content\": \"architecto\",
     \"department\": \"n\"
 }"
@@ -5193,10 +5781,10 @@ const headers = {
 };
 
 let body = {
-    "status": "REJECTED",
+    "status": "APPROVED",
     "reason": "architecto",
     "subject": "n",
-    "priority": "LOW",
+    "priority": "HIGH",
     "content": "architecto",
     "department": "n"
 };
@@ -5211,7 +5799,7 @@ fetch(url, {
 
 <span id="example-responses-POSTapi-oficios--oficio_id--review">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (409):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -5223,7 +5811,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;message&quot;: &quot;Esta a&ccedil;&atilde;o n&atilde;o &eacute; permitida para o status atual do of&iacute;cio&quot;
 }</code>
  </pre>
     </span>
@@ -5331,10 +5919,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="POSTapi-oficios--oficio_id--review"
-               value="REJECTED"
+               value="APPROVED"
                data-component="body">
     <br>
-<p>Example: <code>REJECTED</code></p>
+<p>Example: <code>APPROVED</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>APPROVED</code></li> <li><code>REJECTED</code></li> <li><code>RETURNED</code></li></ul>
         </div>
@@ -5381,10 +5969,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="priority"                data-endpoint="POSTapi-oficios--oficio_id--review"
-               value="LOW"
+               value="HIGH"
                data-component="body">
     <br>
-<p>Example: <code>LOW</code></p>
+<p>Example: <code>HIGH</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>LOW</code></li> <li><code>MEDIUM</code></li> <li><code>HIGH</code></li></ul>
         </div>
@@ -5469,7 +6057,7 @@ fetch(url, {
 
 <span id="example-responses-POSTapi-oficios--oficio_id--send">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (409):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -5481,7 +6069,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;message&quot;: &quot;Esta a&ccedil;&atilde;o n&atilde;o &eacute; permitida para o status atual do of&iacute;cio&quot;
 }</code>
  </pre>
     </span>
@@ -5624,7 +6212,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-oficio-templates">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -5636,7 +6224,46 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;current_page&quot;: 1,
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;b&quot;,
+            &quot;content&quot;: &quot;architecto&quot;,
+            &quot;created_at&quot;: &quot;2026-06-18T04:39:47.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2026-06-18T04:39:47.000000Z&quot;
+        }
+    ],
+    &quot;first_page_url&quot;: &quot;http://localhost/api/oficio-templates?page=1&quot;,
+    &quot;from&quot;: 1,
+    &quot;last_page&quot;: 1,
+    &quot;last_page_url&quot;: &quot;http://localhost/api/oficio-templates?page=1&quot;,
+    &quot;links&quot;: [
+        {
+            &quot;url&quot;: null,
+            &quot;label&quot;: &quot;&amp;laquo; Previous&quot;,
+            &quot;page&quot;: null,
+            &quot;active&quot;: false
+        },
+        {
+            &quot;url&quot;: &quot;http://localhost/api/oficio-templates?page=1&quot;,
+            &quot;label&quot;: &quot;1&quot;,
+            &quot;page&quot;: 1,
+            &quot;active&quot;: true
+        },
+        {
+            &quot;url&quot;: null,
+            &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
+            &quot;page&quot;: null,
+            &quot;active&quot;: false
+        }
+    ],
+    &quot;next_page_url&quot;: null,
+    &quot;path&quot;: &quot;http://localhost/api/oficio-templates&quot;,
+    &quot;per_page&quot;: 20,
+    &quot;prev_page_url&quot;: null,
+    &quot;to&quot;: 1,
+    &quot;total&quot;: 1
 }</code>
  </pre>
     </span>
@@ -5776,7 +6403,7 @@ fetch(url, {
 
 <span id="example-responses-POSTapi-oficio-templates">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (201):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -5788,7 +6415,11 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;name&quot;: &quot;b&quot;,
+    &quot;content&quot;: &quot;architecto&quot;,
+    &quot;updated_at&quot;: &quot;2026-06-18T06:52:18.000000Z&quot;,
+    &quot;created_at&quot;: &quot;2026-06-18T06:52:18.000000Z&quot;,
+    &quot;id&quot;: 2
 }</code>
  </pre>
     </span>
@@ -5943,7 +6574,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-oficio-templates--id-">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -5955,7 +6586,11 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;id&quot;: 1,
+    &quot;name&quot;: &quot;b&quot;,
+    &quot;content&quot;: &quot;architecto&quot;,
+    &quot;created_at&quot;: &quot;2026-06-18T04:39:47.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2026-06-18T04:39:47.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -6108,7 +6743,7 @@ fetch(url, {
 
 <span id="example-responses-PUTapi-oficio-templates--id-">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -6120,7 +6755,11 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;id&quot;: 1,
+    &quot;name&quot;: &quot;b&quot;,
+    &quot;content&quot;: &quot;architecto&quot;,
+    &quot;created_at&quot;: &quot;2026-06-18T04:39:47.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2026-06-18T04:39:47.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -6292,7 +6931,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-settings">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -6304,7 +6943,10 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;id&quot;: 1,
+    &quot;statement_text&quot;: &quot;architecto&quot;,
+    &quot;created_at&quot;: &quot;2026-06-18T04:39:47.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2026-06-18T04:39:47.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -6442,7 +7084,7 @@ fetch(url, {
 
 <span id="example-responses-PUTapi-settings">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -6454,7 +7096,10 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;id&quot;: 1,
+    &quot;statement_text&quot;: &quot;architecto&quot;,
+    &quot;created_at&quot;: &quot;2026-06-18T04:39:47.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2026-06-18T04:39:47.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -6597,7 +7242,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-settings-smtp">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -6609,7 +7254,13 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;host&quot;: null,
+    &quot;port&quot;: null,
+    &quot;username&quot;: null,
+    &quot;from_name&quot;: null,
+    &quot;from_email&quot;: null,
+    &quot;use_tls&quot;: false,
+    &quot;has_password&quot;: false
 }</code>
  </pre>
     </span>
@@ -6759,7 +7410,7 @@ fetch(url, {
 
 <span id="example-responses-PUTapi-settings-smtp">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (500):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -6771,7 +7422,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;message&quot;: &quot;Server Error&quot;
 }</code>
  </pre>
     </span>
@@ -6996,7 +7647,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-messages">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -7008,7 +7659,38 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;current_page&quot;: 1,
+    &quot;data&quot;: [],
+    &quot;first_page_url&quot;: &quot;http://localhost/api/messages?page=1&quot;,
+    &quot;from&quot;: null,
+    &quot;last_page&quot;: 1,
+    &quot;last_page_url&quot;: &quot;http://localhost/api/messages?page=1&quot;,
+    &quot;links&quot;: [
+        {
+            &quot;url&quot;: null,
+            &quot;label&quot;: &quot;&amp;laquo; Previous&quot;,
+            &quot;page&quot;: null,
+            &quot;active&quot;: false
+        },
+        {
+            &quot;url&quot;: &quot;http://localhost/api/messages?page=1&quot;,
+            &quot;label&quot;: &quot;1&quot;,
+            &quot;page&quot;: 1,
+            &quot;active&quot;: true
+        },
+        {
+            &quot;url&quot;: null,
+            &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
+            &quot;page&quot;: null,
+            &quot;active&quot;: false
+        }
+    ],
+    &quot;next_page_url&quot;: null,
+    &quot;path&quot;: &quot;http://localhost/api/messages&quot;,
+    &quot;per_page&quot;: 20,
+    &quot;prev_page_url&quot;: null,
+    &quot;to&quot;: null,
+    &quot;total&quot;: 0
 }</code>
  </pre>
     </span>
@@ -7138,7 +7820,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-messages--id-">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (404):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -7150,7 +7832,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\Message] 16&quot;
 }</code>
  </pre>
     </span>
@@ -7293,7 +7975,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-worker-logs">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -7305,7 +7987,52 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;current_page&quot;: 1,
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 1,
+            &quot;correlation_id&quot;: &quot;architecto&quot;,
+            &quot;code&quot;: &quot;architecto&quot;,
+            &quot;message&quot;: &quot;architecto&quot;,
+            &quot;status&quot;: 16,
+            &quot;queue_name&quot;: &quot;architecto&quot;,
+            &quot;event_type&quot;: &quot;architecto&quot;,
+            &quot;metadata&quot;: null,
+            &quot;user_id&quot;: &quot;architecto&quot;,
+            &quot;created_at&quot;: &quot;2026-06-18T04:39:47.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2026-06-18T04:39:47.000000Z&quot;
+        }
+    ],
+    &quot;first_page_url&quot;: &quot;http://localhost/api/worker-logs?page=1&quot;,
+    &quot;from&quot;: 1,
+    &quot;last_page&quot;: 1,
+    &quot;last_page_url&quot;: &quot;http://localhost/api/worker-logs?page=1&quot;,
+    &quot;links&quot;: [
+        {
+            &quot;url&quot;: null,
+            &quot;label&quot;: &quot;&amp;laquo; Previous&quot;,
+            &quot;page&quot;: null,
+            &quot;active&quot;: false
+        },
+        {
+            &quot;url&quot;: &quot;http://localhost/api/worker-logs?page=1&quot;,
+            &quot;label&quot;: &quot;1&quot;,
+            &quot;page&quot;: 1,
+            &quot;active&quot;: true
+        },
+        {
+            &quot;url&quot;: null,
+            &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
+            &quot;page&quot;: null,
+            &quot;active&quot;: false
+        }
+    ],
+    &quot;next_page_url&quot;: null,
+    &quot;path&quot;: &quot;http://localhost/api/worker-logs&quot;,
+    &quot;per_page&quot;: 20,
+    &quot;prev_page_url&quot;: null,
+    &quot;to&quot;: 1,
+    &quot;total&quot;: 1
 }</code>
  </pre>
     </span>
@@ -7455,7 +8182,7 @@ fetch(url, {
 
 <span id="example-responses-POSTapi-worker-logs">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (201):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -7467,7 +8194,17 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;correlation_id&quot;: &quot;architecto&quot;,
+    &quot;code&quot;: &quot;architecto&quot;,
+    &quot;message&quot;: &quot;architecto&quot;,
+    &quot;status&quot;: 16,
+    &quot;queue_name&quot;: &quot;architecto&quot;,
+    &quot;event_type&quot;: &quot;architecto&quot;,
+    &quot;metadata&quot;: null,
+    &quot;user_id&quot;: &quot;architecto&quot;,
+    &quot;updated_at&quot;: &quot;2026-06-18T06:52:21.000000Z&quot;,
+    &quot;created_at&quot;: &quot;2026-06-18T06:52:21.000000Z&quot;,
+    &quot;id&quot;: 2
 }</code>
  </pre>
     </span>
