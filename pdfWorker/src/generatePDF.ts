@@ -59,12 +59,11 @@ export async function generatePDF(data: string) {
   // header
   const docDefinition: any = {
     pageSize: "A4",
-    pageMargins: [85, 120, 57, 85],
+    pageMargins: [72, 180, 72, 120], // left, top, right, bottom
 
     defaultStyle: {
       font: "Roboto",
       fontSize: 12,
-      lineHeight: 1.5,
     },
 
     patterns: [],
@@ -74,27 +73,30 @@ export async function generatePDF(data: string) {
         stack: [
           {
             image: "logo",
-            width: 45,
-            height: 22,
+            width: 50,
+            height: 25,
             alignment: "center",
-            margin: [0, 0, 0, 8],
+            margin: [0, 0, 0, 20],
           },
           {
             text: "ORDEM DOS ADVOGADOS DO BRASIL",
-            fontSize: 14,
+            fontSize: 16,
             bold: true,
             alignment: "center",
+            margin: [0, 0, 0, 10],
           },
           {
             text: "SECCIONAL MATO GROSSO",
-            fontSize: 12,
+            fontSize: 14,
+            medium: true,
             alignment: "center",
+            margin: [0, 0, 0, 10],
           },
           {
             text: "6ª SUBSEÇÃO — SINOP",
-            fontSize: 11,
+            fontSize: 12,
             alignment: "center",
-            margin: [0, 0, 0, 10],
+            margin: [0, 0, 0, 20],
           },
           {
             canvas: [
@@ -114,7 +116,7 @@ export async function generatePDF(data: string) {
       };
     },
 
-    footer: function () {
+    footer: function (page: number, pages: number) {
       return {
         stack: [
           {
@@ -125,38 +127,47 @@ export async function generatePDF(data: string) {
                 y1: 0,
                 x2: 523,
                 y2: 0,
-                lineWidth: 1,
+                lineWidth: 1.5,
+                lineColor: "#000000", // ← vermelho pra testar
               },
             ],
+            margin: [0, 0, 0, 20],
           },
           {
-            text: "OAB Mato Grosso - 6ª Subseção de Sinop",
+            image: "logo",
+            width: 50,
+            height: 25,
             alignment: "center",
-            fontSize: 9,
-            margin: [0, 8, 0, 0],
+            margin: [0, 0, 0, 20],
+          },
+          {
+            text: "OAB Mato Grosso 6ª subseção - Sinop",
+            bold: true,
+            alignment: "center",
+            fontSize: 12,
           },
         ],
-        margin: [0, 0, 0, 10],
+        margin: [0, 10, 0, 0],
       };
     },
 
     content: [
       {
-        text: `${configuration.oficioNumero}`,
+        text: `Ofício nº ${configuration.oficioNumero}`,
         alignment: "right",
-
+        fontSize: 12,
         margin: [0, 0, 0, 20],
       },
       {
-        text: `${configuration.oficioDestinatarioTratamento}\n${configuration.oficioDestinatarioCargo} ${configuration.oficioDestinatarioNome} \n${configuration.oficioDestinatarioInstituicao}`,
+        text: `${configuration.oficioDestinatarioTratamento}\n${configuration.oficioDestinatarioCargo} ${configuration.oficioDestinatarioNome}\n${configuration.oficioDestinatarioInstituicao}`,
         alignment: "left",
-
+        fontSize: 12,
         margin: [0, 0, 0, 20],
       },
       {
         text: `Assunto: ${configuration.oficioAssunto}`,
         bold: true,
-
+        fontSize: 12,
         margin: [0, 0, 0, 20],
       },
 
@@ -166,7 +177,7 @@ export async function generatePDF(data: string) {
         .map((p) => ({
           text: p.trim().replace(/-/g, "\u2011"),
           alignment: "justify" as const,
-
+          fontSize: 12,
           margin: [0, 0, 0, 12],
           noWrap: false,
           preserveLeadingSpaces: true,
@@ -179,10 +190,12 @@ export async function generatePDF(data: string) {
             text: `${configuration.oficioAutor}`,
             alignment: "center",
             bold: true,
+            fontSize: 12,
           },
           {
             text: `${configuration.oficioAutorCargo}`,
             alignment: "center",
+            fontSize: 12,
           },
         ],
         absolutePosition: { x: 72, y: 680 }, // ← y fixo, ajusta conforme necessário
