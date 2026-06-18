@@ -97,7 +97,7 @@ export async function generatePDF(data: string) {
             text: "6ª SUBSEÇÃO — SINOP",
             fontSize: 12,
             alignment: "center",
-            margin: [0, 0, 0, 20],
+            margin: [0, 0, 0, 10],
           },
           {
             canvas: [
