@@ -64,6 +64,7 @@ export async function generatePDF(data: string) {
     defaultStyle: {
       font: "Roboto",
       fontSize: 12,
+      lineHeight: 1.5,
     },
 
     patterns: [],
