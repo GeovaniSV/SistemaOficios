@@ -13,7 +13,7 @@ export function getTransporter() {
     port: smtpConfig.port,
     secure: smtpConfig.secure,
     auth: {
-      user: smtpConfig.user,
+      user: smtpConfig.username,
       pass: smtpConfig.password,
     },
   });
