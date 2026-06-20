@@ -10,7 +10,7 @@ class UpdateSettingsRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can('configuracoes.acessar');
     }
 
     public function rules(): array

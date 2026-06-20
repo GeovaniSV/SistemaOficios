@@ -7,6 +7,7 @@ use App\Http\Requests\ReviewOficioRequest;
 use App\Http\Requests\SendOficioRequest;
 use App\Http\Requests\StoreOficioRequest;
 use App\Http\Requests\UpdateOficioRequest;
+use App\Http\Requests\ViewOficioRequest;
 use App\Models\Oficio;
 use App\Services\OficioService;
 
@@ -16,12 +17,12 @@ class OficioController extends Controller
         private OficioService $service
     ) {}
 
-    public function index()
+    public function index(ViewOficioRequest $request)
     {
         return response()->json($this->service->list());
     }
 
-    public function show(Oficio $oficio)
+    public function show(ViewOficioRequest $request, Oficio $oficio)
     {
         return response()->json($this->service->getById($oficio));
     }

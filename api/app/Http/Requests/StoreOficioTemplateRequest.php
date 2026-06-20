@@ -8,7 +8,7 @@ class StoreOficioTemplateRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can('templates.criar');
     }
 
     public function rules(): array

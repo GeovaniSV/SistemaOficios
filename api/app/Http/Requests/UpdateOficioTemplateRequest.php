@@ -8,7 +8,7 @@ class UpdateOficioTemplateRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can('templates.editar');
     }
 
     public function rules(): array
