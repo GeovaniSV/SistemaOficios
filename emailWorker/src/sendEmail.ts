@@ -10,6 +10,7 @@ export type EmailDataType = {
   oficioAssunto: string;
   oficio: string;
   userId: string;
+  event: string;
 };
 
 async function sendEmail(msg: amqp.Message): Promise<void> {

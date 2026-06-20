@@ -5,31 +5,20 @@ import axios from "axios";
 import fs from "fs";
 import { EmailDataType } from "./sendEmail";
 
-type ConfigType = {
-  event: "SMTP_CONFIG_UPDATED";
-};
-
+event: "SMTP_CONFIG_UPDATED";
 const RABBITMQ_URL = process.env.RABBITMQ_URL;
 const queueName = "email_queue";
 
-// export let smtpConfig: any = null;
+export let smtpConfig: any = null;
 
-// async function loadSMTP() {
-//   const { data } = await axios.get(
-//     `${process.env.API_URL}api/broker/smtp-config`,
-//   );
-// await fs.promises.writeFile(
-//   "./smtp-config.conf",
-//   JSON.stringify(data)
-// );
+async function loadSMTP() {
+  const { data } = await axios.get(
+    `${process.env.API_URL}api/broker/smtp-config`,
+  );
+  await fs.promises.writeFile("./smtp-config.conf", JSON.stringify(data));
 
-//   smtpConfig = data;
-// }
-
-// async function bootstrap() {
-//   await loadSMTP();
-//   await startWorker();
-// }
+  smtpConfig = data;
+}
 
 async function startWorker() {
   try {
@@ -46,9 +35,11 @@ async function startWorker() {
           return;
         }
 
-        const msgParser: EmailDataType | ConfigType = JSON.parse(
-          msg.content.toString(),
-        );
+        const msgParser: EmailDataType = JSON.parse(msg.content.toString());
+
+        if (msgParser.event === "SMTP_CONFIG_UPDATED") {
+          loadSMTP();
+        }
         await sendEmailWithRetry(msg);
       },
       {
