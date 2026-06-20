@@ -64,7 +64,7 @@ async function sendEmailWithRetry(
           attempt,
           timestamp: new Date().toISOString(),
         },
-        userId: data.userId,
+        userId: data.userId.toString(),
       };
 
       console.log(outbox);
@@ -110,7 +110,7 @@ async function sendEmailWithRetry(
           retries,
           timestamp: new Date().toISOString(),
         },
-        userId: data.userId,
+        userId: data.userId.toString(),
       };
 
       if (mustRetry) {
