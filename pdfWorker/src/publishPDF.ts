@@ -64,7 +64,7 @@ export async function uploadPDFWithRetry(
           attempt,
           timestamp: new Date().toISOString(),
         },
-        userId: data.userId,
+        userId: data.userId.toString(),
       };
       boxMessageLogger(outbox);
 
@@ -108,7 +108,7 @@ export async function uploadPDFWithRetry(
           retries,
           timestamp: new Date().toISOString(),
         },
-        userId: data.userId,
+        userId: data.userId.toString(),
       };
 
       if (!mustRetry) {
