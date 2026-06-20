@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\OficioController;
 use App\Http\Controllers\Api\OficioTemplateController;
 use App\Http\Controllers\Api\PositionController;
+use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SettingsController;
 use App\Http\Controllers\Api\SmtpConfigController;
 use App\Http\Controllers\Api\UserController;
@@ -16,6 +17,7 @@ Route::post('auth/login', [AuthController::class, 'login']);
 
 Route::middleware('broker.auth')->group(function () {
     Route::get('broker/smtp-config', [SmtpConfigController::class, 'brokerShow']);
+    Route::post('worker-logs', [WorkerLogController::class, 'store']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -28,6 +30,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('users/{user}/restore', [UserController::class, 'restore']);
 
     Route::apiResource('positions', PositionController::class);
+
+    Route::apiResource('roles', RoleController::class)->only(['index', 'show', 'store', 'update']);
 
     Route::apiResource('contacts', ContactController::class);
     Route::get('contacts/{id}/responsibles', [ContactController::class, 'responsibles']);
@@ -47,5 +51,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('messages', MessageController::class)->only(['index', 'show']);
 
     Route::get('worker-logs', [WorkerLogController::class, 'index']);
-    Route::post('worker-logs', [WorkerLogController::class, 'store']);
 });

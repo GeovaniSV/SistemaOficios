@@ -10,7 +10,7 @@ class UserService
 {
     public function list(): LengthAwarePaginator
     {
-        return User::with('position')->where('is_dev', false)->paginate(20);
+        return User::with('position', 'roles')->where('is_dev', false)->paginate(20);
     }
 
     public function getById(User $user): User
@@ -19,7 +19,7 @@ class UserService
             throw new ModelNotFoundException();
         }
 
-        return $user;
+        return $user->load('position', 'roles');
     }
 
     public function create(array $data): User

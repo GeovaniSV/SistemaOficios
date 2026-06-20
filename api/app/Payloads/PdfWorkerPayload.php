@@ -26,8 +26,8 @@ final readonly class PdfWorkerPayload implements \JsonSerializable
     public static function fromMessage(Message $message): self
     {
         $oficio      = $message->oficio;
-        $contact     = $oficio->destinationContact;
         $responsible = $message->responsible;
+        $contact     = $responsible->contact;
         $setting = OficioSetting::first();
 
         return new self(

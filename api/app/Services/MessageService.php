@@ -15,8 +15,8 @@ class MessageService
     public function list()
     {
         return Message::with([
-            'oficio.destinationContact.address',
-            'responsible',
+            'oficio',
+            'responsible.contact.address',
         ])->paginate(20);
     }
 
@@ -25,16 +25,16 @@ class MessageService
     ): Message {
 
         return $message->load([
-            'oficio.destinationContact.address',
-            'responsible',
+            'oficio',
+            'responsible.contact.address',
         ]);
     }
 
     public function sendBroker(Message $message): array
     {
         $message->load([
-            'oficio.destinationContact.address',
-            'responsible',
+            'oficio',
+            'responsible.contact.address',
         ]);
 
         $payload = PdfWorkerPayload::fromMessage($message);

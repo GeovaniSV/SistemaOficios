@@ -46,7 +46,7 @@ class OficioService
             $oficio = Oficio::create([
                 'number'                 => $this->generateNumber(),
                 'subject'                => $data['subject'],
-                'destination_contact_id' => $data['destination_contact_id'],
+                'destination_contact_id' => $data['destination_contact_id'] ?? null,
                 'priority'               => $data['priority'],
                 'content'                => $data['content'],
                 'department'             => $data['department'] ?? null,

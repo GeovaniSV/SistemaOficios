@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DestroyUserRequest;
+use App\Http\Requests\RestoreUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\ViewUserRequest;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
@@ -15,12 +18,12 @@ class UserController extends Controller
         private UserService $service
     ) {}
 
-    public function index(): JsonResponse
+    public function index(ViewUserRequest $request): JsonResponse
     {
         return response()->json($this->service->list());
     }
 
-    public function show(User $user): JsonResponse
+    public function show(ViewUserRequest $request, User $user): JsonResponse
     {
         return response()->json($this->service->getById($user));
     }
@@ -40,14 +43,14 @@ class UserController extends Controller
         );
     }
 
-    public function destroy(User $user): JsonResponse
+    public function destroy(DestroyUserRequest $request, User $user): JsonResponse
     {
         return response()->json(
             $this->service->softDelete($user)
         );
     }
 
-    public function restore(User $user): JsonResponse
+    public function restore(RestoreUserRequest $request, User $user): JsonResponse
     {
         return response()->json(
             $this->service->restore($user)

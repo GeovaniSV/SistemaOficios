@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\DestroyContactRequest;
 use App\Http\Requests\StoreContactRequest;
 use App\Http\Requests\UpdateContactRequest;
+use App\Http\Requests\ViewContactRequest;
 use App\Services\ContactService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
@@ -16,7 +16,7 @@ class ContactController extends Controller
         private ContactService $service
     ) {}
 
-    public function index(Request $request): JsonResponse
+    public function index(ViewContactRequest $request): JsonResponse
     {
         $isActive = null;
 
@@ -30,6 +30,7 @@ class ContactController extends Controller
     }
 
     public function responsibles(
+        ViewContactRequest $request,
         int $id
     ): JsonResponse {
 
@@ -39,6 +40,7 @@ class ContactController extends Controller
     }
 
     public function show(
+        ViewContactRequest $request,
         int $id
     ): JsonResponse {
 
