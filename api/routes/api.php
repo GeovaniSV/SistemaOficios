@@ -17,6 +17,7 @@ Route::post('auth/login', [AuthController::class, 'login']);
 
 Route::middleware('broker.auth')->group(function () {
     Route::get('broker/smtp-config', [SmtpConfigController::class, 'brokerShow']);
+    Route::post('worker-logs', [WorkerLogController::class, 'store']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -50,5 +51,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('messages', MessageController::class)->only(['index', 'show']);
 
     Route::get('worker-logs', [WorkerLogController::class, 'index']);
-    Route::post('worker-logs', [WorkerLogController::class, 'store']);
 });
