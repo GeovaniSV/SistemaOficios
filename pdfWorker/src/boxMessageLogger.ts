@@ -11,7 +11,7 @@ type ErrorType = {
   queueName?: string;
   eventType?: string;
   metadata?: Record<string, any>;
-  userId?: number | string;
+  userId?: string;
 };
 
 async function boxMessageLogger(error: ErrorType) {
