@@ -1,3 +1,5 @@
+import "dotenv";
+import axios from "axios";
 type ErrorType = {
   correlationId?: string;
   code?: string;
@@ -9,7 +11,9 @@ type ErrorType = {
   userId?: number | string;
 };
 
-function boxMessageLogger(error: ErrorType) {
+const BROKER_API_KEY = process.env.BROKER_API_KEY;
+
+async function boxMessageLogger(error: ErrorType) {
   const logEntry = {
     correlationId: error.correlationId,
     code: error.code,
@@ -21,6 +25,9 @@ function boxMessageLogger(error: ErrorType) {
     userId: error.userId,
   };
   console.error(JSON.stringify(logEntry));
+  await axios.post(`${process.env.API_URL}/api/worker-logs`, logEntry, {
+    headers: { BROKER_API_KEY },
+  });
 }
 
 export default boxMessageLogger;

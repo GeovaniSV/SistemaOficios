@@ -15,6 +15,8 @@ export type PDFData = {
   oficioAutor: string;
   oficioAutorCargo: string;
   userId: number;
+  oficioHeader: string;
+  oficioFooter: string;
 };
 
 const fonts = {
@@ -53,6 +55,8 @@ export async function generatePDF(data: string) {
     oficioAutor: pdfData.oficioAutor,
     oficioAutorCargo: pdfData.oficioAutorCargo,
     userId: pdfData.userId,
+    oficioHeader: pdfData.oficioHeader,
+    oficioFooter: pdfData.oficioFooter,
   };
 
   const hash = `${Date.now()}${crypto.randomUUID()}`;
@@ -193,6 +197,7 @@ export async function generatePDF(data: string) {
         })),
 
       {
+        margin: [0, 40, 0, 0],
         stack: [
           {
             text: `${configuration.oficioAutor}`,

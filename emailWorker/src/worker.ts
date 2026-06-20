@@ -5,34 +5,30 @@ import axios from "axios";
 import fs from "fs";
 import { EmailDataType } from "./sendEmail";
 
-type ConfigType = {
-  event: "SMTP_CONFIG_UPDATED";
-};
-
+event: "SMTP_CONFIG_UPDATED";
 const RABBITMQ_URL = process.env.RABBITMQ_URL;
 const queueName = "email_queue";
 
-// export let smtpConfig: any = null;
+export let smtpConfig: any = null;
 
-// async function loadSMTP() {
-//   const { data } = await axios.get(
-//     `${process.env.API_URL}api/broker/smtp-config`,
-//   );
-// await fs.promises.writeFile(
-//   "./smtp-config.conf",
-//   JSON.stringify(data)
-// );
+async function loadSMTP() {
+  const { data } = await axios.get(
+    `${process.env.API_URL}api/broker/smtp-config`,
+  );
+  await fs.promises.writeFile("./smtp-config.conf", JSON.stringify(data));
 
-//   smtpConfig = data;
-// }
+  smtpConfig = data;
+}
 
-// async function bootstrap() {
-//   await loadSMTP();
-//   await startWorker();
-// }
+async function initialConfig() {
+  const data = await fs.promises.readFile("./smtp-config.conf", "utf-8");
+
+  smtpConfig = JSON.parse(data);
+}
 
 async function startWorker() {
   try {
+    await initialConfig();
     const connection = await amqp.connect(RABBITMQ_URL!);
     const channel = await connection.createChannel();
     await channel.assertQueue(queueName, { durable: true });
@@ -46,9 +42,11 @@ async function startWorker() {
           return;
         }
 
-        const msgParser: EmailDataType | ConfigType = JSON.parse(
-          msg.content.toString(),
-        );
+        const msgParser: EmailDataType = JSON.parse(msg.content.toString());
+
+        if (msgParser.event === "SMTP_CONFIG_UPDATED") {
+          loadSMTP();
+        }
         await sendEmailWithRetry(msg);
       },
       {
