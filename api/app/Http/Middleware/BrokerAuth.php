@@ -11,7 +11,7 @@ class BrokerAuth
     public function handle(Request $request, Closure $next): Response
     {
         $expected = config('services.broker.key');
-        $provided = $request->header('BROKER_API_KEY');
+        $provided = $request->header('X-Broker-Api-Key');
 
         if (empty($expected) || !is_string($provided) || !hash_equals($expected, $provided)) {
             return response()->json(['message' => 'Unauthorized'], 401);

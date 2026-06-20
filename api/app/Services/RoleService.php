@@ -23,6 +23,7 @@ class RoleService
             'name'        => $data['name'],
             'description' => $data['description'],
             'status'      => $data['status'],
+            'guard_name'  => 'web',
         ]);
 
         $role->syncPermissions($data['permissions'] ?? []);
