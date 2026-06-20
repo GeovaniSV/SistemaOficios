@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import amqp from "amqplib";
 import fs from "fs";
-import { transporter } from "./nodemailer";
+import { getTransporter } from "./nodemailer";
 import logError from "./boxMessageLogger";
 import boxMessageLogger from "./boxMessageLogger";
 
@@ -14,6 +14,7 @@ export type EmailDataType = {
 };
 
 async function sendEmail(msg: amqp.Message): Promise<void> {
+  const transporter = getTransporter();
   const data: EmailDataType = JSON.parse(msg.content.toString());
   await transporter.sendMail({
     from: "seu_nome@test-xkjn41mw9w04z781.mlsender.net",

@@ -5,7 +5,6 @@ import axios from "axios";
 import fs from "fs";
 import { EmailDataType } from "./sendEmail";
 
-const BROKER_API_KEY = process.env.BROKER_API_KEY;
 const RABBITMQ_URL = process.env.RABBITMQ_URL;
 const queueName = "email_queue";
 
@@ -16,6 +15,7 @@ async function loadSMTP() {
     `${process.env.API_URL}/api/broker/smtp-config`,
     { headers: { BROKER_API_KEY: process.env.BROKER_API_KEY } },
   );
+  console.log("SMTP recebido:", data);
   await fs.promises.writeFile("./smtp-config.conf", JSON.stringify(data));
 
   smtpConfig = data;
