@@ -5,34 +5,25 @@ import axios from "axios";
 import fs from "fs";
 import { EmailDataType } from "./sendEmail";
 
-type ConfigType = {
-  event: "SMTP_CONFIG_UPDATED";
-};
-
+const BROKER_API_KEY = process.env.BROKER_API_KEY;
 const RABBITMQ_URL = process.env.RABBITMQ_URL;
 const queueName = "email_queue";
 
-// export let smtpConfig: any = null;
+export let smtpConfig: any = null;
 
-// async function loadSMTP() {
-//   const { data } = await axios.get(
-//     `${process.env.API_URL}api/broker/smtp-config`,
-//   );
-// await fs.promises.writeFile(
-//   "./smtp-config.conf",
-//   JSON.stringify(data)
-// );
+async function loadSMTP() {
+  const { data } = await axios.get(
+    `${process.env.API_URL}/api/broker/smtp-config`,
+    { headers: { BROKER_API_KEY: process.env.BROKER_API_KEY } },
+  );
+  await fs.promises.writeFile("./smtp-config.conf", JSON.stringify(data));
 
-//   smtpConfig = data;
-// }
-
-// async function bootstrap() {
-//   await loadSMTP();
-//   await startWorker();
-// }
+  smtpConfig = data;
+}
 
 async function startWorker() {
   try {
+    await loadSMTP();
     const connection = await amqp.connect(RABBITMQ_URL!);
     const channel = await connection.createChannel();
     await channel.assertQueue(queueName, { durable: true });
@@ -46,10 +37,13 @@ async function startWorker() {
           return;
         }
 
-        const msgParser: EmailDataType | ConfigType = JSON.parse(
-          msg.content.toString(),
-        );
-        await sendEmailWithRetry(msg);
+        const msgParser: EmailDataType = JSON.parse(msg.content.toString());
+
+        if (msgParser.event === "SMTP_CONFIG_UPDATED") {
+          loadSMTP();
+        } else {
+          await sendEmailWithRetry(msg);
+        }
       },
       {
         noAck: true,
