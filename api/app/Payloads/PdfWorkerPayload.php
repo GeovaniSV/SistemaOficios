@@ -21,6 +21,7 @@ final readonly class PdfWorkerPayload implements \JsonSerializable
         public string $oficioHeader,
         public string $oficioFooter,
         public int    $userId,
+        public string $hash,
     ) {}
 
     public static function fromMessage(Message $message): self
@@ -44,6 +45,7 @@ final readonly class PdfWorkerPayload implements \JsonSerializable
             oficioHeader:                 $setting?->header ?? '',
             oficioFooter:                 $setting?->footer ?? '',
             userId:                       $oficio->author->id,
+            hash:                         $message->pdf_hash,
         );
     }
 
@@ -63,6 +65,7 @@ final readonly class PdfWorkerPayload implements \JsonSerializable
             'userId'                        => $this->userId,
             'oficioHeader'                  => $this->oficioHeader,
             'oficioFooter'                  => $this->oficioFooter,
+            'hash'                          => $this->hash,
         ];
     }
 }

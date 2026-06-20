@@ -49,6 +49,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('settings/smtp', [SmtpConfigController::class, 'update']);
 
     Route::apiResource('messages', MessageController::class)->only(['index', 'show']);
+    Route::get('messages/{message}/pdf', [MessageController::class, 'downloadPdf']);
 
     Route::get('worker-logs', [WorkerLogController::class, 'index']);
 });
