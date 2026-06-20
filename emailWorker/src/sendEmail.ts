@@ -4,6 +4,7 @@ import fs from "fs";
 import { getTransporter } from "./nodemailer";
 import logError from "./boxMessageLogger";
 import boxMessageLogger from "./boxMessageLogger";
+import { smtpConfig } from "./worker";
 
 export type EmailDataType = {
   oficioDestinatario: string;
@@ -17,7 +18,7 @@ async function sendEmail(msg: amqp.Message): Promise<void> {
   const transporter = getTransporter();
   const data: EmailDataType = JSON.parse(msg.content.toString());
   await transporter.sendMail({
-    from: "seu_nome@test-xkjn41mw9w04z781.mlsender.net",
+    from: smtpConfig.from_email,
     to: data.oficioDestinatario,
     subject: data.oficioAssunto,
     text: `
