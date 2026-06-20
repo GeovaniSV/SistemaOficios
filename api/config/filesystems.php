@@ -62,11 +62,11 @@ return [
 
         'r2' => [
             'driver' => 's3',
-            'key' => env('R2_ACCESS_KEY_ID'),
-            'secret' => env('R2_SECRET_ACCESS_KEY'),
-            'region' => env('R2_REGION', 'auto'),
-            'bucket' => env('R2_BUCKET', 'pdf-worker'),
-            'endpoint' => env('R2_ENDPOINT'),
+            'key' => env('cloudflare_access_key_id'),
+            'secret' => env('cloudflare_secret_access_key'),
+            'region' => 'auto',
+            'bucket' => env('cloudflare_bucket_name', 'pdf-worker'),
+            'endpoint' => env('cloudflare_endpoint'),
             'use_path_style_endpoint' => true,
             'throw' => false,
             'report' => false,
