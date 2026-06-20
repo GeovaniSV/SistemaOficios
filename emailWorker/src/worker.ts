@@ -20,8 +20,15 @@ async function loadSMTP() {
   smtpConfig = data;
 }
 
+async function initialConfig() {
+  const data = await fs.promises.readFile("./smtp-config.conf", "utf-8");
+
+  smtpConfig = JSON.parse(data);
+}
+
 async function startWorker() {
   try {
+    await initialConfig();
     const connection = await amqp.connect(RABBITMQ_URL!);
     const channel = await connection.createChannel();
     await channel.assertQueue(queueName, { durable: true });
