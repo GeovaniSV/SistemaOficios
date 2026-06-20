@@ -24,6 +24,9 @@ class AuthService
 
         $user->update(['last_login' => now()]);
 
+        $user->load(['position:id,name', 'roles:id,name']);
+        $user->roles->each(fn ($role) => $role->makeHidden('pivot'));
+
         return [
             'user' => $user,
             'token' => $token,
