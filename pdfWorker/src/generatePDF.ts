@@ -148,7 +148,7 @@ export async function generatePDF(data: string) {
             margin: [0, 0, 0, 20],
           },
           {
-            text: "OAB Mato Grosso 6ª subseção - Sinop",
+            text: `${configuration.oficioFooter}`,
             bold: true,
             alignment: "center",
             fontSize: 12,
@@ -213,7 +213,6 @@ export async function generatePDF(data: string) {
             fontSize: 12,
           },
         ],
-        absolutePosition: { x: 72, y: 680 }, // ← y fixo, ajusta conforme necessário
       },
     ],
 
@@ -228,7 +227,7 @@ export async function generatePDF(data: string) {
     .write(pdfPath)
     .then(
       () => {
-        uploadPDFWithRetry(data, pdfPath, `${pdfData.hash}.pdf`);
+        // uploadPDFWithRetry(data, pdfPath, `${hash}.pdf`);
         publishToqueue({
           oficioAssunto: pdfData.oficioAssunto,
           oficioDestinatario: pdfData.oficioDestinatario,
