@@ -61,8 +61,8 @@ export async function generatePDF(data: string) {
     hash: pdfData.hash,
   };
 
-  /* const hash = `${Date.now()}${crypto.randomUUID()}`; */
-  // header
+  const headerLines = configuration.oficioHeader.split("\n");
+
   const docDefinition: any = {
     pageSize: "A4",
     pageMargins: [72, 180, 72, 120], // left, top, right, bottom
@@ -86,21 +86,21 @@ export async function generatePDF(data: string) {
             margin: [0, 0, 0, 10],
           },
           {
-            text: "ORDEM DOS ADVOGADOS DO BRASIL",
+            text: `${headerLines[0]}`,
             fontSize: 14,
             bold: true,
             alignment: "center",
             margin: [0, 0, 0, 5],
           },
           {
-            text: "SECCIONAL MATO GROSSO",
+            text: `${headerLines[1]}`,
             fontSize: 12,
             medium: true,
             alignment: "center",
             margin: [0, 0, 0, 5],
           },
           {
-            text: "6ª SUBSEÇÃO — SINOP",
+            text: `${headerLines[3]}`,
             fontSize: 11,
             alignment: "center",
             margin: [0, 0, 0, 5],
@@ -126,6 +126,22 @@ export async function generatePDF(data: string) {
     footer: function (page: number, pages: number) {
       return {
         stack: [
+          {
+            margin: [0, 0, 0, 16],
+            stack: [
+              {
+                text: `${configuration.oficioAutor}`,
+                alignment: "center",
+                bold: true,
+                fontSize: 12,
+              },
+              {
+                text: `${configuration.oficioAutorCargo}`,
+                alignment: "center",
+                fontSize: 12,
+              },
+            ],
+          },
           {
             canvas: [
               {
@@ -197,23 +213,6 @@ export async function generatePDF(data: string) {
           preserveLeadingSpaces: true,
           characterSpacing: 0,
         })),
-
-      {
-        margin: [0, 40, 0, 0],
-        stack: [
-          {
-            text: `${configuration.oficioAutor}`,
-            alignment: "center",
-            bold: true,
-            fontSize: 12,
-          },
-          {
-            text: `${configuration.oficioAutorCargo}`,
-            alignment: "center",
-            fontSize: 12,
-          },
-        ],
-      },
     ],
 
     images: {
