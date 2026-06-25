@@ -127,7 +127,7 @@ export async function generatePDF(data: string) {
       return {
         stack: [
           {
-            margin: [0, 0, 0, 16],
+            margin: [0, 0, 0, 4],
             stack: [
               {
                 text: `${configuration.oficioAutor}`,
@@ -170,7 +170,7 @@ export async function generatePDF(data: string) {
             fontSize: 12,
           },
         ],
-        margin: [0, 10, 0, 0],
+        margin: [0, 0, 0, 0],
       };
     },
 
