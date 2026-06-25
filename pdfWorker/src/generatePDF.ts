@@ -65,7 +65,7 @@ export async function generatePDF(data: string) {
 
   const docDefinition: any = {
     pageSize: "A4",
-    pageMargins: [72, 180, 72, 120], // left, top, right, bottom
+    pageMargins: [72, 180, 72, 160], // left, top, right, bottom
 
     defaultStyle: {
       font: "Roboto",
@@ -127,7 +127,7 @@ export async function generatePDF(data: string) {
       return {
         stack: [
           {
-            margin: [0, 0, 0, 4],
+            margin: [0, 0, 0, 8],
             stack: [
               {
                 text: `${configuration.oficioAutor}`,
@@ -170,7 +170,7 @@ export async function generatePDF(data: string) {
             fontSize: 12,
           },
         ],
-        margin: [0, 0, 0, 0],
+        margin: [0, 10, 0, 0],
       };
     },
 
