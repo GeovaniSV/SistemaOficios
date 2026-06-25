@@ -63,6 +63,8 @@ export async function generatePDF(data: string) {
 
   const headerLines = configuration.oficioHeader.split("\n");
 
+  console.log(headerLines);
+
   const docDefinition: any = {
     pageSize: "A4",
     pageMargins: [72, 180, 72, 120], // left, top, right, bottom
@@ -100,7 +102,7 @@ export async function generatePDF(data: string) {
             margin: [0, 0, 0, 5],
           },
           {
-            text: `${headerLines[3]}`,
+            text: `${headerLines[2]}`,
             fontSize: 11,
             alignment: "center",
             margin: [0, 0, 0, 5],
