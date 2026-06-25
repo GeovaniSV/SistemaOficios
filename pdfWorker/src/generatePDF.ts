@@ -127,6 +127,22 @@ export async function generatePDF(data: string) {
       return {
         stack: [
           {
+            margin: [0, 0, 0, 16],
+            stack: [
+              {
+                text: `${configuration.oficioAutor}`,
+                alignment: "center",
+                bold: true,
+                fontSize: 12,
+              },
+              {
+                text: `${configuration.oficioAutorCargo}`,
+                alignment: "center",
+                fontSize: 12,
+              },
+            ],
+          },
+          {
             canvas: [
               {
                 type: "line",
@@ -197,23 +213,6 @@ export async function generatePDF(data: string) {
           preserveLeadingSpaces: true,
           characterSpacing: 0,
         })),
-
-      {
-        margin: [0, 40, 0, 0],
-        stack: [
-          {
-            text: `${configuration.oficioAutor}`,
-            alignment: "center",
-            bold: true,
-            fontSize: 12,
-          },
-          {
-            text: `${configuration.oficioAutorCargo}`,
-            alignment: "center",
-            fontSize: 12,
-          },
-        ],
-      },
     ],
 
     images: {
