@@ -3,6 +3,7 @@
 namespace App\Payloads;
 
 use App\Models\Message;
+use App\Models\OficioSetting;
 
 final readonly class PdfWorkerPayload implements \JsonSerializable
 {
@@ -17,27 +18,34 @@ final readonly class PdfWorkerPayload implements \JsonSerializable
         public string $oficioDestinatario,
         public string $oficioAutor,
         public string $oficioAutorCargo,
+        public string $oficioHeader,
+        public string $oficioFooter,
         public int    $userId,
+        public string $hash,
     ) {}
 
     public static function fromMessage(Message $message): self
     {
         $oficio      = $message->oficio;
-        $contact     = $oficio->destinationContact;
         $responsible = $message->responsible;
+        $contact     = $responsible->contact;
+        $setting = OficioSetting::first();
 
         return new self(
-            oficioNumero:                 (string) $oficio->id,
+            oficioNumero:                 $oficio->number,
             oficioDestinatarioTratamento: $responsible->treatment ?? '',
-            oficioDestinatarioNome:       $contact->name,
-            oficioDestinatarioCargo:      $contact->position ?? '',       // campo ainda não existe no Contact
-            oficioDestinatarioInstituicao:$contact->institution ?? '',    // campo ainda não existe no Contact
+            oficioDestinatarioNome:       $responsible->name,
+            oficioDestinatarioCargo:      $responsible->position ?? '',
+            oficioDestinatarioInstituicao:$contact->name ?? '',
             oficioAssunto:                $oficio->subject,
             oficioCorpo:                  $oficio->content,
             oficioDestinatario:           $responsible->email,
-            oficioAutor:                  $responsible->name,
-            oficioAutorCargo:             $responsible->position ?? '',
-            userId:                       $message->id,
+            oficioAutor:                  $oficio->author->name,
+            oficioAutorCargo:             $oficio->author->position->name ?? '',
+            oficioHeader:                 $setting?->header ?? '',
+            oficioFooter:                 $setting?->footer ?? '',
+            userId:                       $oficio->author->id,
+            hash:                         $message->pdf_hash,
         );
     }
 
@@ -55,6 +63,9 @@ final readonly class PdfWorkerPayload implements \JsonSerializable
             'oficioAutor'                   => $this->oficioAutor,
             'oficioAutorCargo'              => $this->oficioAutorCargo,
             'userId'                        => $this->userId,
+            'oficioHeader'                  => $this->oficioHeader,
+            'oficioFooter'                  => $this->oficioFooter,
+            'hash'                          => $this->hash,
         ];
     }
 }

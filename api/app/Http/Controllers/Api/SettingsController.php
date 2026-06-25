@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateSettingsRequest;
+use App\Http\Requests\ViewSettingsRequest;
 use App\Services\SettingsService;
 
 class SettingsController extends Controller
@@ -12,7 +13,7 @@ class SettingsController extends Controller
         private SettingsService $service
     ) {}
 
-    public function show()
+    public function show(ViewSettingsRequest $request)
     {
         return response()->json(
             $this->service->get()

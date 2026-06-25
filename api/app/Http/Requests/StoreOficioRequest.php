@@ -8,7 +8,7 @@ class StoreOficioRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can('oficios.criar');
     }
 
     public function rules(): array
@@ -22,13 +22,13 @@ class StoreOficioRequest extends FormRequest
             ],
 
             'destination_contact_id' => [
-                'required',
+                'nullable',
                 'exists:contacts,id'
             ],
 
             'priority' => [
                 'required',
-                'in:LOW,MEDIUM,HIGH'
+                'in:LOW,MEDIUM,HIGH,URGENT'
             ],
 
             'content' => [

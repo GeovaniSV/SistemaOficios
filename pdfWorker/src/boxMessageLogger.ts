@@ -27,7 +27,7 @@ async function boxMessageLogger(error: ErrorType) {
   };
   console.error(JSON.stringify(logEntry));
   await axios.post(`${process.env.API_URL}/api/worker-logs`, logEntry, {
-    headers: { BROKER_API_KEY },
+    headers: { "X-Broker-Api-Key": BROKER_API_KEY },
   });
 }
 

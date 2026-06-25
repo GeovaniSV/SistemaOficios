@@ -6,6 +6,8 @@ use App\Enums\MessageStatusEnum;
 use App\Models\Message;
 use Carbon\Carbon;
 use App\Payloads\PdfWorkerPayload;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MessageService
 {
@@ -15,8 +17,8 @@ class MessageService
     public function list()
     {
         return Message::with([
-            'oficio.destinationContact.address',
-            'responsible',
+            'oficio',
+            'responsible.contact.address',
         ])->paginate(20);
     }
 
@@ -25,16 +27,16 @@ class MessageService
     ): Message {
 
         return $message->load([
-            'oficio.destinationContact.address',
-            'responsible',
+            'oficio',
+            'responsible.contact.address',
         ]);
     }
 
     public function sendBroker(Message $message): array
     {
         $message->load([
-            'oficio.destinationContact.address',
-            'responsible',
+            'oficio',
+            'responsible.contact.address',
         ]);
 
         $payload = PdfWorkerPayload::fromMessage($message);
@@ -50,5 +52,23 @@ class MessageService
             'success' => true,
             'message' => 'Payload enviado',
         ];
+    }
+
+    public function downloadPdf(Message $message): StreamedResponse
+    {
+        if (!$message->pdf_hash) {
+            abort(404, 'PDF não disponível para esta mensagem');
+        }
+
+        $path = "oficios/{$message->pdf_hash}.pdf";
+
+        if (!Storage::disk('r2')->exists($path)) {
+            abort(404, 'PDF ainda não foi gerado');
+        }
+
+        $message->load('oficio');
+        $filename = 'oficio-' . str_replace('/', '-', $message->oficio->number) . '.pdf';
+
+        return Storage::disk('r2')->download($path, $filename);
     }
 }

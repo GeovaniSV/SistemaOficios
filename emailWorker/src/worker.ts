@@ -13,7 +13,7 @@ export let smtpConfig: any = null;
 async function loadSMTP() {
   const { data } = await axios.get(
     `${process.env.API_URL}/api/broker/smtp-config`,
-    { headers: { BROKER_API_KEY: process.env.BROKER_API_KEY } },
+    { headers: { "X-Broker-Api-Key": process.env.BROKER_API_KEY } },
   );
   console.log("SMTP recebido:", data);
   await fs.promises.writeFile("./smtp-config.conf", JSON.stringify(data));

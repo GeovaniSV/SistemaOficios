@@ -17,6 +17,7 @@ export type PDFData = {
   userId: number;
   oficioHeader: string;
   oficioFooter: string;
+  hash: string;
 };
 
 const fonts = {
@@ -57,9 +58,10 @@ export async function generatePDF(data: string) {
     userId: pdfData.userId,
     oficioHeader: pdfData.oficioHeader,
     oficioFooter: pdfData.oficioFooter,
+    hash: pdfData.hash,
   };
 
-  const hash = `${Date.now()}${crypto.randomUUID()}`;
+  /* const hash = `${Date.now()}${crypto.randomUUID()}`; */
   // header
   const docDefinition: any = {
     pageSize: "A4",
@@ -219,7 +221,7 @@ export async function generatePDF(data: string) {
     },
   };
 
-  const pdfPath = `./pdfs/${hash}.pdf`;
+  const pdfPath = `./pdfs/${pdfData.hash}.pdf`;
   pdfmake
     .createPdf(docDefinition)
     .write(pdfPath)
@@ -229,7 +231,7 @@ export async function generatePDF(data: string) {
         publishToqueue({
           oficioAssunto: pdfData.oficioAssunto,
           oficioDestinatario: pdfData.oficioDestinatario,
-          oficio: hash + ".pdf",
+          oficio: pdfData.hash + ".pdf",
           userId: pdfData.userId,
         });
       },

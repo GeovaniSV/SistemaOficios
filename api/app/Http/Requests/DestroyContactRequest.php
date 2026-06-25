@@ -8,7 +8,7 @@ class DestroyContactRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can('contatos.excluir');
     }
 
     public function rules(): array

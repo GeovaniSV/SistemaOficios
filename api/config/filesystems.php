@@ -60,6 +60,18 @@ return [
             'report' => false,
         ],
 
+        'r2' => [
+            'driver' => 's3',
+            'key' => env('cloudflare_access_key_id'),
+            'secret' => env('cloudflare_secret_access_key'),
+            'region' => 'auto',
+            'bucket' => env('cloudflare_bucket_name', 'pdf-worker'),
+            'endpoint' => env('cloudflare_endpoint'),
+            'use_path_style_endpoint' => true,
+            'throw' => false,
+            'report' => false,
+        ],
+
     ],
 
     /*

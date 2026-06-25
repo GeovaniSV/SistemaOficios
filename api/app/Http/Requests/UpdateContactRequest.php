@@ -8,7 +8,7 @@ class UpdateContactRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can('contatos.editar');
     }
 
     public function rules(): array

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOficioTemplateRequest;
 use App\Http\Requests\UpdateOficioTemplateRequest;
+use App\Http\Requests\ViewOficioTemplateRequest;
 use App\Models\OficioTemplate;
 use App\Services\OficioTemplateService;
 
@@ -14,7 +15,7 @@ class OficioTemplateController extends Controller
         private OficioTemplateService $service
     ) {}
 
-    public function index()
+    public function index(ViewOficioTemplateRequest $request)
     {
         return response()->json(
             $this->service->list()
@@ -22,6 +23,7 @@ class OficioTemplateController extends Controller
     }
 
     public function show(
+        ViewOficioTemplateRequest $request,
         OficioTemplate $oficioTemplate
     ) {
 

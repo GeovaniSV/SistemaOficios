@@ -30,6 +30,13 @@ class MessageController extends Controller
         );
     }
 
+    public function downloadPdf(
+        Message $message
+    ) {
+
+        return $this->service->downloadPdf($message);
+    }
+
     // Função para testes e debugs da conexão com o broker
 
     /* public function sendBroker(

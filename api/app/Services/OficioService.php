@@ -20,6 +20,7 @@ class OficioService
             'destinationContact',
             'responsibles',
             'author',
+            'messages',
         ])->paginate(20);
     }
 
@@ -29,6 +30,7 @@ class OficioService
             'destinationContact',
             'responsibles',
             'author',
+            'messages',
             'rejectionInfos.author',
         ]);
 
@@ -46,7 +48,7 @@ class OficioService
             $oficio = Oficio::create([
                 'number'                 => $this->generateNumber(),
                 'subject'                => $data['subject'],
-                'destination_contact_id' => $data['destination_contact_id'],
+                'destination_contact_id' => $data['destination_contact_id'] ?? null,
                 'priority'               => $data['priority'],
                 'content'                => $data['content'],
                 'department'             => $data['department'] ?? null,
@@ -143,7 +145,7 @@ class OficioService
     private function generateNumber(): string
     {
         $year  = now()->year;
-        $count = Oficio::whereYear('created_at', $year)->count();
+        $count = Oficio::whereYear('created_at', $year)->lockForUpdate()->count();
         return str_pad($count + 1, 3, '0', STR_PAD_LEFT) . '/' . $year;
     }
 

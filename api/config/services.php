@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'broker' => [
+        'key' => env('BROKER_API_KEY'),
+    ],
+
 ];
