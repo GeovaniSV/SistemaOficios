@@ -100,7 +100,7 @@ export async function generatePDF(data: string) {
             margin: [0, 0, 0, 5],
           },
           {
-            text: `${headerLines[3]}`,
+            text: `${headerLines[2]}`,
             fontSize: 11,
             alignment: "center",
             margin: [0, 0, 0, 5],
