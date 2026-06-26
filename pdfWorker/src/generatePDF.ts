@@ -215,61 +215,27 @@ export async function generatePDF(data: string) {
           characterSpacing: 0,
         })),
 
-      // Assinatura (ainda na página 1)
-      {
-        margin: [0, 48, 0, 0],
-        stack: [
-          {
-            text: configuration.oficioAutor,
-            alignment: "center",
-            bold: true,
-            fontSize: 12,
-          },
-          {
-            text: configuration.oficioAutorCargo,
-            alignment: "center",
-            fontSize: 12,
-          },
-        ],
-      },
-
       // ── Página 2: Protocolo ──
       { text: "", pageBreak: "before" },
 
-      // Cabeçalho azul escuro
-      {
-        canvas: [
-          { type: "rect", x: 0, y: 0, w: 451, h: 52, r: 4, color: "#1a1a2e" },
-        ],
-        margin: [0, 0, 0, 0],
-      },
+      // Título centralizado (sem fundo, só texto bold + subtítulo)
       {
         stack: [
           {
-            text: "PROTOCOLO DE ASSINATURA ELETRÔNICA",
-            fontSize: 13,
+            text: "PROTOCOLO DE ASSINATURA ELETRONICA",
+            fontSize: 14,
             bold: true,
-            color: "#ffffff",
             alignment: "center",
+            margin: [0, 0, 0, 4],
           },
           {
             text: "Documento assinado digitalmente conforme MP nº 2.200-2/2001",
             fontSize: 9,
-            color: "#9fa3b8",
+            color: "#666666",
             alignment: "center",
           },
         ],
-        relativePosition: { x: 0, y: -42 },
-        margin: [0, 0, 0, 28],
-      },
-
-      // Informações do Documento
-      {
-        text: "Informações do Documento",
-        bold: true,
-        fontSize: 11,
-        color: "#1a1a2e",
-        margin: [0, 0, 0, 4],
+        margin: [0, 0, 0, 20],
       },
       {
         canvas: [
@@ -279,35 +245,49 @@ export async function generatePDF(data: string) {
             y1: 0,
             x2: 451,
             y2: 0,
-            lineWidth: 0.5,
+            lineWidth: 1,
             lineColor: "#cccccc",
           },
         ],
-        margin: [0, 0, 0, 10],
+        margin: [0, 0, 0, 20],
+      },
+
+      // ── Informações do Documento ──
+      {
+        text: "INFORMAÇÕES DO DOCUMENTO",
+        fontSize: 9,
+        bold: true,
+        color: "#888888",
+        letterSpacing: 1,
+        margin: [0, 0, 0, 12],
       },
       {
         columns: [
           {
             stack: [
-              { text: "Identificação", fontSize: 9, color: "#888888" },
+              { text: "Identificação", fontSize: 9, color: "#4a90d9" },
               {
                 text: configuration.oficioNumero,
                 fontSize: 13,
                 bold: true,
+                color: "#1a1a1a",
                 margin: [0, 2, 0, 0],
               },
             ],
+            width: "50%",
           },
           {
             stack: [
-              { text: "Assunto", fontSize: 9, color: "#888888" },
+              { text: "Assunto", fontSize: 9, color: "#4a90d9" },
               {
                 text: configuration.oficioAssunto,
                 fontSize: 13,
                 bold: true,
+                color: "#1a1a1a",
                 margin: [0, 2, 0, 0],
               },
             ],
+            width: "50%",
           },
         ],
         margin: [0, 0, 0, 16],
@@ -315,24 +295,14 @@ export async function generatePDF(data: string) {
       {
         text: "Código Hash (SHA-256)",
         fontSize: 9,
-        color: "#888888",
+        color: "#4a90d9",
         margin: [0, 0, 0, 4],
       },
       {
         text: configuration.hash ?? "—",
         fontSize: 9,
         color: "#333333",
-        background: "#f5f5f5",
-        margin: [0, 0, 0, 24],
-      },
-
-      // Signatários
-      {
-        text: "Signatários",
-        bold: true,
-        fontSize: 11,
-        color: "#1a1a2e",
-        margin: [0, 0, 0, 4],
+        margin: [0, 0, 0, 20],
       },
       {
         canvas: [
@@ -342,98 +312,113 @@ export async function generatePDF(data: string) {
             y1: 0,
             x2: 451,
             y2: 0,
-            lineWidth: 0.5,
+            lineWidth: 1,
             lineColor: "#cccccc",
           },
         ],
-        margin: [0, 0, 0, 10],
+        margin: [0, 0, 0, 20],
+      },
+
+      // ── Signatários ──
+      {
+        text: "SIGNATÁRIOS",
+        fontSize: 9,
+        bold: true,
+        color: "#888888",
+        margin: [0, 0, 0, 12],
       },
       {
+        // Card do signatário com borda
         table: {
-          widths: [38, "*"],
+          widths: ["*", 80],
           body: [
             [
-              // Avatar com iniciais
               {
-                canvas: [
+                stack: [
                   {
-                    type: "ellipse",
-                    x: 19,
-                    y: 19,
-                    r1: 19,
-                    r2: 19,
-                    color: "#dbeafe",
+                    text: configuration.oficioAutor,
+                    fontSize: 12,
+                    bold: true,
+                    color: "#1a1a1a",
+                  },
+                  {
+                    text: configuration.oficioAutorCargo,
+                    fontSize: 10,
+                    color: "#666666",
+                    margin: [0, 2, 0, 8],
+                  },
+                  {
+                    text: `Data/Hora: ${"26/06/2026 15:45"} (Horário de Brasília)`,
+                    fontSize: 9,
+                    color: "#4a90d9",
+                  },
+                  {
+                    text: `Autenticação: ${"Senha de Sistema"}`,
+                    fontSize: 9,
+                    color: "#4a90d9",
+                    margin: [0, 2, 0, 0],
                   },
                 ],
                 border: [false, false, false, false],
                 margin: [0, 0, 0, 0],
               },
               {
+                // Badge ASSINADO à direita
                 stack: [
                   {
-                    text: "ABC",
-                    fontSize: 13,
-                    color: "#1d4ed8",
-                    bold: true,
-                    relativePosition: { x: -30, y: -24 },
-                    alignment: "center",
-                  },
-                  { text: configuration.oficioAutor, fontSize: 12, bold: true },
-                  {
-                    text: configuration.oficioAutorCargo,
-                    fontSize: 10,
-                    color: "#666666",
-                    margin: [0, 2, 0, 6],
-                  },
-                  {
-                    text: `Data/Hora: ${"26/06/2026 15:32"}`,
-                    fontSize: 9,
-                    color: "#666666",
-                  },
-                  {
-                    text: `Autenticação: ${"Senha de Sistema"}`,
-                    fontSize: 9,
-                    color: "#666666",
-                    margin: [0, 2, 0, 8],
-                  },
-                  {
+                    // Ícone escudo (simulado com texto/canvas)
                     canvas: [
                       {
                         type: "rect",
-                        x: 0,
+                        x: 16,
                         y: 0,
-                        w: 70,
-                        h: 18,
-                        r: 9,
-                        color: "#dcfce7",
+                        w: 28,
+                        h: 28,
+                        r: 4,
+                        color: "#f0fdf4",
+                      },
+                      // triângulo/escudo aproximado
+                      {
+                        type: "polyline",
+                        points: [
+                          { x: 30, y: 4 },
+                          { x: 36, y: 8 },
+                          { x: 36, y: 18 },
+                          { x: 30, y: 24 },
+                          { x: 24, y: 18 },
+                          { x: 24, y: 8 },
+                        ],
+                        closePath: true,
+                        color: "#16a34a",
                       },
                     ],
-                    margin: [0, 0, 0, 0],
+                    margin: [0, 0, 0, 4],
                   },
                   {
-                    text: "✓ Assinado",
-                    fontSize: 9,
+                    text: "ASSINADO",
+                    fontSize: 8,
                     bold: true,
                     color: "#16a34a",
-                    relativePosition: { x: 8, y: -16 },
+                    alignment: "center",
                   },
                 ],
                 border: [false, false, false, false],
+                alignment: "center",
+                margin: [0, 4, 0, 0],
               },
             ],
           ],
         },
-        layout: "noBorders",
-        margin: [0, 0, 0, 24],
-      },
-
-      // Verificação
-      {
-        text: "Verificação de Autenticidade",
-        bold: true,
-        fontSize: 11,
-        color: "#1a1a2e",
-        margin: [0, 0, 0, 4],
+        layout: {
+          hLineWidth: () => 1,
+          vLineWidth: () => 0,
+          hLineColor: () => "#e5e7eb",
+          paddingLeft: () => 12,
+          paddingRight: () => 12,
+          paddingTop: () => 12,
+          paddingBottom: () => 12,
+        },
+        margin: [0, 0, 0, 20],
       },
       {
         canvas: [
@@ -443,42 +428,114 @@ export async function generatePDF(data: string) {
             y1: 0,
             x2: 451,
             y2: 0,
-            lineWidth: 0.5,
+            lineWidth: 1,
             lineColor: "#cccccc",
           },
         ],
-        margin: [0, 0, 0, 10],
+        margin: [0, 0, 0, 20],
+      },
+
+      // ── Verificação de Autenticidade ──
+      {
+        text: "VERIFICAÇÃO DE AUTENTICIDADE",
+        fontSize: 9,
+        bold: true,
+        color: "#888888",
+        margin: [0, 0, 0, 12],
       },
       {
+        text: "A autenticidade deste documento e de suas assinaturas pode ser verificada acessando o portal de validação através do link abaixo:",
+        fontSize: 10,
+        color: "#444444",
+        margin: [0, 0, 0, 12],
+      },
+      {
+        // Linha com URL + QR
         columns: [
           {
             stack: [
+              // Caixa da URL
               {
-                text: "A autenticidade deste documento pode ser verificada acessando o portal de validação:",
-                fontSize: 10,
-                color: "#444444",
+                table: {
+                  widths: ["*"],
+                  body: [
+                    [
+                      {
+                        text: "https://oficiopro.com.br/validacao",
+                        fontSize: 10,
+                        color: "#1d4ed8",
+                        border: [true, true, true, true],
+                        margin: [8, 6, 8, 6],
+                      },
+                    ],
+                  ],
+                },
+                layout: {
+                  hLineColor: () => "#bfdbfe",
+                  vLineColor: () => "#bfdbfe",
+                },
                 margin: [0, 0, 0, 8],
               },
+              // Linha "Informe o código"
               {
-                text: "https://oficiopro.com.br/validacao",
-                fontSize: 10,
-                color: "#1d4ed8",
-                margin: [0, 0, 0, 12],
-              },
-              {
-                text: `Código: ${configuration.hash?.slice(0, 4).toUpperCase()}-${configuration.hash?.slice(4, 8).toUpperCase()}-${configuration.hash?.slice(8, 12).toUpperCase()}`,
-                fontSize: 10,
-                bold: true,
+                columns: [
+                  {
+                    text: "Informe o seguinte código:",
+                    fontSize: 9,
+                    color: "#444444",
+                    width: "auto",
+                    margin: [0, 6, 6, 0],
+                  },
+                  {
+                    table: {
+                      widths: ["*"],
+                      body: [
+                        [
+                          {
+                            text: `${configuration.hash?.slice(0, 4).toUpperCase()}-${configuration.hash?.slice(4, 8).toUpperCase()}-${configuration.hash?.slice(8, 12).toUpperCase()}-${configuration.hash?.slice(12, 16).toUpperCase()}`,
+                            fontSize: 9,
+                            bold: true,
+                            color: "#1a1a1a",
+                            border: [true, true, true, true],
+                            margin: [8, 4, 8, 4],
+                          },
+                        ],
+                      ],
+                    },
+                    layout: {
+                      hLineColor: () => "#cccccc",
+                      vLineColor: () => "#cccccc",
+                    },
+                  },
+                ],
               },
             ],
             width: "*",
           },
-          // {
-          //   image: "",
-          //   width: 80,
-          //   height: 80,
-          //   margin: [12, 0, 0, 0],
-          // },
+          // QR Code placeholder (substitua por imagem gerada com qrcode lib)
+          {
+            canvas: [
+              {
+                type: "rect",
+                x: 0,
+                y: 0,
+                w: 52,
+                h: 52,
+                lineWidth: 1,
+                lineColor: "#cccccc",
+              },
+              // quadradinhos simulando QR
+              { type: "rect", x: 4, y: 4, w: 14, h: 14, color: "#1a1a1a" },
+              { type: "rect", x: 34, y: 4, w: 14, h: 14, color: "#1a1a1a" },
+              { type: "rect", x: 4, y: 34, w: 14, h: 14, color: "#1a1a1a" },
+              { type: "rect", x: 20, y: 20, w: 6, h: 6, color: "#1a1a1a" },
+              { type: "rect", x: 34, y: 34, w: 6, h: 6, color: "#1a1a1a" },
+              { type: "rect", x: 42, y: 34, w: 6, h: 6, color: "#1a1a1a" },
+              { type: "rect", x: 34, y: 42, w: 6, h: 6, color: "#1a1a1a" },
+            ],
+            width: 52,
+            margin: [12, 0, 0, 0],
+          },
         ],
       },
     ],
