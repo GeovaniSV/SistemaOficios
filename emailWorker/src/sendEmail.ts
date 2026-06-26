@@ -92,12 +92,13 @@ async function sendEmailWithRetry(
       const errorCodes: Record<string, string> = {
         ESOCKET: "Connection error",
         ETIMEDOUT: "Connection timed out",
-        EAUTH: "Authentication failed",
+        EAUTH: "Credênciais inválidas",
         EDNS: "DNS resolution failed",
         ETLS: "TLS handshake or STARTTLS failed",
-        ENOAUTH: "Authentication not provided",
+        ENOAUTH: "Sem credênciais de autenticação",
         EMESSAGE: "Message delivery error",
         EPROTOCOL: "Invalid SMTP server response",
+        ENOTFOUND: "Servidor SMTP inválido",
       };
 
       if (mustRetry) {
@@ -107,7 +108,7 @@ async function sendEmailWithRetry(
 
       if (!mustRetry) {
         const errorLog = {
-          correlationId: msg.properties.correlationId,
+          correlationId: new Date() + crypto.randomUUID(),
           code: error.code,
           message: error.message,
           status: error.status,
