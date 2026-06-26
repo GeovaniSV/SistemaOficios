@@ -4,7 +4,7 @@ import fs from "fs";
 import { getTransporter } from "./nodemailer";
 import logError from "./boxMessageLogger";
 import boxMessageLogger from "./boxMessageLogger";
-import { smtpConfig } from "./worker";
+import { smtpConfig, startWorker } from "./worker";
 
 export type EmailDataType = {
   oficioDestinatario: string;
@@ -100,31 +100,30 @@ async function sendEmailWithRetry(
         EPROTOCOL: "Invalid SMTP server response",
       };
 
-      const errorLog = {
-        correlationId: msg.properties.correlationId,
-        code: error.code,
-        message: error.message,
-        status: error.status,
-        queueName: "email_queue",
-        eventType: errorCodes[error.code] || "Unknown error",
-        metadata: {
-          attempt,
-          retries,
-          timestamp: new Date().toISOString(),
-        },
-        userId: data.userId.toString(),
-      };
-
       if (mustRetry) {
         console.log(`Retrying in ${delay / 1000} seconds...`);
         await new Promise((res) => setTimeout(res, delay));
       }
 
       if (!mustRetry) {
+        const errorLog = {
+          correlationId: msg.properties.correlationId,
+          code: error.code,
+          message: error.message,
+          status: error.status,
+          queueName: "email_queue",
+          eventType: errorCodes[error.code] || "Unknown error",
+          metadata: {
+            attempt,
+            retries,
+            timestamp: new Date().toISOString(),
+          },
+          userId: data.userId.toString(),
+        };
         console.error("All retry attempts failed. Email could not be sent.");
         boxMessageLogger(errorLog);
         attempt = retries;
-        throw error;
+        startWorker();
       }
     }
   }
