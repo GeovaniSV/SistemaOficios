@@ -1,13 +1,9 @@
 import "dotenv/config";
-import amqp from "amqplib";
 import fs from "fs";
-import {
-  S3Client,
-  PutObjectCommand,
-  S3ServiceException,
-} from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { PDFData } from "./generatePDF";
 import boxMessageLogger from "./boxMessageLogger";
+import { startWorker } from "./worker";
 
 const bucketName = "pdf-worker";
 const ENDPOINT = process.env.cloudflare_endpoint;
@@ -113,7 +109,7 @@ export async function uploadPDFWithRetry(
         };
         console.log(errorLog);
         boxMessageLogger(errorLog);
-        throw error;
+        setTimeout(startWorker, 5000);
       }
 
       await new Promise((resolve) => setTimeout(resolve, delay));

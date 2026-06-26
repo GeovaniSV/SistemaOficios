@@ -4,7 +4,7 @@ import { generatePDF } from "./generatePDF";
 
 const RABBITMQ_URL = process.env.RABBITMQ_URL;
 const queueName = "oficios_queue";
-async function startWorker() {
+export async function startWorker() {
   try {
     const connection = await amqp.connect(RABBITMQ_URL!);
     const channel = await connection.createChannel();
