@@ -96,22 +96,21 @@ export async function uploadPDFWithRetry(
         InvalidBucketName: "O nome do bucket é inválido.",
       };
 
-      const errorLog = {
-        correlationId: crypto.randomUUID(),
-        code: error.code,
-        message: error.message,
-        status: error.status,
-        queueName: "email_queue",
-        eventType: errorCodes[error.code] || "Unknown error",
-        metadata: {
-          attempt,
-          retries,
-          timestamp: new Date().toISOString(),
-        },
-        userId: data.userId.toString(),
-      };
-
       if (!mustRetry) {
+        const errorLog = {
+          correlationId: crypto.randomUUID(),
+          code: error.code,
+          message: error.message,
+          status: error.status,
+          queueName: "email_queue",
+          eventType: errorCodes[error.code] || "Unknown error",
+          metadata: {
+            attempt,
+            retries,
+            timestamp: new Date().toISOString(),
+          },
+          userId: data.userId.toString(),
+        };
         console.log(errorLog);
         boxMessageLogger(errorLog);
         throw error;

@@ -21,7 +21,7 @@ async function loadSMTP() {
   smtpConfig = data;
 }
 
-async function startWorker() {
+export async function startWorker() {
   try {
     await loadSMTP();
     const connection = await amqp.connect(RABBITMQ_URL!);
