@@ -473,12 +473,12 @@ export async function generatePDF(data: string) {
             ],
             width: "*",
           },
-          {
-            image: "",
-            width: 80,
-            height: 80,
-            margin: [12, 0, 0, 0],
-          },
+          // {
+          //   image: "",
+          //   width: 80,
+          //   height: 80,
+          //   margin: [12, 0, 0, 0],
+          // },
         ],
       },
     ],
