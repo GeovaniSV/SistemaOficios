@@ -2,6 +2,7 @@ var pdfmake = require("pdfmake");
 import publishToqueue from "./publisher";
 import { uploadPDFWithRetry } from "./publishPDF";
 import crypto from "crypto";
+import { startWorker } from "./worker";
 
 export type PDFData = {
   oficioNumero: string;
@@ -213,6 +214,189 @@ export async function generatePDF(data: string) {
           preserveLeadingSpaces: true,
           characterSpacing: 0,
         })),
+      { text: "", pageBreak: "before" }, // força segunda página
+
+      // ── Cabeçalho do protocolo ──
+      {
+        stack: [
+          {
+            canvas: [
+              {
+                type: "rect",
+                x: 0,
+                y: 0,
+                w: 451,
+                h: 50,
+                color: "#1a1a2e",
+                r: 4,
+              },
+            ],
+          },
+          {
+            text: "PROTOCOLO DE ASSINATURA ELETRÔNICA",
+            fontSize: 14,
+            bold: true,
+            color: "#ffffff",
+            alignment: "center",
+            relativePosition: { x: 0, y: -38 },
+          },
+          {
+            text: "Documento assinado digitalmente conforme MP nº 2.200-2/2001",
+            fontSize: 9,
+            color: "#cccccc",
+            alignment: "center",
+            relativePosition: { x: 0, y: -20 },
+          },
+        ],
+        margin: [0, 0, 0, 24],
+      },
+
+      // ── Informações do Documento ──
+      {
+        text: "Informações do Documento",
+        bold: true,
+        fontSize: 11,
+        margin: [0, 0, 0, 10],
+        color: "#1a1a2e",
+      },
+      {
+        table: {
+          widths: ["*", "*"],
+          body: [
+            [
+              {
+                text: "Identificação",
+                fontSize: 9,
+                color: "#666666",
+                border: [false, false, false, false],
+              },
+              {
+                text: "Assunto",
+                fontSize: 9,
+                color: "#666666",
+                border: [false, false, false, false],
+              },
+            ],
+            [
+              {
+                text: configuration.oficioNumero,
+                bold: true,
+                fontSize: 11,
+                border: [false, false, false, true],
+                borderColor: [false, false, false, "#e0e0e0"],
+                margin: [0, 0, 0, 8],
+              },
+              {
+                text: configuration.oficioAssunto,
+                bold: true,
+                fontSize: 11,
+                border: [false, false, false, true],
+                borderColor: [false, false, false, "#e0e0e0"],
+                margin: [0, 0, 0, 8],
+              },
+            ],
+          ],
+        },
+        layout: "noBorders",
+        margin: [0, 0, 0, 16],
+      },
+      {
+        text: "Código Hash (SHA-256)",
+        fontSize: 9,
+        color: "#666666",
+        margin: [0, 0, 0, 4],
+      },
+      {
+        text: "—",
+        fontSize: 9,
+        font: "Roboto",
+        color: "#333333",
+        background: "#f5f5f5",
+        margin: [0, 0, 0, 24],
+      },
+
+      // ── Signatários ──
+      {
+        text: "Signatários",
+        bold: true,
+        fontSize: 11,
+        margin: [0, 0, 0, 10],
+        color: "#1a1a2e",
+      },
+      {
+        stack: [
+          {
+            canvas: [
+              {
+                type: "rect",
+                x: 0,
+                y: 0,
+                w: 451,
+                h: 80,
+                color: "#f9f9f9",
+                r: 4,
+              },
+            ],
+          },
+          {
+            stack: [
+              { text: configuration.oficioAutor, bold: true, fontSize: 11 },
+              {
+                text: configuration.oficioAutorCargo,
+                fontSize: 10,
+                color: "#555555",
+                margin: [0, 2, 0, 6],
+              },
+              {
+                text: `Data/Hora: ${"—"}`,
+                fontSize: 9,
+                color: "#666666",
+              },
+              {
+                text: `Autenticação: ${"Senha de Sistema"}`,
+                fontSize: 9,
+                color: "#666666",
+                margin: [0, 2, 0, 6],
+              },
+              {
+                text: "✓ Assinado",
+                fontSize: 9,
+                bold: true,
+                color: "#2e7d32",
+              },
+            ],
+            relativePosition: { x: 12, y: -72 },
+          },
+        ],
+        margin: [0, 0, 0, 24],
+      },
+
+      // ── Verificação ──
+      {
+        text: "Verificação de Autenticidade",
+        bold: true,
+        fontSize: 11,
+        margin: [0, 0, 0, 8],
+        color: "#1a1a2e",
+      },
+      {
+        text: "A autenticidade deste documento e de suas assinaturas pode ser verificada acessando o portal de validação através do link abaixo:",
+        fontSize: 10,
+        color: "#444444",
+        margin: [0, 0, 0, 8],
+      },
+      {
+        text: "https://oficiopro.com.br/validacao",
+        fontSize: 10,
+        color: "#1565c0",
+        margin: [0, 0, 0, 8],
+      },
+      {
+        text: `Informe o seguinte código:  "—"}`,
+        fontSize: 10,
+        bold: true,
+        color: "#333333",
+      },
     ],
 
     images: {
@@ -235,6 +419,7 @@ export async function generatePDF(data: string) {
         });
       },
       (err: any) => {
+        setTimeout(startWorker, 5000);
         console.error(err);
       },
     );
