@@ -1,8 +1,12 @@
+import "dotenv/config";
 var pdfmake = require("pdfmake");
 import publishToqueue from "./publisher";
 import { uploadPDFWithRetry } from "./publishPDF";
 import crypto from "crypto";
+import QRCode from "qrcode";
 import { startWorker } from "./worker";
+
+const frontURL = process.env.FRONT_URL;
 
 export type PDFData = {
   oficioNumero: string;
@@ -30,20 +34,21 @@ const fonts = {
     bolditalics: "fonts/Roboto/static/Roboto-MediumItalic.ttf",
   },
 };
-pdfmake.addFonts(fonts);
-
-pdfmake.setUrlAccessPolicy((url: string) => {
-  return url.startsWith(
-    "https://www.oabsinop.com.br/images/logo-oabsinop-40anos.png",
-  );
-});
-
-pdfmake.setLocalAccessPolicy((path: string) => {
-  return true;
-});
 
 export async function generatePDF(data: string) {
   const pdfData: PDFData = JSON.parse(data);
+
+  await pdfmake.addFonts(fonts);
+
+  await pdfmake.setUrlAccessPolicy((url: string) => {
+    return url.startsWith(
+      "https://www.oabsinop.com.br/images/logo-oabsinop-40anos.png",
+    );
+  });
+
+  await pdfmake.setLocalAccessPolicy((path: string) => {
+    return true;
+  });
 
   const configuration = {
     oficioNumero: pdfData.oficioNumero,
@@ -61,6 +66,11 @@ export async function generatePDF(data: string) {
     oficioFooter: pdfData.oficioFooter,
     hash: pdfData.hash,
   };
+
+  const qrDataUrl = await QRCode.toDataURL(
+    `${frontURL}/validacao?codigo=${configuration.hash}`,
+    { width: 300, margin: 2 },
+  );
 
   const headerLines = configuration.oficioHeader.split("\n");
 
@@ -218,12 +228,6 @@ export async function generatePDF(data: string) {
             alignment: "center",
             margin: [0, 0, 0, 4],
           },
-          {
-            text: "Documento assinado digitalmente conforme MP nº 2.200-2/2001",
-            fontSize: 9,
-            color: "#666666",
-            alignment: "center",
-          },
         ],
         margin: [0, 0, 0, 14],
       },
@@ -282,7 +286,7 @@ export async function generatePDF(data: string) {
         margin: [0, 0, 0, 12],
       },
       {
-        text: "Código Hash (SHA-256)",
+        text: "Código Hash",
         fontSize: 9,
         color: "#4a90d9",
         margin: [0, 0, 0, 4],
@@ -429,7 +433,7 @@ export async function generatePDF(data: string) {
                   body: [
                     [
                       {
-                        text: "https://oficiopro.com.br/validacao",
+                        text: `${frontURL}/validacao/${configuration.hash}`,
                         fontSize: 10,
                         color: "#1d4ed8",
                         border: [true, true, true, true],
@@ -459,7 +463,7 @@ export async function generatePDF(data: string) {
                       body: [
                         [
                           {
-                            text: "hashCodigo", // ← código real do UUID, não mais "sdsa"
+                            text: configuration.hash,
                             fontSize: 9,
                             bold: true,
                             color: "#1a1a1a",
@@ -475,31 +479,15 @@ export async function generatePDF(data: string) {
                     },
                   },
                 ],
+                margin: [0, 0, 0, 16],
               },
-            ],
-            width: "*",
-          },
-          {
-            canvas: [
               {
-                type: "rect",
-                x: 0,
-                y: 0,
-                w: 52,
-                h: 52,
-                lineWidth: 1,
-                lineColor: "#cccccc",
+                image: "qrcode",
+                width: 104, // dobro do original — ainda impactante, mas cabe
+                height: 104,
+                alignment: "center",
               },
-              { type: "rect", x: 4, y: 4, w: 14, h: 14, color: "#1a1a1a" },
-              { type: "rect", x: 34, y: 4, w: 14, h: 14, color: "#1a1a1a" },
-              { type: "rect", x: 4, y: 34, w: 14, h: 14, color: "#1a1a1a" },
-              { type: "rect", x: 20, y: 20, w: 6, h: 6, color: "#1a1a1a" },
-              { type: "rect", x: 34, y: 34, w: 6, h: 6, color: "#1a1a1a" },
-              { type: "rect", x: 42, y: 34, w: 6, h: 6, color: "#1a1a1a" },
-              { type: "rect", x: 34, y: 42, w: 6, h: 6, color: "#1a1a1a" },
             ],
-            width: 52,
-            margin: [12, 0, 0, 0],
           },
         ],
       },
@@ -509,11 +497,12 @@ export async function generatePDF(data: string) {
 
     images: {
       logo: "https://www.oabsinop.com.br/images/logo-oabsinop-40anos.png",
+      qrcode: qrDataUrl, // ← adiciona aqui
     },
   };
 
   const pdfPath = `./pdfs/${pdfData.hash}.pdf`;
-  pdfmake
+  await pdfmake
     .createPdf(docDefinition)
     .write(pdfPath)
     .then(
