@@ -66,7 +66,7 @@ export async function generatePDF(data: string) {
 
   const docDefinition: any = {
     pageSize: "A4",
-    pageMargins: [72, 180, 72, 160], // left, top, right, bottom
+    pageMargins: [72, 40, 72, 160], // pequeno e fixo pras duas páginas
 
     defaultStyle: {
       font: "Roboto",
@@ -74,57 +74,8 @@ export async function generatePDF(data: string) {
       lineHeight: 1.5,
     },
 
-    patterns: [],
-
-    header: function (page: number, pages: number) {
-      return {
-        stack: [
-          {
-            image: "logo",
-            width: 50,
-            height: 25,
-            alignment: "center",
-            margin: [0, 0, 0, 10],
-          },
-          {
-            text: `${headerLines[0]}`,
-            fontSize: 14,
-            bold: true,
-            alignment: "center",
-            margin: [0, 0, 0, 5],
-          },
-          {
-            text: `${headerLines[1]}`,
-            fontSize: 12,
-            medium: true,
-            alignment: "center",
-            margin: [0, 0, 0, 5],
-          },
-          {
-            text: `${headerLines[2]}`,
-            fontSize: 11,
-            alignment: "center",
-            margin: [0, 0, 0, 5],
-          },
-          {
-            canvas: [
-              {
-                type: "line",
-                x1: 72,
-                y1: 0,
-                x2: 523,
-                y2: 0,
-                lineWidth: 1.5,
-                lineColor: "#000000", // ← vermelho pra testar
-              },
-            ],
-          },
-        ],
-        margin: [0, 20, 0, 0],
-      };
-    },
-
     footer: function (page: number, pages: number) {
+      if (page > 1) return { text: "", margin: [0, -160, 0, 0] };
       return {
         stack: [
           {
@@ -155,14 +106,14 @@ export async function generatePDF(data: string) {
                 lineColor: "#000000", // ← vermelho pra testar
               },
             ],
-            margin: [0, 0, 0, 20],
+            margin: [0, 0, 0, 12],
           },
           {
             image: "logo",
             width: 50,
             height: 25,
             alignment: "center",
-            margin: [0, 0, 0, 20],
+            margin: [0, 0, 0, 12],
           },
           {
             text: `${configuration.oficioFooter}`,
@@ -175,18 +126,61 @@ export async function generatePDF(data: string) {
       };
     },
 
+    // SEM função header/footer — tudo dentro do content, controlado manualmente
     content: [
+      // ════════════════ CABEÇALHO (somente página 1) ════════════════
       {
-        text: `${configuration.oficioNumero}`,
+        image: "logo",
+        width: 50,
+        height: 25,
+        alignment: "center",
+        margin: [0, 0, 0, 10],
+      },
+      {
+        text: headerLines[0] ?? "",
+        fontSize: 14,
+        bold: true,
+        alignment: "center",
+        margin: [0, 0, 0, 5],
+      },
+      {
+        text: headerLines[1] ?? "",
+        fontSize: 12,
+        alignment: "center",
+        margin: [0, 0, 0, 5],
+      },
+      {
+        text: headerLines[2] ?? "",
+        fontSize: 11,
+        alignment: "center",
+        margin: [0, 0, 0, 5],
+      },
+      {
+        canvas: [
+          {
+            type: "line",
+            x1: 0,
+            y1: 0,
+            x2: 451,
+            y2: 0,
+            lineWidth: 1.5,
+            lineColor: "#000000",
+          },
+        ],
+        margin: [0, 0, 0, 20],
+      },
+
+      // ════════════════ CONTEÚDO DO OFÍCIO ════════════════
+      {
+        text: configuration.oficioNumero,
         alignment: "right",
         fontSize: 12,
         margin: [0, 10, 0, 20],
       },
       {
-        text: `${configuration.oficioDestinatarioTratamento}`,
+        text: configuration.oficioDestinatarioTratamento,
         alignment: "left",
         fontSize: 12,
-        margin: [0, 0, 0, 0],
       },
       {
         text: `${configuration.oficioDestinatarioCargo} ${configuration.oficioDestinatarioNome} (${configuration.oficioDestinatarioInstituicao})`,
@@ -210,15 +204,11 @@ export async function generatePDF(data: string) {
           alignment: "justify" as const,
           fontSize: 12,
           margin: [0, 0, 0, 12],
-          noWrap: false,
-          preserveLeadingSpaces: true,
-          characterSpacing: 0,
         })),
 
-      // ── Página 2: Protocolo ──
+      // ════════════════ PÁGINA 2: PROTOCOLO (sem header/footer institucional) ════════════════
       { text: "", pageBreak: "before" },
 
-      // Título centralizado (sem fundo, só texto bold + subtítulo)
       {
         stack: [
           {
@@ -235,7 +225,7 @@ export async function generatePDF(data: string) {
             alignment: "center",
           },
         ],
-        margin: [0, 0, 0, 20],
+        margin: [0, 0, 0, 14],
       },
       {
         canvas: [
@@ -249,7 +239,7 @@ export async function generatePDF(data: string) {
             lineColor: "#cccccc",
           },
         ],
-        margin: [0, 0, 0, 20],
+        margin: [0, 0, 0, 14],
       },
 
       // ── Informações do Documento ──
@@ -258,8 +248,7 @@ export async function generatePDF(data: string) {
         fontSize: 9,
         bold: true,
         color: "#888888",
-        letterSpacing: 1,
-        margin: [0, 0, 0, 12],
+        margin: [0, 0, 0, 10],
       },
       {
         columns: [
@@ -290,7 +279,7 @@ export async function generatePDF(data: string) {
             width: "50%",
           },
         ],
-        margin: [0, 0, 0, 16],
+        margin: [0, 0, 0, 12],
       },
       {
         text: "Código Hash (SHA-256)",
@@ -302,7 +291,7 @@ export async function generatePDF(data: string) {
         text: configuration.hash ?? "—",
         fontSize: 9,
         color: "#333333",
-        margin: [0, 0, 0, 20],
+        margin: [0, 0, 0, 14],
       },
       {
         canvas: [
@@ -316,7 +305,7 @@ export async function generatePDF(data: string) {
             lineColor: "#cccccc",
           },
         ],
-        margin: [0, 0, 0, 20],
+        margin: [0, 0, 0, 14],
       },
 
       // ── Signatários ──
@@ -325,10 +314,9 @@ export async function generatePDF(data: string) {
         fontSize: 9,
         bold: true,
         color: "#888888",
-        margin: [0, 0, 0, 12],
+        margin: [0, 0, 0, 10],
       },
       {
-        // Card do signatário com borda
         table: {
           widths: ["*", 80],
           body: [
@@ -345,7 +333,7 @@ export async function generatePDF(data: string) {
                     text: configuration.oficioAutorCargo,
                     fontSize: 10,
                     color: "#666666",
-                    margin: [0, 2, 0, 8],
+                    margin: [0, 2, 0, 6],
                   },
                   {
                     text: `Data/Hora: ${"26/06/2026 15:45"} (Horário de Brasília)`,
@@ -360,35 +348,18 @@ export async function generatePDF(data: string) {
                   },
                 ],
                 border: [false, false, false, false],
-                margin: [0, 0, 0, 0],
               },
               {
-                // Badge ASSINADO à direita
+                // Badge ASSINADO — ícone via canvas (não usa caractere de fonte)
                 stack: [
                   {
-                    // Ícone escudo (simulado com texto/canvas)
                     canvas: [
                       {
-                        type: "rect",
-                        x: 16,
-                        y: 0,
-                        w: 28,
-                        h: 28,
-                        r: 4,
-                        color: "#f0fdf4",
-                      },
-                      // triângulo/escudo aproximado
-                      {
-                        type: "polyline",
-                        points: [
-                          { x: 30, y: 4 },
-                          { x: 36, y: 8 },
-                          { x: 36, y: 18 },
-                          { x: 30, y: 24 },
-                          { x: 24, y: 18 },
-                          { x: 24, y: 8 },
-                        ],
-                        closePath: true,
+                        type: "ellipse",
+                        x: 14,
+                        y: 8,
+                        r1: 8,
+                        r2: 8,
                         color: "#16a34a",
                       },
                     ],
@@ -404,7 +375,6 @@ export async function generatePDF(data: string) {
                 ],
                 border: [false, false, false, false],
                 alignment: "center",
-                margin: [0, 4, 0, 0],
               },
             ],
           ],
@@ -413,12 +383,12 @@ export async function generatePDF(data: string) {
           hLineWidth: () => 1,
           vLineWidth: () => 0,
           hLineColor: () => "#e5e7eb",
-          paddingLeft: () => 12,
-          paddingRight: () => 12,
-          paddingTop: () => 12,
-          paddingBottom: () => 12,
+          paddingLeft: () => 10,
+          paddingRight: () => 10,
+          paddingTop: () => 8,
+          paddingBottom: () => 8,
         },
-        margin: [0, 0, 0, 20],
+        margin: [0, 0, 0, 14],
       },
       {
         canvas: [
@@ -432,7 +402,7 @@ export async function generatePDF(data: string) {
             lineColor: "#cccccc",
           },
         ],
-        margin: [0, 0, 0, 20],
+        margin: [0, 0, 0, 14],
       },
 
       // ── Verificação de Autenticidade ──
@@ -441,20 +411,18 @@ export async function generatePDF(data: string) {
         fontSize: 9,
         bold: true,
         color: "#888888",
-        margin: [0, 0, 0, 12],
+        margin: [0, 0, 0, 10],
       },
       {
         text: "A autenticidade deste documento e de suas assinaturas pode ser verificada acessando o portal de validação através do link abaixo:",
         fontSize: 10,
         color: "#444444",
-        margin: [0, 0, 0, 12],
+        margin: [0, 0, 0, 10],
       },
       {
-        // Linha com URL + QR
         columns: [
           {
             stack: [
-              // Caixa da URL
               {
                 table: {
                   widths: ["*"],
@@ -476,7 +444,6 @@ export async function generatePDF(data: string) {
                 },
                 margin: [0, 0, 0, 8],
               },
-              // Linha "Informe o código"
               {
                 columns: [
                   {
@@ -492,7 +459,7 @@ export async function generatePDF(data: string) {
                       body: [
                         [
                           {
-                            text: `${configuration.hash?.slice(0, 4).toUpperCase()}-${configuration.hash?.slice(4, 8).toUpperCase()}-${configuration.hash?.slice(8, 12).toUpperCase()}-${configuration.hash?.slice(12, 16).toUpperCase()}`,
+                            text: "hashCodigo", // ← código real do UUID, não mais "sdsa"
                             fontSize: 9,
                             bold: true,
                             color: "#1a1a1a",
@@ -512,7 +479,6 @@ export async function generatePDF(data: string) {
             ],
             width: "*",
           },
-          // QR Code placeholder (substitua por imagem gerada com qrcode lib)
           {
             canvas: [
               {
@@ -524,7 +490,6 @@ export async function generatePDF(data: string) {
                 lineWidth: 1,
                 lineColor: "#cccccc",
               },
-              // quadradinhos simulando QR
               { type: "rect", x: 4, y: 4, w: 14, h: 14, color: "#1a1a1a" },
               { type: "rect", x: 34, y: 4, w: 14, h: 14, color: "#1a1a1a" },
               { type: "rect", x: 4, y: 34, w: 14, h: 14, color: "#1a1a1a" },
@@ -538,6 +503,8 @@ export async function generatePDF(data: string) {
           },
         ],
       },
+
+      // ════════════════ FIM — SEM RODAPÉ INSTITUCIONAL NA PÁGINA 2 ════════════════
     ],
 
     images: {

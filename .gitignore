@@ -13,6 +13,9 @@ build/
 .env.test
 .phpstorm.meta.php
 
+# ===== Criado pelos containers =====
+nginx
+
 # ===== LOGS =====
 logs/
 *.log

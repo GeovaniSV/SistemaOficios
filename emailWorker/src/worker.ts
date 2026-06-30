@@ -39,6 +39,8 @@ export async function startWorker() {
 
         const msgParser: EmailDataType = JSON.parse(msg.content.toString());
 
+        console.log(msgParser);
+
         if (msgParser.event === "SMTP_CONFIG_UPDATED") {
           loadSMTP();
         } else {
