@@ -16,7 +16,7 @@ class OficioService
 
     public function list()
     {
-        return Oficio::with([
+        return Oficio::latest()->with([
             'destinationContact',
             'responsibles',
             'author',
