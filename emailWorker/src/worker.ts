@@ -23,7 +23,9 @@ async function loadSMTP() {
 
 async function startWorker() {
   try {
-    await loadSMTP();
+    await loadSMTP().catch((err) => {
+      console.warn("[SMTP] Não foi possível carregar config remota, usando variáveis de ambiente:", err.message);
+    });
     const connection = await amqp.connect(RABBITMQ_URL!);
     const channel = await connection.createChannel();
     await channel.assertQueue(queueName, { durable: true });

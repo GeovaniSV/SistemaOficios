@@ -29,20 +29,21 @@ const fonts = {
     bolditalics: "fonts/Roboto/static/Roboto-MediumItalic.ttf",
   },
 };
-pdfmake.addFonts(fonts);
-
-pdfmake.setUrlAccessPolicy((url: string) => {
-  return url.startsWith(
-    "https://www.oabsinop.com.br/images/logo-oabsinop-40anos.png",
-  );
-});
-
-pdfmake.setLocalAccessPolicy((path: string) => {
-  return true;
-});
 
 export async function generatePDF(data: string) {
   const pdfData: PDFData = JSON.parse(data);
+
+  await pdfmake.addFonts(fonts);
+
+  await pdfmake.setUrlAccessPolicy((url: string) => {
+    return url.startsWith(
+      "https://www.oabsinop.com.br/images/logo-oabsinop-40anos.png",
+    );
+  });
+
+  await pdfmake.setLocalAccessPolicy((path: string) => {
+    return true;
+  });
 
   const configuration = {
     oficioNumero: pdfData.oficioNumero,
@@ -223,12 +224,12 @@ export async function generatePDF(data: string) {
   };
 
   const pdfPath = `./pdfs/${pdfData.hash}.pdf`;
-  pdfmake
+  await pdfmake
     .createPdf(docDefinition)
     .write(pdfPath)
     .then(
       () => {
-        uploadPDFWithRetry(data, pdfPath, `${pdfData.hash}.pdf`);
+        // uploadPDFWithRetry(data, pdfPath, `${pdfData.hash}.pdf`);
         publishToqueue({
           oficioAssunto: pdfData.oficioAssunto,
           oficioDestinatario: pdfData.oficioDestinatario,
@@ -237,7 +238,8 @@ export async function generatePDF(data: string) {
         });
       },
       (err: any) => {
-        console.error(err);
+        console.error("Erro ao gerar PDF:", err);
+        throw err;
       },
     );
 }

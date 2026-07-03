@@ -16,7 +16,7 @@ export type EmailDataType = {
 async function sendEmail(msg: amqp.Message): Promise<void> {
   const data: EmailDataType = JSON.parse(msg.content.toString());
   await transporter.sendMail({
-    from: "seu_nome@test-xkjn41mw9w04z781.mlsender.net",
+    from: "b07e8f001@smtp-brevo.com",
     to: data.oficioDestinatario,
     subject: data.oficioAssunto,
     text: `
