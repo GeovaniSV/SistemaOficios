@@ -20,6 +20,7 @@ class Message extends Model
 
     protected $hidden = [
         'pdf_hash',
+        'validation_hash',
     ];
 
     protected $casts = [
@@ -30,7 +31,8 @@ class Message extends Model
     protected static function booted(): void
     {
         static::creating(function (Message $message) {
-            $message->pdf_hash ??= (string) Str::uuid();
+            $message->pdf_hash        ??= (string) Str::uuid();
+            $message->validation_hash ??= (string) Str::uuid();
         });
     }
 

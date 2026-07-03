@@ -54,6 +54,35 @@ class MessageService
         ];
     }
 
+    public function validateByHash(string $codigo): array
+    {
+        $message = Message::where('validation_hash', $codigo)->first();
+
+        if (!$message) {
+            return [
+                'success' => false,
+                'message' => 'don\'t exists a PDF for this hash',
+            ];
+        }
+
+        $path = "oficios/{$message->pdf_hash}.pdf";
+
+        if (!Storage::disk('r2')->exists($path)) {
+            return [
+                'success' => false,
+                'message' => 'don\'t exists a PDF for this hash',
+            ];
+        }
+
+        $url = Storage::disk('r2')->temporaryUrl($path, now()->addMinutes(60));
+
+        return [
+            'success' => true,
+            'message' => 'a PDF exists for this hash',
+            'path'    => $url,
+        ];
+    }
+
     public function downloadPdf(Message $message): StreamedResponse
     {
         if (!$message->pdf_hash) {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ValidacaoController;
 use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\OficioController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Api\WorkerLogController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('auth/login', [AuthController::class, 'login']);
+Route::get('validacao', [ValidacaoController::class, 'validate']);
 
 Route::middleware('broker.auth')->group(function () {
     Route::get('broker/smtp-config', [SmtpConfigController::class, 'brokerShow']);
