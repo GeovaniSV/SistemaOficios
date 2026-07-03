@@ -1,0 +1,773 @@
+name: Contatos
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/contacts
+    metadata:
+      custom: []
+      groupName: Contatos
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Listar contatos'
+      description: 'Retorna lista paginada de contatos. Filtre pelo status com o parâmetro `is_active`.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      is_active:
+        custom: []
+        name: is_active
+        description: 'Filtra por status ativo/inativo. Omita para retornar todos.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      is_active: true
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "current_page": 1,
+            "data": [{
+              "id": 1,
+              "name": "OAB Nacional",
+              "tipo": "PJ",
+              "email": "oab@oab.org.br",
+              "is_active": true,
+              "address": { "street": "SHS Q. 6", "city": "Brasília", "state": "DF" }
+            }],
+            "per_page": 20,
+            "total": 1
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 5|IyfnMVvZ4SX8Csu8DfR1dF6aAp7dksJ6CYTxLAlw317d1179'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/contacts
+    metadata:
+      custom: []
+      groupName: Contatos
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Criar contato'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      type:
+        custom: []
+        name: type
+        description: ''
+        required: true
+        example: PJ
+        type: string
+        enumValues:
+          - PF
+          - PJ
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      doc:
+        custom: []
+        name: doc
+        description: 'Must not be greater than 14 characters.'
+        required: true
+        example: bngzmiyvdljnik
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      name:
+        custom: []
+        name: name
+        description: 'Must not be greater than 191 characters.'
+        required: true
+        example: h
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      address:
+        custom: []
+        name: address
+        description: ''
+        required: true
+        example: []
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      address.cep:
+        custom: []
+        name: address.cep
+        description: 'Must be 8 characters.'
+        required: true
+        example: bngzmiyv
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      address.logradouro:
+        custom: []
+        name: address.logradouro
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      address.numero:
+        custom: []
+        name: address.numero
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      address.bairro:
+        custom: []
+        name: address.bairro
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      address.cidade:
+        custom: []
+        name: address.cidade
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      address.estado:
+        custom: []
+        name: address.estado
+        description: 'Must be 2 characters.'
+        required: true
+        example: ng
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      responsibles:
+        custom: []
+        name: responsibles
+        description: 'Must have at least 1 items.'
+        required: true
+        example:
+          - []
+        type: 'object[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'responsibles[].name':
+        custom: []
+        name: 'responsibles[].name'
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'responsibles[].email':
+        custom: []
+        name: 'responsibles[].email'
+        description: 'Must be a valid email address.'
+        required: true
+        example: zbailey@example.net
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'responsibles[].treatment':
+        custom: []
+        name: 'responsibles[].treatment'
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      'responsibles[].position':
+        custom: []
+        name: 'responsibles[].position'
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      'responsibles[].department':
+        custom: []
+        name: 'responsibles[].department'
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      type: PJ
+      doc: bngzmiyvdljnik
+      name: h
+      address:
+        cep: bngzmiyv
+        logradouro: architecto
+        numero: architecto
+        bairro: architecto
+        cidade: architecto
+        estado: ng
+      responsibles:
+        -
+          name: architecto
+          email: zbailey@example.net
+          treatment: architecto
+          position: architecto
+          department: architecto
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+            "id": 2,
+            "name": "TRT 10ª Região",
+            "tipo": "PJ",
+            "email": "trt10@trt10.jus.br",
+            "is_active": true
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 5|IyfnMVvZ4SX8Csu8DfR1dF6aAp7dksJ6CYTxLAlw317d1179'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/contacts/{id}'
+    metadata:
+      custom: []
+      groupName: Contatos
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Exibir contato'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'ID do contato.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "id": 1,
+            "name": "OAB Nacional",
+            "tipo": "PJ",
+            "email": "oab@oab.org.br",
+            "is_active": true,
+            "address": { "street": "SHS Q. 6", "city": "Brasília", "state": "DF" }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"message": "Contato não encontrado."}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 5|IyfnMVvZ4SX8Csu8DfR1dF6aAp7dksJ6CYTxLAlw317d1179'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'api/contacts/{id}'
+    metadata:
+      custom: []
+      groupName: Contatos
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Atualizar contato'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'ID do contato.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      type:
+        custom: []
+        name: type
+        description: ''
+        required: true
+        example: PF
+        type: string
+        enumValues:
+          - PF
+          - PJ
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      doc:
+        custom: []
+        name: doc
+        description: 'Must not be greater than 14 characters.'
+        required: false
+        example: bngzmiyvdljnik
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      name:
+        custom: []
+        name: name
+        description: 'Must not be greater than 191 characters.'
+        required: true
+        example: h
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      address:
+        custom: []
+        name: address
+        description: ''
+        required: true
+        example: []
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      address.cep:
+        custom: []
+        name: address.cep
+        description: 'Must be 8 characters.'
+        required: true
+        example: bngzmiyv
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      address.logradouro:
+        custom: []
+        name: address.logradouro
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      address.numero:
+        custom: []
+        name: address.numero
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      address.bairro:
+        custom: []
+        name: address.bairro
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      address.cidade:
+        custom: []
+        name: address.cidade
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      address.estado:
+        custom: []
+        name: address.estado
+        description: 'Must be 2 characters.'
+        required: true
+        example: ng
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      responsibles:
+        custom: []
+        name: responsibles
+        description: 'Must have at least 1 items.'
+        required: true
+        example:
+          - []
+        type: 'object[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'responsibles[].name':
+        custom: []
+        name: 'responsibles[].name'
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'responsibles[].email':
+        custom: []
+        name: 'responsibles[].email'
+        description: 'Must be a valid email address.'
+        required: true
+        example: zbailey@example.net
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'responsibles[].treatment':
+        custom: []
+        name: 'responsibles[].treatment'
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      'responsibles[].position':
+        custom: []
+        name: 'responsibles[].position'
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      'responsibles[].department':
+        custom: []
+        name: 'responsibles[].department'
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      type: PF
+      doc: bngzmiyvdljnik
+      name: h
+      address:
+        cep: bngzmiyv
+        logradouro: architecto
+        numero: architecto
+        bairro: architecto
+        cidade: architecto
+        estado: ng
+      responsibles:
+        -
+          name: architecto
+          email: zbailey@example.net
+          treatment: architecto
+          position: architecto
+          department: architecto
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "id": 1,
+            "name": "OAB Nacional Atualizado",
+            "tipo": "PJ",
+            "is_active": true
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 5|IyfnMVvZ4SX8Csu8DfR1dF6aAp7dksJ6CYTxLAlw317d1179'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/contacts/{id}'
+    metadata:
+      custom: []
+      groupName: Contatos
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Inativar / Reativar contato'
+      description: 'Quando `activate=false` (padrão), inativa o contato. Quando `activate=true`, reativa.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'ID do contato.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters:
+      activate:
+        custom: []
+        name: activate
+        description: 'Passa `true` para reativar, `false` (padrão) para inativar.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      activate: false
+    bodyParameters:
+      activate:
+        custom: []
+        name: activate
+        description: ''
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      activate: true
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{ "id": 1, "name": "OAB Nacional", "is_active": false }'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 5|IyfnMVvZ4SX8Csu8DfR1dF6aAp7dksJ6CYTxLAlw317d1179'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/contacts/{id}/responsibles'
+    metadata:
+      custom: []
+      groupName: Contatos
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Responsáveis do contato'
+      description: 'Retorna a lista de responsáveis (pessoas físicas) vinculados ao contato.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'ID do contato.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          [{
+            "id": 1,
+            "name": "João da Silva",
+            "email": "joao@oab.org.br",
+            "treatment": "Dr.",
+            "position": "Presidente"
+          }]
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 5|IyfnMVvZ4SX8Csu8DfR1dF6aAp7dksJ6CYTxLAlw317d1179'
+    controller: null
+    method: null
+    route: null

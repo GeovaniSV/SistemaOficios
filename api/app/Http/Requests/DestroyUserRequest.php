@@ -13,6 +13,8 @@ class DestroyUserRequest extends FormRequest
 
     public function rules(): array
     {
-        return [];
+        return [
+            'activate' => ['sometimes', 'boolean'],
+        ];
     }
 }

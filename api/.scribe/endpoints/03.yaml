@@ -1,0 +1,480 @@
+name: Usuários
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/users
+    metadata:
+      custom: []
+      groupName: Usuários
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Listar usuários'
+      description: 'Retorna lista paginada de usuários com cargo e papéis.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "current_page": 1,
+            "data": [{
+              "id": 1,
+              "name": "Hugo Barbosa",
+              "email": "hugo@example.com",
+              "is_active": true,
+              "is_dev": false,
+              "position": { "id": 1, "name": "Diretor" },
+              "roles": [{ "id": 1, "name": "admin" }]
+            }],
+            "per_page": 20,
+            "total": 1
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 5|IyfnMVvZ4SX8Csu8DfR1dF6aAp7dksJ6CYTxLAlw317d1179'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/users
+    metadata:
+      custom: []
+      groupName: Usuários
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Criar usuário'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'Must not be greater than 255 characters.'
+        required: true
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      email:
+        custom: []
+        name: email
+        description: 'Must be a valid email address.'
+        required: true
+        example: zbailey@example.net
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      password:
+        custom: []
+        name: password
+        description: 'Must be at least 8 characters.'
+        required: true
+        example: '-0pBNvYgxw'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      cpf:
+        custom: []
+        name: cpf
+        description: 'Must match the regex /^\d{3}\.\d{3}\.\d{3}-\d{2}$|^\d{11}$/.'
+        required: false
+        example: 559.314.232-68$|^22820492192
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      position_id:
+        custom: []
+        name: position_id
+        description: 'The <code>id</code> of an existing record in the positions table.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      role:
+        custom: []
+        name: role
+        description: 'The <code>name</code> of an existing record in the roles table.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      name: b
+      email: zbailey@example.net
+      password: '-0pBNvYgxw'
+      cpf: 559.314.232-68$|^22820492192
+      position_id: 16
+      role: architecto
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+            "id": 2,
+            "name": "Maria Silva",
+            "email": "maria@example.com",
+            "is_active": true,
+            "position": null,
+            "roles": []
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: '{"message": "The email has already been taken.", "errors": { "email": ["The email has already been taken."] }}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 5|IyfnMVvZ4SX8Csu8DfR1dF6aAp7dksJ6CYTxLAlw317d1179'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/users/{id}'
+    metadata:
+      custom: []
+      groupName: Usuários
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Exibir usuário'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the user.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "id": 1,
+            "name": "Hugo Barbosa",
+            "email": "hugo@example.com",
+            "is_active": true,
+            "is_dev": false,
+            "position": { "id": 1, "name": "Diretor" },
+            "roles": [{ "id": 1, "name": "admin" }]
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"message": "No query results for model [App\\Models\\User]"}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 5|IyfnMVvZ4SX8Csu8DfR1dF6aAp7dksJ6CYTxLAlw317d1179'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'api/users/{id}'
+    metadata:
+      custom: []
+      groupName: Usuários
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Atualizar usuário'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the user.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      email:
+        custom: []
+        name: email
+        description: 'Must be a valid email address.'
+        required: false
+        example: zbailey@example.net
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      password:
+        custom: []
+        name: password
+        description: 'Must be at least 8 characters.'
+        required: false
+        example: '-0pBNvYgxw'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      cpf:
+        custom: []
+        name: cpf
+        description: 'Must match the regex /^\d{3}\.\d{3}\.\d{3}-\d{2}$|^\d{11}$/.'
+        required: false
+        example: 559.314.232-68$|^22820492192
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      position_id:
+        custom: []
+        name: position_id
+        description: 'The <code>id</code> of an existing record in the positions table.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      role:
+        custom: []
+        name: role
+        description: 'The <code>name</code> of an existing record in the roles table.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      name: b
+      email: zbailey@example.net
+      password: '-0pBNvYgxw'
+      cpf: 559.314.232-68$|^22820492192
+      position_id: 16
+      role: architecto
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "id": 1,
+            "name": "Hugo Barbosa Atualizado",
+            "email": "hugo@example.com",
+            "is_active": true,
+            "position": { "id": 1, "name": "Diretor" },
+            "roles": [{ "id": 1, "name": "admin" }]
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 5|IyfnMVvZ4SX8Csu8DfR1dF6aAp7dksJ6CYTxLAlw317d1179'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/users/{id}'
+    metadata:
+      custom: []
+      groupName: Usuários
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Inativar / Reativar usuário'
+      description: |-
+        Quando `activate=false` (padrão), inativa o usuário e revoga todos os seus tokens.
+        Quando `activate=true`, reativa o usuário.
+        Usuários marcados como `is_dev` não podem ser inativados.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the user.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters:
+      activate:
+        custom: []
+        name: activate
+        description: 'Passa `true` para reativar, `false` (padrão) para inativar.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      activate: false
+    bodyParameters:
+      activate:
+        custom: []
+        name: activate
+        description: ''
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      activate: true
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "id": 1,
+            "name": "Hugo Barbosa",
+            "is_active": false,
+            "position": { "id": 1, "name": "Diretor" },
+            "roles": []
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"message": "No query results for model [App\\Models\\User]"}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 5|IyfnMVvZ4SX8Csu8DfR1dF6aAp7dksJ6CYTxLAlw317d1179'
+    controller: null
+    method: null
+    route: null

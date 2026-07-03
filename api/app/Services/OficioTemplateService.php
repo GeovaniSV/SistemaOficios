@@ -34,4 +34,11 @@ class OficioTemplateService
 
         return $template;
     }
+
+    public function toggleActive(OficioTemplate $template, bool $activate): OficioTemplate
+    {
+        $template->update(['is_active' => $activate]);
+
+        return $template->fresh();
+    }
 }

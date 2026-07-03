@@ -51,6 +51,11 @@ class StoreOficioRequest extends FormRequest
             'responsibles.*' => [
                 'exists:responsibles,id'
             ],
+
+            'submit' => [
+                'sometimes',
+                'boolean'
+            ],
         ];
     }
 }

@@ -1,0 +1,636 @@
+name: Ofícios
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/oficios
+    metadata:
+      custom: []
+      groupName: Ofícios
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Listar ofícios'
+      description: 'Retorna lista paginada de ofícios com remetente e destinatários.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "current_page": 1,
+            "data": [{
+              "id": 1,
+              "number": "001/2026",
+              "subject": "Solicitação de Informações",
+              "status": "DRAFT",
+              "priority": "MEDIUM",
+              "created_at": "2026-07-03T00:00:00.000000Z"
+            }],
+            "per_page": 20,
+            "total": 1
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 5|IyfnMVvZ4SX8Csu8DfR1dF6aAp7dksJ6CYTxLAlw317d1179'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/oficios
+    metadata:
+      custom: []
+      groupName: Ofícios
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Criar ofício'
+      description: 'Cria um novo ofício com status `DRAFT`. O número é gerado automaticamente.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      subject:
+        custom: []
+        name: subject
+        description: 'Must not be greater than 191 characters.'
+        required: true
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      destination_contact_id:
+        custom: []
+        name: destination_contact_id
+        description: 'The <code>id</code> of an existing record in the contacts table.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      priority:
+        custom: []
+        name: priority
+        description: ''
+        required: true
+        example: LOW
+        type: string
+        enumValues:
+          - LOW
+          - MEDIUM
+          - HIGH
+          - URGENT
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      content:
+        custom: []
+        name: content
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      department:
+        custom: []
+        name: department
+        description: 'Must not be greater than 191 characters.'
+        required: false
+        example: 'n'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      responsibles:
+        custom: []
+        name: responsibles
+        description: 'The <code>id</code> of an existing record in the responsibles table.'
+        required: false
+        example: null
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      submit:
+        custom: []
+        name: submit
+        description: ''
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      subject: b
+      priority: LOW
+      content: architecto
+      department: 'n'
+      submit: true
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+            "id": 2,
+            "number": "002/2026",
+            "subject": "Novo Ofício",
+            "status": "DRAFT",
+            "priority": "LOW"
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: '{"message": "The subject field is required.", "errors": { "subject": ["The subject field is required."] }}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 5|IyfnMVvZ4SX8Csu8DfR1dF6aAp7dksJ6CYTxLAlw317d1179'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/oficios/{id}'
+    metadata:
+      custom: []
+      groupName: Ofícios
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Exibir ofício'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the oficio.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "id": 1,
+            "number": "001/2026",
+            "subject": "Solicitação de Informações",
+            "content": "<p>Conteúdo do ofício...</p>",
+            "status": "DRAFT",
+            "priority": "MEDIUM",
+            "author": { "id": 1, "name": "Hugo Barbosa" },
+            "messages": []
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"message": "No query results for model [App\\Models\\Oficio]"}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 5|IyfnMVvZ4SX8Csu8DfR1dF6aAp7dksJ6CYTxLAlw317d1179'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'api/oficios/{id}'
+    metadata:
+      custom: []
+      groupName: Ofícios
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Atualizar ofício'
+      description: 'Apenas ofícios em status `DRAFT` ou `RETURNED` podem ser editados.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the oficio.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      subject:
+        custom: []
+        name: subject
+        description: 'Must not be greater than 191 characters.'
+        required: true
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      destination_contact_id:
+        custom: []
+        name: destination_contact_id
+        description: 'The <code>id</code> of an existing record in the contacts table.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      priority:
+        custom: []
+        name: priority
+        description: ''
+        required: true
+        example: LOW
+        type: string
+        enumValues:
+          - LOW
+          - MEDIUM
+          - HIGH
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      content:
+        custom: []
+        name: content
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      responsibles:
+        custom: []
+        name: responsibles
+        description: 'The <code>id</code> of an existing record in the responsibles table.'
+        required: false
+        example: null
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      department:
+        custom: []
+        name: department
+        description: 'Must not be greater than 191 characters.'
+        required: false
+        example: 'n'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      submit:
+        custom: []
+        name: submit
+        description: ''
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      subject: b
+      priority: LOW
+      content: architecto
+      department: 'n'
+      submit: true
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "id": 1,
+            "number": "001/2026",
+            "subject": "Assunto Atualizado",
+            "status": "DRAFT"
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 5|IyfnMVvZ4SX8Csu8DfR1dF6aAp7dksJ6CYTxLAlw317d1179'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/oficios/{oficio_id}/review'
+    metadata:
+      custom: []
+      groupName: Ofícios
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Revisar ofício'
+      description: 'Aprova (`APPROVED`) ou rejeita/devolve (`REJECTED`/`RETURNED`) o ofício.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      oficio_id:
+        custom: []
+        name: oficio_id
+        description: 'The ID of the oficio.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      oficio_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      status:
+        custom: []
+        name: status
+        description: ''
+        required: true
+        example: APPROVED
+        type: string
+        enumValues:
+          - APPROVED
+          - REJECTED
+          - RETURNED
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      reason:
+        custom: []
+        name: reason
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      subject:
+        custom: []
+        name: subject
+        description: 'Must not be greater than 191 characters.'
+        required: false
+        example: 'n'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      destination_contact_id:
+        custom: []
+        name: destination_contact_id
+        description: 'The <code>id</code> of an existing record in the contacts table.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      priority:
+        custom: []
+        name: priority
+        description: ''
+        required: false
+        example: MEDIUM
+        type: string
+        enumValues:
+          - LOW
+          - MEDIUM
+          - HIGH
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      content:
+        custom: []
+        name: content
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      department:
+        custom: []
+        name: department
+        description: 'Must not be greater than 191 characters.'
+        required: false
+        example: 'n'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      responsibles:
+        custom: []
+        name: responsibles
+        description: 'The <code>id</code> of an existing record in the responsibles table.'
+        required: false
+        example: null
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      status: APPROVED
+      reason: architecto
+      subject: 'n'
+      priority: MEDIUM
+      content: architecto
+      department: 'n'
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "id": 1,
+            "number": "001/2026",
+            "status": "APPROVED"
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{"message": "This action is unauthorized."}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 5|IyfnMVvZ4SX8Csu8DfR1dF6aAp7dksJ6CYTxLAlw317d1179'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/oficios/{oficio_id}/send'
+    metadata:
+      custom: []
+      groupName: Ofícios
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Enviar ofício'
+      description: |-
+        Enfileira o ofício para geração de PDF e envio de e-mail. O status muda para `SENT`.
+        Requer que o ofício esteja `APPROVED`.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      oficio_id:
+        custom: []
+        name: oficio_id
+        description: 'The ID of the oficio.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      oficio_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success": true, "message": "Ofício enviado com sucesso."}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: '{"message": "Ofício não está aprovado para envio."}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 5|IyfnMVvZ4SX8Csu8DfR1dF6aAp7dksJ6CYTxLAlw317d1179'
+    controller: null
+    method: null
+    route: null

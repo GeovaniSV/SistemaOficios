@@ -43,4 +43,11 @@ class RoleService
 
         return $role->load('permissions');
     }
+
+    public function toggleActive(Role $role, bool $activate): Role
+    {
+        $role->update(['status' => $activate ? 'Ativo' : 'Inativo']);
+
+        return $role->fresh()->load('permissions');
+    }
 }

@@ -11,5 +11,10 @@ class OficioTemplate extends Model
     protected $fillable = [
         'name',
         'content',
+        'is_active',
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
     ];
 }

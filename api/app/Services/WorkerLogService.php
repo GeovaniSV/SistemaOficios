@@ -14,6 +14,7 @@ class WorkerLogService
             'message'        => $data['message'] ?? null,
             'status'         => $data['status'] ?? null,
             'queue_name'     => $data['queueName'] ?? null,
+            'worker'         => $data['worker'] ?? null,
             'event_type'     => $data['eventType'] ?? null,
             'metadata'       => $data['metadata'] ?? null,
             'user_id'        => $data['userId'] ?? null,

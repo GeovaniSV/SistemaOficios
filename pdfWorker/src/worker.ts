@@ -4,7 +4,8 @@ import { generatePDF } from "./generatePDF";
 
 const RABBITMQ_URL = process.env.RABBITMQ_URL;
 const queueName = "oficios_queue";
-export async function startWorker() {
+
+async function startWorker() {
   try {
     const connection = await amqp.connect(RABBITMQ_URL!);
     const channel = await connection.createChannel();
@@ -14,11 +15,18 @@ export async function startWorker() {
     channel.consume(
       queueName,
       async (msg) => {
-        console.log(" [x] Received %s", msg!.content.toString());
-        await generatePDF(msg!.content.toString());
+        if (!msg) return;
+        console.log(" [x] Received %s", msg.content.toString());
+        try {
+          await generatePDF(msg.content.toString());
+        } catch (err) {
+          console.error("Erro ao processar mensagem:", err);
+        } finally {
+          channel.ack(msg);
+        }
       },
       {
-        noAck: true,
+        noAck: false,
       },
     );
 

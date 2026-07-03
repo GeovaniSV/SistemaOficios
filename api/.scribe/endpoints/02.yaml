@@ -1,0 +1,289 @@
+name: 'Broker (Interno)'
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/broker/smtp-config
+    metadata:
+      custom: []
+      groupName: 'Broker (Interno)'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Configuração SMTP para broker'
+      description: |-
+        Endpoint interno usado pelo emailWorker para obter as credenciais SMTP.
+        Autenticado via chave de API do broker (`X-Broker-Api-Key`), não por Sanctum.
+      authenticated: false
+      deprecated: false
+    headers:
+      X-Broker-Api-Key: '{BROKER_API_KEY} required'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "host": "smtp-relay.brevo.com",
+            "port": 587,
+            "username": "b07e8f001@smtp-brevo.com",
+            "password": "xsmtpsib-...",
+            "from_email": "noreply@example.com",
+            "from_name": "Sistema de Ofícios"
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 401
+        content: '{"message": "Unauthorized"}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"message": "SMTP não configurado"}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/worker-logs
+    metadata:
+      custom: []
+      groupName: 'Broker (Interno)'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Registrar log de worker'
+      description: |-
+        Endpoint interno usado pelos workers para registrar logs de execução.
+        Autenticado via chave de API do broker (`X-Broker-Api-Key`), não por Sanctum.
+      authenticated: false
+      deprecated: false
+    headers:
+      X-Broker-Api-Key: '{BROKER_API_KEY} required'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      correlationId:
+        custom: []
+        name: correlationId
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      code:
+        custom: []
+        name: code
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      message:
+        custom: []
+        name: message
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: ''
+        required: false
+        example: warn
+        type: string
+        enumValues:
+          - success
+          - error
+          - warn
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      queueName:
+        custom: []
+        name: queueName
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      worker:
+        custom: []
+        name: worker
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      eventType:
+        custom: []
+        name: eventType
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      metadata:
+        custom: []
+        name: metadata
+        description: ''
+        required: false
+        example: null
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      userId:
+        custom: []
+        name: userId
+        description: ''
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      correlationId: architecto
+      code: architecto
+      message: architecto
+      status: warn
+      queueName: architecto
+      worker: architecto
+      eventType: architecto
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+            "id": 2,
+            "worker": "emailWorker",
+            "queue": "email_queue",
+            "code": "EMAIL_SENT",
+            "status": "success",
+            "message": "Email enviado com sucesso para joao@oab.org.br",
+            "created_at": "2026-07-03T15:05:00.000000Z"
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 401
+        content: '{"message": "Unauthorized"}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/backups/auto
+    metadata:
+      custom: []
+      groupName: 'Broker (Interno)'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Backup automático'
+      description: |-
+        Gera um backup do banco de dados e armazena no Cloudflare R2 (bucket de backup).
+        Executa automaticamente a limpeza: remove backups automáticos com mais de 5 dias
+        e garante que no máximo 5 backups automáticos permaneçam disponíveis.
+
+        Autenticado via chave de API do broker (`X-Broker-Api-Key`), não por Sanctum.
+        Deve ser chamado pelo cron do servidor.
+
+        **Exemplo de chamada via cron:**
+        ```
+        curl -X POST https://seu-dominio.com/api/backups/auto \
+          -H "X-Broker-Api-Key: SUA_CHAVE_AQUI"
+        ```
+      authenticated: false
+      deprecated: false
+    headers:
+      X-Broker-Api-Key: '{BROKER_API_KEY} required'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success": true, "message": "Backup automático realizado com sucesso"}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 401
+        content: '{"message": "Unauthorized"}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 500
+        content: '{"message": "Nenhum arquivo de backup foi gerado (exit code: 1)"}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null

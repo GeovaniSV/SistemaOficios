@@ -1,0 +1,408 @@
+name: Papéis
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/roles
+    metadata:
+      custom: []
+      groupName: Papéis
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Listar papéis'
+      description: 'Retorna lista paginada de papéis (roles) com suas permissões.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "current_page": 1,
+            "data": [{
+              "id": 1,
+              "name": "admin",
+              "status": "Ativo",
+              "permissions": [{ "id": 1, "name": "configuracoes.acessar" }]
+            }],
+            "per_page": 20,
+            "total": 1
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 5|IyfnMVvZ4SX8Csu8DfR1dF6aAp7dksJ6CYTxLAlw317d1179'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/roles
+    metadata:
+      custom: []
+      groupName: Papéis
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Criar papel'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'Must not be greater than 191 characters.'
+        required: true
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      description:
+        custom: []
+        name: description
+        description: 'Must not be greater than 191 characters.'
+        required: true
+        example: 'Et animi quos velit et fugiat.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: ''
+        required: true
+        example: Ativo
+        type: string
+        enumValues:
+          - Ativo
+          - Inativo
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      permissions:
+        custom: []
+        name: permissions
+        description: 'The <code>name</code> of an existing record in the permissions table.'
+        required: false
+        example:
+          - architecto
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      name: b
+      description: 'Et animi quos velit et fugiat.'
+      status: Ativo
+      permissions:
+        - architecto
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+            "id": 2,
+            "name": "editor",
+            "status": "Ativo",
+            "permissions": []
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 5|IyfnMVvZ4SX8Csu8DfR1dF6aAp7dksJ6CYTxLAlw317d1179'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/roles/{id}'
+    metadata:
+      custom: []
+      groupName: Papéis
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Exibir papel'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the role.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "id": 1,
+            "name": "admin",
+            "status": "Ativo",
+            "permissions": [{ "id": 1, "name": "configuracoes.acessar" }]
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"message": "No query results for model [Role]"}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 5|IyfnMVvZ4SX8Csu8DfR1dF6aAp7dksJ6CYTxLAlw317d1179'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'api/roles/{id}'
+    metadata:
+      custom: []
+      groupName: Papéis
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Atualizar papel'
+      description: 'Atualiza nome, status e permissões do papel.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the role.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'Must not be greater than 191 characters.'
+        required: true
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      description:
+        custom: []
+        name: description
+        description: 'Must not be greater than 191 characters.'
+        required: true
+        example: 'Et animi quos velit et fugiat.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: ''
+        required: true
+        example: Inativo
+        type: string
+        enumValues:
+          - Ativo
+          - Inativo
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      permissions:
+        custom: []
+        name: permissions
+        description: 'The <code>name</code> of an existing record in the permissions table.'
+        required: false
+        example:
+          - architecto
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      name: b
+      description: 'Et animi quos velit et fugiat.'
+      status: Inativo
+      permissions:
+        - architecto
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "id": 1,
+            "name": "admin",
+            "status": "Ativo",
+            "permissions": [{ "id": 1, "name": "configuracoes.acessar" }]
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 5|IyfnMVvZ4SX8Csu8DfR1dF6aAp7dksJ6CYTxLAlw317d1179'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/roles/{id}'
+    metadata:
+      custom: []
+      groupName: Papéis
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Inativar / Reativar papel'
+      description: 'Quando `activate=false` (padrão), muda o status para `Inativo`. Quando `activate=true`, muda para `Ativo`.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the role.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters:
+      activate:
+        custom: []
+        name: activate
+        description: 'Passa `true` para reativar, `false` (padrão) para inativar.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      activate: false
+    bodyParameters:
+      activate:
+        custom: []
+        name: activate
+        description: ''
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      activate: false
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{ "id": 1, "name": "admin", "status": "Inativo" }'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 5|IyfnMVvZ4SX8Csu8DfR1dF6aAp7dksJ6CYTxLAlw317d1179'
+    controller: null
+    method: null
+    route: null

@@ -14,6 +14,7 @@ class WorkerLog extends Model
         'message',
         'status',
         'queue_name',
+        'worker',
         'event_type',
         'metadata',
         'user_id',
@@ -21,6 +22,5 @@ class WorkerLog extends Model
 
     protected $casts = [
         'metadata' => 'array',
-        'status'   => 'integer',
     ];
 }

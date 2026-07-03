@@ -7,10 +7,16 @@ async function publishToqueue(message: object) {
   console.log(`Publishing message to queue ${queueName}...`);
   console.log(`Message content: ${JSON.stringify(message)}`);
   const conn = await amqp.connect(RABBITMQ_URL!);
-  const channel = await conn.createChannel();
+  const channel = await conn.createConfirmChannel();
   await channel.assertQueue(queueName, { durable: true });
-  channel.sendToQueue(queueName, Buffer.from(JSON.stringify(message)), {
-    persistent: true,
+
+  await new Promise<void>((resolve, reject) => {
+    channel.sendToQueue(
+      queueName,
+      Buffer.from(JSON.stringify(message)),
+      { persistent: true },
+      (err) => (err ? reject(err) : resolve()),
+    );
   });
 
   console.log(`Message sent to queue ${queueName}:`, message);

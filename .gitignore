@@ -13,8 +13,8 @@ build/
 .env.test
 .phpstorm.meta.php
 
-# ===== Criado pelos containers =====
-nginx
+api.env
+smtp-config.conf
 
 # ===== LOGS =====
 logs/

@@ -29,8 +29,10 @@ class PositionService
         return $position;
     }
 
-    public function delete(Position $position): void
+    public function toggleActive(Position $position, bool $activate): Position
     {
-        $position->delete();
+        $position->update(['is_active' => $activate]);
+
+        return $position->fresh();
     }
 }

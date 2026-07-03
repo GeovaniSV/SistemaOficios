@@ -72,6 +72,24 @@ return [
             'report' => false,
         ],
 
+        'backup_local' => [
+            'driver' => 'local',
+            'root'   => storage_path('app/backups'),
+            'throw'  => false,
+        ],
+
+        'r2_backup' => [
+            'driver'                  => 's3',
+            'key'                     => env('cloudflare_backup_access_key_id'),
+            'secret'                  => env('cloudflare_backup_secret_access_key'),
+            'region'                  => 'auto',
+            'bucket'                  => env('cloudflare_backup_bucket_name', 'backup-storage-oab'),
+            'endpoint'                => env('cloudflare_backup_endpoint'),
+            'use_path_style_endpoint' => true,
+            'throw'                   => false,
+            'report'                  => false,
+        ],
+
     ],
 
     /*
