@@ -10,17 +10,17 @@
     ],
     "info": {
         "name": "Laravel API Documentation",
-        "_postman_id": "1b358fca-4309-48af-9f4d-29b5d6c8195d",
+        "_postman_id": "f684306b-b346-4d54-945e-1ce0902e2d70",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
     "item": [
         {
-            "name": "Endpoints",
+            "name": "Autentica\u00e7\u00e3o",
             "description": "",
             "item": [
                 {
-                    "name": "POST api\/auth\/login",
+                    "name": "Login",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -43,80 +43,28 @@
                             "mode": "raw",
                             "raw": "{\"email\":\"gbailey@example.net\",\"password\":\"|]|{+-\"}"
                         },
-                        "description": "",
+                        "description": "Autentica o usu\u00e1rio e retorna um token Bearer Sanctum.",
                         "auth": {
                             "type": "noauth"
                         }
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 422,
-                            "body": "{\"message\":\"Credenciais inv\\u00e1lidas.\",\"errors\":{\"email\":[\"Credenciais inv\\u00e1lidas.\"]}}",
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"token\": \"1|AbCdEf...\",\n  \"user\": {\n    \"id\": 1,\n    \"name\": \"Hugo Barbosa\",\n    \"email\": \"hugo@example.com\",\n    \"is_dev\": false,\n    \"position\": { \"id\": 1, \"name\": \"Diretor\" },\n    \"roles\": [{ \"id\": 1, \"name\": \"admin\" }]\n  }\n}",
                             "name": ""
-                        }
-                    ]
-                },
-                {
-                    "name": "GET api\/broker\/smtp-config",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/broker\/smtp-config",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/broker\/smtp-config"
                         },
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": ""
-                    },
-                    "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthorized\"}",
+                            "body": "{\"message\": \"Credenciais inv\u00e1lidas.\"}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "POST api\/auth\/logout",
+                    "name": "Logout",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -136,32 +84,19 @@
                             }
                         ],
                         "body": null,
-                        "description": ""
+                        "description": "Revoga o token de acesso atual."
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
                             "code": 200,
-                            "body": "{\"message\":\"Logout realizado com sucesso.\"}",
+                            "body": "{\"message\": \"Logout realizado com sucesso.\"}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "POST api\/auth\/logout-all",
+                    "name": "Logout de todos os dispositivos",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -181,32 +116,19 @@
                             }
                         ],
                         "body": null,
-                        "description": ""
+                        "description": "Revoga todos os tokens Sanctum do usu\u00e1rio autenticado."
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
                             "code": 200,
-                            "body": "{\"message\":\"Todos os tokens revogados.\"}",
+                            "body": "{\"message\": \"Todos os tokens revogados.\"}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "GET api\/auth\/me",
+                    "name": "Usu\u00e1rio autenticado",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -226,32 +148,25 @@
                             }
                         ],
                         "body": null,
-                        "description": ""
+                        "description": "Retorna os dados do usu\u00e1rio logado, incluindo cargo e pap\u00e9is."
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
                             "code": 200,
-                            "body": "{\"id\":2,\"name\":\"Administrador\",\"email\":\"admin@admin.com\",\"cpf\":\"000.000.000-01\",\"position_id\":null,\"is_active\":true,\"is_dev\":false,\"last_login\":null,\"created_at\":\"2026-06-16T05:55:44.000000Z\",\"updated_at\":\"2026-06-16T05:55:44.000000Z\"}",
+                            "body": "{\n  \"id\": 1,\n  \"name\": \"Hugo Barbosa\",\n  \"email\": \"hugo@example.com\",\n  \"is_active\": true,\n  \"is_dev\": false,\n  \"position\": { \"id\": 1, \"name\": \"Diretor\", \"is_active\": true },\n  \"roles\": [{ \"id\": 1, \"name\": \"admin\", \"status\": \"Ativo\" }]\n}",
                             "name": ""
                         }
                     ]
-                },
+                }
+            ]
+        },
+        {
+            "name": "Usu\u00e1rios",
+            "description": "",
+            "item": [
                 {
-                    "name": "GET api\/users",
+                    "name": "Listar usu\u00e1rios",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -271,32 +186,19 @@
                             }
                         ],
                         "body": null,
-                        "description": ""
+                        "description": "Retorna lista paginada de usu\u00e1rios com cargo e pap\u00e9is."
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
                             "code": 200,
-                            "body": "{\"current_page\":1,\"data\":[{\"id\":2,\"name\":\"Administrador\",\"email\":\"admin@admin.com\",\"cpf\":\"000.000.000-01\",\"position_id\":null,\"is_active\":true,\"is_dev\":false,\"last_login\":null,\"created_at\":\"2026-06-16T05:55:44.000000Z\",\"updated_at\":\"2026-06-16T05:55:44.000000Z\"}],\"first_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/users?page=1\",\"from\":1,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/users?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\\/\\\/localhost\\\/api\\\/users?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/localhost\\\/api\\\/users\",\"per_page\":20,\"prev_page_url\":null,\"to\":1,\"total\":1}",
+                            "body": "{\n  \"current_page\": 1,\n  \"data\": [{\n    \"id\": 1,\n    \"name\": \"Hugo Barbosa\",\n    \"email\": \"hugo@example.com\",\n    \"is_active\": true,\n    \"is_dev\": false,\n    \"position\": { \"id\": 1, \"name\": \"Diretor\" },\n    \"roles\": [{ \"id\": 1, \"name\": \"admin\" }]\n  }],\n  \"per_page\": 20,\n  \"total\": 1\n}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "POST api\/users",
+                    "name": "Criar usu\u00e1rio",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -323,336 +225,239 @@
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 422,
-                            "body": "{\"message\":\"The cpf field format is invalid. (and 2 more errors)\",\"errors\":{\"cpf\":[\"The cpf field format is invalid.\"],\"position_id\":[\"The selected position id is invalid.\"],\"role\":[\"The selected role is invalid.\"]}}",
-                            "name": ""
-                        }
-                    ]
-                },
-                {
-                    "name": "GET api\/users\/{id}",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/users\/:id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/users\/:id",
-                            "variable": [
-                                {
-                                    "id": "id",
-                                    "key": "id",
-                                    "value": "1",
-                                    "description": "The ID of the user."
-                                }
-                            ]
-                        },
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": ""
-                    },
-                    "response": [
-                        {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 404,
-                            "body": "{\n    \"message\": \"\"\n}",
-                            "name": ""
-                        }
-                    ]
-                },
-                {
-                    "name": "PUT api\/users\/{id}",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/users\/:id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/users\/:id",
-                            "variable": [
-                                {
-                                    "id": "id",
-                                    "key": "id",
-                                    "value": "1",
-                                    "description": "The ID of the user."
-                                }
-                            ]
-                        },
-                        "method": "PUT",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"name\":\"b\",\"email\":\"zbailey@example.net\",\"password\":\"-0pBNvYgxw\",\"cpf\":\"559.314.232-68$|^22820492192\",\"position_id\":16,\"role\":\"architecto\"}"
-                        },
-                        "description": ""
-                    },
-                    "response": [
-                        {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 422,
-                            "body": "{\"message\":\"The cpf field format is invalid. (and 2 more errors)\",\"errors\":{\"cpf\":[\"The cpf field format is invalid.\"],\"position_id\":[\"The selected position id is invalid.\"],\"role\":[\"The selected role is invalid.\"]}}",
-                            "name": ""
-                        }
-                    ]
-                },
-                {
-                    "name": "DELETE api\/users\/{id}",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/users\/:id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/users\/:id",
-                            "variable": [
-                                {
-                                    "id": "id",
-                                    "key": "id",
-                                    "value": "1",
-                                    "description": "The ID of the user."
-                                }
-                            ]
-                        },
-                        "method": "DELETE",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": ""
-                    },
-                    "response": [
-                        {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 404,
-                            "body": "{\n    \"message\": \"\"\n}",
-                            "name": ""
-                        }
-                    ]
-                },
-                {
-                    "name": "PATCH api\/users\/{user_id}\/restore",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/users\/:user_id\/restore",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/users\/:user_id\/restore",
-                            "variable": [
-                                {
-                                    "id": "user_id",
-                                    "key": "user_id",
-                                    "value": "1",
-                                    "description": "The ID of the user."
-                                }
-                            ]
-                        },
-                        "method": "PATCH",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": ""
-                    },
-                    "response": [
-                        {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 404,
-                            "body": "{\n    \"message\": \"\"\n}",
-                            "name": ""
-                        }
-                    ]
-                },
-                {
-                    "name": "GET api\/positions",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/positions",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/positions"
-                        },
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": ""
-                    },
-                    "response": [
-                        {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 200,
-                            "body": "{\"current_page\":1,\"data\":[],\"first_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/positions?page=1\",\"from\":null,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/positions?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\\/\\\/localhost\\\/api\\\/positions?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/localhost\\\/api\\\/positions\",\"per_page\":20,\"prev_page_url\":null,\"to\":null,\"total\":0}",
-                            "name": ""
-                        }
-                    ]
-                },
-                {
-                    "name": "POST api\/positions",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/positions",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/positions"
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"name\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"is_active\":true}"
-                        },
-                        "description": ""
-                    },
-                    "response": [
-                        {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
                             "code": 201,
-                            "body": "{\"name\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"is_active\":true,\"updated_at\":\"2026-06-18T06:52:16.000000Z\",\"created_at\":\"2026-06-18T06:52:16.000000Z\",\"id\":1}",
+                            "body": "{\n  \"id\": 2,\n  \"name\": \"Maria Silva\",\n  \"email\": \"maria@example.com\",\n  \"is_active\": true,\n  \"position\": null,\n  \"roles\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\"message\": \"The email has already been taken.\", \"errors\": { \"email\": [\"The email has already been taken.\"] }}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "GET api\/positions\/{id}",
+                    "name": "Exibir usu\u00e1rio",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/users\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the user."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"id\": 1,\n  \"name\": \"Hugo Barbosa\",\n  \"email\": \"hugo@example.com\",\n  \"is_active\": true,\n  \"is_dev\": false,\n  \"position\": { \"id\": 1, \"name\": \"Diretor\" },\n  \"roles\": [{ \"id\": 1, \"name\": \"admin\" }]\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\"message\": \"No query results for model [App\\\\Models\\\\User]\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Atualizar usu\u00e1rio",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/users\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the user."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"b\",\"email\":\"zbailey@example.net\",\"password\":\"-0pBNvYgxw\",\"cpf\":\"559.314.232-68$|^22820492192\",\"position_id\":16,\"role\":\"architecto\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"id\": 1,\n  \"name\": \"Hugo Barbosa Atualizado\",\n  \"email\": \"hugo@example.com\",\n  \"is_active\": true,\n  \"position\": { \"id\": 1, \"name\": \"Diretor\" },\n  \"roles\": [{ \"id\": 1, \"name\": \"admin\" }]\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Inativar \/ Reativar usu\u00e1rio",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users\/:id",
+                            "query": [
+                                {
+                                    "key": "activate",
+                                    "value": "",
+                                    "description": "Passa `true` para reativar, `false` (padr\u00e3o) para inativar.",
+                                    "disabled": true
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/users\/:id?activate=",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the user."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"activate\":true}"
+                        },
+                        "description": "Quando `activate=false` (padr\u00e3o), inativa o usu\u00e1rio e revoga todos os seus tokens.\nQuando `activate=true`, reativa o usu\u00e1rio.\nUsu\u00e1rios marcados como `is_dev` n\u00e3o podem ser inativados."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"id\": 1,\n  \"name\": \"Hugo Barbosa\",\n  \"is_active\": false,\n  \"position\": { \"id\": 1, \"name\": \"Diretor\" },\n  \"roles\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\"message\": \"No query results for model [App\\\\Models\\\\User]\"}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Cargos",
+            "description": "",
+            "item": [
+                {
+                    "name": "Listar cargos",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/positions",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/positions"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Retorna lista paginada de cargos."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"current_page\": 1,\n  \"data\": [{ \"id\": 1, \"name\": \"Diretor\", \"is_active\": true }],\n  \"per_page\": 20,\n  \"total\": 1\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Criar cargo",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/positions",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/positions"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"is_active\":true}"
+                        },
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 201,
+                            "body": "{ \"id\": 2, \"name\": \"Secret\u00e1rio\", \"is_active\": true }",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Exibir cargo",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -663,7 +468,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "1",
+                                    "value": "16",
                                     "description": "The ID of the position."
                                 }
                             ]
@@ -684,28 +489,21 @@
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
                             "code": 200,
-                            "body": "{\"id\":1,\"name\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"is_active\":true,\"created_at\":\"2026-06-18T06:52:16.000000Z\",\"updated_at\":\"2026-06-18T06:52:16.000000Z\"}",
+                            "body": "{ \"id\": 1, \"name\": \"Diretor\", \"is_active\": true }",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\"message\": \"No query results for model [App\\\\Models\\\\Position]\"}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "PUT api\/positions\/{id}",
+                    "name": "Atualizar cargo",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -716,7 +514,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "1",
+                                    "value": "16",
                                     "description": "The ID of the position."
                                 }
                             ]
@@ -740,39 +538,33 @@
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
                             "code": 200,
-                            "body": "{\"id\":1,\"name\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"is_active\":true,\"created_at\":\"2026-06-18T06:52:16.000000Z\",\"updated_at\":\"2026-06-18T06:52:16.000000Z\"}",
+                            "body": "{ \"id\": 1, \"name\": \"Diretor Geral\", \"is_active\": true }",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "DELETE api\/positions\/{id}",
+                    "name": "Inativar \/ Reativar cargo",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
                             "path": "api\/positions\/:id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/positions\/:id",
+                            "query": [
+                                {
+                                    "key": "activate",
+                                    "value": "",
+                                    "description": "Passa `true` para reativar, `false` (padr\u00e3o) para inativar.",
+                                    "disabled": true
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/positions\/:id?activate=",
                             "variable": [
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "1",
+                                    "value": "16",
                                     "description": "The ID of the position."
                                 }
                             ]
@@ -788,35 +580,254 @@
                                 "value": "application\/json"
                             }
                         ],
-                        "body": null,
-                        "description": ""
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"activate\":false}"
+                        },
+                        "description": "Quando `activate=false` (padr\u00e3o), inativa o cargo. Quando `activate=true`, reativa."
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 204,
-                            "body": "",
+                            "header": [],
+                            "code": 200,
+                            "body": "{ \"id\": 1, \"name\": \"Diretor\", \"is_active\": false }",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Pap\u00e9is",
+            "description": "",
+            "item": [
+                {
+                    "name": "Listar pap\u00e9is",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/roles",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/roles"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Retorna lista paginada de pap\u00e9is (roles) com suas permiss\u00f5es."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"current_page\": 1,\n  \"data\": [{\n    \"id\": 1,\n    \"name\": \"admin\",\n    \"status\": \"Ativo\",\n    \"permissions\": [{ \"id\": 1, \"name\": \"configuracoes.acessar\" }]\n  }],\n  \"per_page\": 20,\n  \"total\": 1\n}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "GET api\/contacts",
+                    "name": "Criar papel",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/roles",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/roles"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"status\":\"Ativo\",\"permissions\":[\"architecto\"]}"
+                        },
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 201,
+                            "body": "{\n  \"id\": 2,\n  \"name\": \"editor\",\n  \"status\": \"Ativo\",\n  \"permissions\": []\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Exibir papel",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/roles\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/roles\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the role."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"id\": 1,\n  \"name\": \"admin\",\n  \"status\": \"Ativo\",\n  \"permissions\": [{ \"id\": 1, \"name\": \"configuracoes.acessar\" }]\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\"message\": \"No query results for model [Role]\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Atualizar papel",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/roles\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/roles\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the role."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"status\":\"Inativo\",\"permissions\":[\"architecto\"]}"
+                        },
+                        "description": "Atualiza nome, status e permiss\u00f5es do papel."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"id\": 1,\n  \"name\": \"admin\",\n  \"status\": \"Ativo\",\n  \"permissions\": [{ \"id\": 1, \"name\": \"configuracoes.acessar\" }]\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Inativar \/ Reativar papel",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/roles\/:id",
+                            "query": [
+                                {
+                                    "key": "activate",
+                                    "value": "",
+                                    "description": "Passa `true` para reativar, `false` (padr\u00e3o) para inativar.",
+                                    "disabled": true
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/roles\/:id?activate=",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the role."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"activate\":false}"
+                        },
+                        "description": "Quando `activate=false` (padr\u00e3o), muda o status para `Inativo`. Quando `activate=true`, muda para `Ativo`."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{ \"id\": 1, \"name\": \"admin\", \"status\": \"Inativo\" }",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Contatos",
+            "description": "",
+            "item": [
+                {
+                    "name": "Listar contatos",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
                             "path": "api\/contacts",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/contacts"
+                            "query": [
+                                {
+                                    "key": "is_active",
+                                    "value": "1",
+                                    "description": "Filtra por status ativo\/inativo. Omita para retornar todos.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/contacts?is_active=1"
                         },
                         "method": "GET",
                         "header": [
@@ -830,32 +841,19 @@
                             }
                         ],
                         "body": null,
-                        "description": ""
+                        "description": "Retorna lista paginada de contatos. Filtre pelo status com o par\u00e2metro `is_active`."
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
                             "code": 200,
-                            "body": "{\"current_page\":1,\"data\":[{\"id\":1,\"type\":\"PJ\",\"doc\":\"12345678000195\",\"name\":\"Empresa Teste LTDA\",\"address_id\":1,\"is_active\":true,\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-18T04:39:45.000000Z\",\"formatted_doc\":\"12.345.678\\\/0001-95\",\"address\":{\"id\":1,\"cep\":\"01310100\",\"logradouro\":\"Avenida Paulista\",\"numero\":\"1000\",\"bairro\":\"Bela Vista\",\"cidade\":\"Sao Paulo\",\"estado\":\"SP\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},\"responsibles\":[{\"id\":1,\"contact_id\":1,\"name\":\"Joao Silva\",\"email\":\"joao.silva@empresateste.com\",\"treatment\":null,\"position\":\"Diretor Executivo\",\"department\":\"Diretoria\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},{\"id\":2,\"contact_id\":1,\"name\":\"Maria Souza\",\"email\":\"maria.souza@empresateste.com\",\"treatment\":null,\"position\":\"Gerente Juridica\",\"department\":\"Juridico\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"}]},{\"id\":2,\"type\":\"PJ\",\"doc\":\"98765432000100\",\"name\":\"Nova Empresa LTDA\",\"address_id\":2,\"is_active\":true,\"created_at\":\"2026-06-16T05:59:19.000000Z\",\"updated_at\":\"2026-06-16T05:59:19.000000Z\",\"formatted_doc\":\"98.765.432\\\/0001-00\",\"address\":{\"id\":2,\"cep\":\"20040020\",\"logradouro\":\"Avenida Rio Branco\",\"numero\":\"45\",\"bairro\":\"Centro\",\"cidade\":\"Rio de Janeiro\",\"estado\":\"RJ\",\"created_at\":\"2026-06-16T05:59:19.000000Z\",\"updated_at\":\"2026-06-16T05:59:19.000000Z\"},\"responsibles\":[{\"id\":3,\"contact_id\":2,\"name\":\"Joao Silva\",\"email\":\"joao.silva@novaempresa.com\",\"treatment\":\"Sr.\",\"position\":\"Diretor Executivo\",\"department\":\"Diretoria\",\"created_at\":\"2026-06-16T05:59:19.000000Z\",\"updated_at\":\"2026-06-16T05:59:19.000000Z\"},{\"id\":4,\"contact_id\":2,\"name\":\"Maria Souza\",\"email\":\"maria.souza@novaempresa.com\",\"treatment\":\"Dra.\",\"position\":\"Gerente Juridica\",\"department\":\"Juridico\",\"created_at\":\"2026-06-16T05:59:19.000000Z\",\"updated_at\":\"2026-06-16T05:59:19.000000Z\"}]},{\"id\":3,\"type\":\"PF\",\"doc\":\"04118035146\",\"name\":\"Hugo Moreira Barbosa\",\"address_id\":3,\"is_active\":true,\"created_at\":\"2026-06-16T06:05:45.000000Z\",\"updated_at\":\"2026-06-16T06:05:45.000000Z\",\"formatted_doc\":\"041.180.351-46\",\"address\":{\"id\":3,\"cep\":\"93848239\",\"logradouro\":\"Avenida dos Ing\\u00e1s\",\"numero\":\"2504\",\"bairro\":\"Jardim Imperial\",\"cidade\":\"Sinop\",\"estado\":\"MT\",\"created_at\":\"2026-06-16T06:05:45.000000Z\",\"updated_at\":\"2026-06-16T06:05:45.000000Z\"},\"responsibles\":[{\"id\":5,\"contact_id\":3,\"name\":\"Hugo Moreira\",\"email\":\"hugomoreirabarbosa2@gmail.com\",\"treatment\":\"Magn\\u00edfico\",\"position\":\"Sim\",\"department\":\"Isso\",\"created_at\":\"2026-06-16T06:05:45.000000Z\",\"updated_at\":\"2026-06-16T06:05:45.000000Z\"}]}],\"first_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/contacts?page=1\",\"from\":1,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/contacts?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\\/\\\/localhost\\\/api\\\/contacts?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/localhost\\\/api\\\/contacts\",\"per_page\":20,\"prev_page_url\":null,\"to\":3,\"total\":3}",
+                            "body": "{\n  \"current_page\": 1,\n  \"data\": [{\n    \"id\": 1,\n    \"name\": \"OAB Nacional\",\n    \"tipo\": \"PJ\",\n    \"email\": \"oab@oab.org.br\",\n    \"is_active\": true,\n    \"address\": { \"street\": \"SHS Q. 6\", \"city\": \"Bras\u00edlia\", \"state\": \"DF\" }\n  }],\n  \"per_page\": 20,\n  \"total\": 1\n}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "POST api\/contacts",
+                    "name": "Criar contato",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -882,28 +880,15 @@
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 500,
-                            "body": "{\n    \"message\": \"Server Error\"\n}",
+                            "header": [],
+                            "code": 201,
+                            "body": "{\n  \"id\": 2,\n  \"name\": \"TRT 10\u00aa Regi\u00e3o\",\n  \"tipo\": \"PJ\",\n  \"email\": \"trt10@trt10.jus.br\",\n  \"is_active\": true\n}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "GET api\/contacts\/{id}",
+                    "name": "Exibir contato",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -915,7 +900,7 @@
                                     "id": "id",
                                     "key": "id",
                                     "value": "1",
-                                    "description": "The ID of the contact."
+                                    "description": "ID do contato."
                                 }
                             ]
                         },
@@ -935,28 +920,21 @@
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
                             "code": 200,
-                            "body": "{\"id\":1,\"type\":\"PJ\",\"doc\":\"12345678000195\",\"name\":\"Empresa Teste LTDA\",\"address_id\":1,\"is_active\":true,\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-18T04:39:45.000000Z\",\"formatted_doc\":\"12.345.678\\\/0001-95\",\"address\":{\"id\":1,\"cep\":\"01310100\",\"logradouro\":\"Avenida Paulista\",\"numero\":\"1000\",\"bairro\":\"Bela Vista\",\"cidade\":\"Sao Paulo\",\"estado\":\"SP\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},\"responsibles\":[{\"id\":1,\"contact_id\":1,\"name\":\"Joao Silva\",\"email\":\"joao.silva@empresateste.com\",\"treatment\":null,\"position\":\"Diretor Executivo\",\"department\":\"Diretoria\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},{\"id\":2,\"contact_id\":1,\"name\":\"Maria Souza\",\"email\":\"maria.souza@empresateste.com\",\"treatment\":null,\"position\":\"Gerente Juridica\",\"department\":\"Juridico\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"}]}",
+                            "body": "{\n  \"id\": 1,\n  \"name\": \"OAB Nacional\",\n  \"tipo\": \"PJ\",\n  \"email\": \"oab@oab.org.br\",\n  \"is_active\": true,\n  \"address\": { \"street\": \"SHS Q. 6\", \"city\": \"Bras\u00edlia\", \"state\": \"DF\" }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\"message\": \"Contato n\u00e3o encontrado.\"}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "PUT api\/contacts\/{id}",
+                    "name": "Atualizar contato",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -968,7 +946,7 @@
                                     "id": "id",
                                     "key": "id",
                                     "value": "1",
-                                    "description": "The ID of the contact."
+                                    "description": "ID do contato."
                                 }
                             ]
                         },
@@ -991,40 +969,34 @@
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 500,
-                            "body": "{\n    \"message\": \"Server Error\"\n}",
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"id\": 1,\n  \"name\": \"OAB Nacional Atualizado\",\n  \"tipo\": \"PJ\",\n  \"is_active\": true\n}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "DELETE api\/contacts\/{id}",
+                    "name": "Inativar \/ Reativar contato",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
                             "path": "api\/contacts\/:id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/contacts\/:id",
+                            "query": [
+                                {
+                                    "key": "activate",
+                                    "value": "",
+                                    "description": "Passa `true` para reativar, `false` (padr\u00e3o) para inativar.",
+                                    "disabled": true
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/contacts\/:id?activate=",
                             "variable": [
                                 {
                                     "id": "id",
                                     "key": "id",
                                     "value": "1",
-                                    "description": "The ID of the contact."
+                                    "description": "ID do contato."
                                 }
                             ]
                         },
@@ -1041,34 +1013,21 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"activate\":false}"
+                            "raw": "{\"activate\":true}"
                         },
-                        "description": ""
+                        "description": "Quando `activate=false` (padr\u00e3o), inativa o contato. Quando `activate=true`, reativa."
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
                             "code": 200,
-                            "body": "{\"id\":1,\"type\":\"PJ\",\"doc\":\"12345678000195\",\"name\":\"Empresa Teste LTDA\",\"address_id\":1,\"is_active\":false,\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-18T06:52:17.000000Z\",\"formatted_doc\":\"12.345.678\\\/0001-95\",\"address\":{\"id\":1,\"cep\":\"01310100\",\"logradouro\":\"Avenida Paulista\",\"numero\":\"1000\",\"bairro\":\"Bela Vista\",\"cidade\":\"Sao Paulo\",\"estado\":\"SP\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},\"responsibles\":[{\"id\":1,\"contact_id\":1,\"name\":\"Joao Silva\",\"email\":\"joao.silva@empresateste.com\",\"treatment\":null,\"position\":\"Diretor Executivo\",\"department\":\"Diretoria\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},{\"id\":2,\"contact_id\":1,\"name\":\"Maria Souza\",\"email\":\"maria.souza@empresateste.com\",\"treatment\":null,\"position\":\"Gerente Juridica\",\"department\":\"Juridico\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"}]}",
+                            "body": "{ \"id\": 1, \"name\": \"OAB Nacional\", \"is_active\": false }",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "GET api\/contacts\/{id}\/responsibles",
+                    "name": "Respons\u00e1veis do contato",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -1080,7 +1039,7 @@
                                     "id": "id",
                                     "key": "id",
                                     "value": "1",
-                                    "description": "The ID of the contact."
+                                    "description": "ID do contato."
                                 }
                             ]
                         },
@@ -1096,32 +1055,25 @@
                             }
                         ],
                         "body": null,
-                        "description": ""
+                        "description": "Retorna a lista de respons\u00e1veis (pessoas f\u00edsicas) vinculados ao contato."
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
                             "code": 200,
-                            "body": "[{\"id\":1,\"contact_id\":1,\"name\":\"Joao Silva\",\"email\":\"joao.silva@empresateste.com\",\"treatment\":null,\"position\":\"Diretor Executivo\",\"department\":\"Diretoria\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"},{\"id\":2,\"contact_id\":1,\"name\":\"Maria Souza\",\"email\":\"maria.souza@empresateste.com\",\"treatment\":null,\"position\":\"Gerente Juridica\",\"department\":\"Juridico\",\"created_at\":\"2026-06-16T05:57:37.000000Z\",\"updated_at\":\"2026-06-16T05:57:37.000000Z\"}]",
+                            "body": "[{\n  \"id\": 1,\n  \"name\": \"Jo\u00e3o da Silva\",\n  \"email\": \"joao@oab.org.br\",\n  \"treatment\": \"Dr.\",\n  \"position\": \"Presidente\"\n}]",
                             "name": ""
                         }
                     ]
-                },
+                }
+            ]
+        },
+        {
+            "name": "Of\u00edcios",
+            "description": "",
+            "item": [
                 {
-                    "name": "GET api\/oficios",
+                    "name": "Listar of\u00edcios",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -1141,32 +1093,19 @@
                             }
                         ],
                         "body": null,
-                        "description": ""
+                        "description": "Retorna lista paginada de of\u00edcios com remetente e destinat\u00e1rios."
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
                             "code": 200,
-                            "body": "{\"current_page\":1,\"data\":[{\"id\":1,\"number\":\"001\\\/2026\",\"subject\":\"sdghsdhsd\",\"author_id\":1,\"destination_contact_id\":3,\"priority\":\"MEDIUM\",\"content\":\"bvkgtfukgliygh\",\"department\":null,\"status\":\"DRAFT\",\"created_at\":\"2026-06-16T06:15:16.000000Z\",\"updated_at\":\"2026-06-16T06:15:16.000000Z\",\"destination_contact\":{\"id\":3,\"type\":\"PF\",\"doc\":\"04118035146\",\"name\":\"Hugo Moreira Barbosa\",\"address_id\":3,\"is_active\":true,\"created_at\":\"2026-06-16T06:05:45.000000Z\",\"updated_at\":\"2026-06-16T06:05:45.000000Z\",\"formatted_doc\":\"041.180.351-46\"},\"responsibles\":[{\"id\":5,\"contact_id\":3,\"name\":\"Hugo Moreira\",\"email\":\"hugomoreirabarbosa2@gmail.com\",\"treatment\":\"Magn\\u00edfico\",\"position\":\"Sim\",\"department\":\"Isso\",\"created_at\":\"2026-06-16T06:05:45.000000Z\",\"updated_at\":\"2026-06-16T06:05:45.000000Z\",\"pivot\":{\"oficio_id\":1,\"responsible_id\":5}}],\"author\":{\"id\":1,\"name\":\"Dev\",\"email\":\"dev@dev.com\",\"cpf\":\"000.000.000-00\",\"position_id\":null,\"is_active\":true,\"is_dev\":true,\"last_login\":\"2026-06-16T06:04:13.000000Z\",\"created_at\":\"2026-06-16T05:55:44.000000Z\",\"updated_at\":\"2026-06-16T06:04:13.000000Z\"}},{\"id\":2,\"number\":\"002\\\/2026\",\"subject\":\"sdghsdhsd\",\"author_id\":1,\"destination_contact_id\":3,\"priority\":\"LOW\",\"content\":\"gkugvugyhvhu\",\"department\":null,\"status\":\"DRAFT\",\"created_at\":\"2026-06-16T06:18:45.000000Z\",\"updated_at\":\"2026-06-16T06:18:45.000000Z\",\"destination_contact\":{\"id\":3,\"type\":\"PF\",\"doc\":\"04118035146\",\"name\":\"Hugo Moreira Barbosa\",\"address_id\":3,\"is_active\":true,\"created_at\":\"2026-06-16T06:05:45.000000Z\",\"updated_at\":\"2026-06-16T06:05:45.000000Z\",\"formatted_doc\":\"041.180.351-46\"},\"responsibles\":[{\"id\":5,\"contact_id\":3,\"name\":\"Hugo Moreira\",\"email\":\"hugomoreirabarbosa2@gmail.com\",\"treatment\":\"Magn\\u00edfico\",\"position\":\"Sim\",\"department\":\"Isso\",\"created_at\":\"2026-06-16T06:05:45.000000Z\",\"updated_at\":\"2026-06-16T06:05:45.000000Z\",\"pivot\":{\"oficio_id\":2,\"responsible_id\":5}}],\"author\":{\"id\":1,\"name\":\"Dev\",\"email\":\"dev@dev.com\",\"cpf\":\"000.000.000-00\",\"position_id\":null,\"is_active\":true,\"is_dev\":true,\"last_login\":\"2026-06-16T06:04:13.000000Z\",\"created_at\":\"2026-06-16T05:55:44.000000Z\",\"updated_at\":\"2026-06-16T06:04:13.000000Z\"}}],\"first_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/oficios?page=1\",\"from\":1,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/oficios?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\\/\\\/localhost\\\/api\\\/oficios?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/localhost\\\/api\\\/oficios\",\"per_page\":20,\"prev_page_url\":null,\"to\":2,\"total\":2}",
+                            "body": "{\n  \"current_page\": 1,\n  \"data\": [{\n    \"id\": 1,\n    \"number\": \"001\/2026\",\n    \"subject\": \"Solicita\u00e7\u00e3o de Informa\u00e7\u00f5es\",\n    \"status\": \"DRAFT\",\n    \"priority\": \"MEDIUM\",\n    \"created_at\": \"2026-07-03T00:00:00.000000Z\"\n  }],\n  \"per_page\": 20,\n  \"total\": 1\n}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "POST api\/oficios",
+                    "name": "Criar of\u00edcio",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -1187,34 +1126,27 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"subject\":\"b\",\"destination_contact_id\":\"architecto\",\"priority\":\"MEDIUM\",\"content\":\"architecto\",\"department\":\"n\"}"
+                            "raw": "{\"subject\":\"b\",\"priority\":\"LOW\",\"content\":\"architecto\",\"department\":\"n\",\"submit\":true}"
                         },
-                        "description": ""
+                        "description": "Cria um novo of\u00edcio com status `DRAFT`. O n\u00famero \u00e9 gerado automaticamente."
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
+                            "code": 201,
+                            "body": "{\n  \"id\": 2,\n  \"number\": \"002\/2026\",\n  \"subject\": \"Novo Of\u00edcio\",\n  \"status\": \"DRAFT\",\n  \"priority\": \"LOW\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
                             "code": 422,
-                            "body": "{\"message\":\"The selected destination contact id is invalid. (and 1 more error)\",\"errors\":{\"destination_contact_id\":[\"The selected destination contact id is invalid.\"],\"responsibles\":[\"The responsibles field is required.\"]}}",
+                            "body": "{\"message\": \"The subject field is required.\", \"errors\": { \"subject\": [\"The subject field is required.\"] }}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "GET api\/oficios\/{id}",
+                    "name": "Exibir of\u00edcio",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -1246,28 +1178,21 @@
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
                             "code": 200,
-                            "body": "{\"id\":1,\"number\":\"001\\\/2026\",\"subject\":\"sdghsdhsd\",\"author_id\":1,\"destination_contact_id\":3,\"priority\":\"MEDIUM\",\"content\":\"bvkgtfukgliygh\",\"department\":null,\"status\":\"DRAFT\",\"created_at\":\"2026-06-16T06:15:16.000000Z\",\"updated_at\":\"2026-06-16T06:15:16.000000Z\",\"destination_contact\":{\"id\":3,\"type\":\"PF\",\"doc\":\"04118035146\",\"name\":\"Hugo Moreira Barbosa\",\"address_id\":3,\"is_active\":true,\"created_at\":\"2026-06-16T06:05:45.000000Z\",\"updated_at\":\"2026-06-16T06:05:45.000000Z\",\"formatted_doc\":\"041.180.351-46\"},\"responsibles\":[{\"id\":5,\"contact_id\":3,\"name\":\"Hugo Moreira\",\"email\":\"hugomoreirabarbosa2@gmail.com\",\"treatment\":\"Magn\\u00edfico\",\"position\":\"Sim\",\"department\":\"Isso\",\"created_at\":\"2026-06-16T06:05:45.000000Z\",\"updated_at\":\"2026-06-16T06:05:45.000000Z\",\"pivot\":{\"oficio_id\":1,\"responsible_id\":5}}],\"author\":{\"id\":1,\"name\":\"Dev\",\"email\":\"dev@dev.com\",\"cpf\":\"000.000.000-00\",\"position_id\":null,\"is_active\":true,\"is_dev\":true,\"last_login\":\"2026-06-16T06:04:13.000000Z\",\"created_at\":\"2026-06-16T05:55:44.000000Z\",\"updated_at\":\"2026-06-16T06:04:13.000000Z\"},\"rejection_infos\":[]}",
+                            "body": "{\n  \"id\": 1,\n  \"number\": \"001\/2026\",\n  \"subject\": \"Solicita\u00e7\u00e3o de Informa\u00e7\u00f5es\",\n  \"content\": \"<p>Conte\u00fado do of\u00edcio...<\/p>\",\n  \"status\": \"DRAFT\",\n  \"priority\": \"MEDIUM\",\n  \"author\": { \"id\": 1, \"name\": \"Hugo Barbosa\" },\n  \"messages\": []\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\"message\": \"No query results for model [App\\\\Models\\\\Oficio]\"}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "PUT api\/oficios\/{id}",
+                    "name": "Atualizar of\u00edcio",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -1296,34 +1221,21 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"subject\":\"b\",\"destination_contact_id\":\"architecto\",\"priority\":\"MEDIUM\",\"content\":\"architecto\",\"department\":\"n\",\"submit\":true}"
+                            "raw": "{\"subject\":\"b\",\"priority\":\"LOW\",\"content\":\"architecto\",\"department\":\"n\",\"submit\":true}"
                         },
-                        "description": ""
+                        "description": "Apenas of\u00edcios em status `DRAFT` ou `RETURNED` podem ser editados."
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 422,
-                            "body": "{\"message\":\"The selected destination contact id is invalid. (and 1 more error)\",\"errors\":{\"destination_contact_id\":[\"The selected destination contact id is invalid.\"],\"responsibles\":[\"The responsibles field is required.\"]}}",
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"id\": 1,\n  \"number\": \"001\/2026\",\n  \"subject\": \"Assunto Atualizado\",\n  \"status\": \"DRAFT\"\n}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "POST api\/oficios\/{oficio_id}\/review",
+                    "name": "Revisar of\u00edcio",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -1352,34 +1264,27 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"status\":\"APPROVED\",\"reason\":\"architecto\",\"subject\":\"n\",\"priority\":\"HIGH\",\"content\":\"architecto\",\"department\":\"n\"}"
+                            "raw": "{\"status\":\"APPROVED\",\"reason\":\"architecto\",\"subject\":\"n\",\"priority\":\"MEDIUM\",\"content\":\"architecto\",\"department\":\"n\"}"
                         },
-                        "description": ""
+                        "description": "Aprova (`APPROVED`) ou rejeita\/devolve (`REJECTED`\/`RETURNED`) o of\u00edcio."
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 409,
-                            "body": "{\n    \"message\": \"Esta a\\u00e7\\u00e3o n\\u00e3o \\u00e9 permitida para o status atual do of\\u00edcio\"\n}",
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"id\": 1,\n  \"number\": \"001\/2026\",\n  \"status\": \"APPROVED\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\"message\": \"This action is unauthorized.\"}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "POST api\/oficios\/{oficio_id}\/send",
+                    "name": "Enviar of\u00edcio",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -1407,32 +1312,31 @@
                             }
                         ],
                         "body": null,
-                        "description": ""
+                        "description": "Enfileira o of\u00edcio para gera\u00e7\u00e3o de PDF e envio de e-mail. O status muda para `SENT`.\nRequer que o of\u00edcio esteja `APPROVED`."
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 409,
-                            "body": "{\n    \"message\": \"Esta a\\u00e7\\u00e3o n\\u00e3o \\u00e9 permitida para o status atual do of\\u00edcio\"\n}",
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"success\": true, \"message\": \"Of\u00edcio enviado com sucesso.\"}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\"message\": \"Of\u00edcio n\u00e3o est\u00e1 aprovado para envio.\"}",
                             "name": ""
                         }
                     ]
-                },
+                }
+            ]
+        },
+        {
+            "name": "Templates de Of\u00edcio",
+            "description": "",
+            "item": [
                 {
-                    "name": "GET api\/oficio-templates",
+                    "name": "Listar templates",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -1456,28 +1360,15 @@
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
                             "code": 200,
-                            "body": "{\"current_page\":1,\"data\":[{\"id\":1,\"name\":\"b\",\"content\":\"architecto\",\"created_at\":\"2026-06-18T04:39:47.000000Z\",\"updated_at\":\"2026-06-18T04:39:47.000000Z\"}],\"first_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/oficio-templates?page=1\",\"from\":1,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/oficio-templates?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\\/\\\/localhost\\\/api\\\/oficio-templates?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/localhost\\\/api\\\/oficio-templates\",\"per_page\":20,\"prev_page_url\":null,\"to\":1,\"total\":1}",
+                            "body": "{\n  \"current_page\": 1,\n  \"data\": [{\n    \"id\": 1,\n    \"name\": \"Solicita\u00e7\u00e3o Padr\u00e3o\",\n    \"content\": \"<p>Modelo de of\u00edcio...<\/p>\",\n    \"is_active\": true\n  }],\n  \"per_page\": 20,\n  \"total\": 1\n}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "POST api\/oficio-templates",
+                    "name": "Criar template",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -1504,28 +1395,15 @@
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
                             "code": 201,
-                            "body": "{\"name\":\"b\",\"content\":\"architecto\",\"updated_at\":\"2026-06-18T06:52:18.000000Z\",\"created_at\":\"2026-06-18T06:52:18.000000Z\",\"id\":2}",
+                            "body": "{\n  \"id\": 2,\n  \"name\": \"Convoca\u00e7\u00e3o\",\n  \"content\": \"<p>...<\/p>\",\n  \"is_active\": true\n}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "GET api\/oficio-templates\/{id}",
+                    "name": "Exibir template",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -1536,7 +1414,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "1",
+                                    "value": "16",
                                     "description": "The ID of the oficio template."
                                 }
                             ]
@@ -1557,28 +1435,21 @@
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
                             "code": 200,
-                            "body": "{\"id\":1,\"name\":\"b\",\"content\":\"architecto\",\"created_at\":\"2026-06-18T04:39:47.000000Z\",\"updated_at\":\"2026-06-18T04:39:47.000000Z\"}",
+                            "body": "{\n  \"id\": 1,\n  \"name\": \"Solicita\u00e7\u00e3o Padr\u00e3o\",\n  \"content\": \"<p>Modelo de of\u00edcio...<\/p>\",\n  \"is_active\": true\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\"message\": \"No query results for model [App\\\\Models\\\\OficioTemplate]\"}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "PUT api\/oficio-templates\/{id}",
+                    "name": "Atualizar template",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -1589,7 +1460,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "1",
+                                    "value": "16",
                                     "description": "The ID of the oficio template."
                                 }
                             ]
@@ -1613,81 +1484,38 @@
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
                             "code": 200,
-                            "body": "{\"id\":1,\"name\":\"b\",\"content\":\"architecto\",\"created_at\":\"2026-06-18T04:39:47.000000Z\",\"updated_at\":\"2026-06-18T04:39:47.000000Z\"}",
+                            "body": "{\n  \"id\": 1,\n  \"name\": \"Solicita\u00e7\u00e3o Atualizada\",\n  \"content\": \"<p>Modelo atualizado...<\/p>\",\n  \"is_active\": true\n}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "GET api\/settings",
+                    "name": "Inativar \/ Reativar template",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/settings",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/settings"
-                        },
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": ""
-                    },
-                    "response": [
-                        {
-                            "header": [
+                            "path": "api\/oficio-templates\/:id",
+                            "query": [
                                 {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
+                                    "key": "activate",
+                                    "value": "",
+                                    "description": "Passa `true` para reativar, `false` (padr\u00e3o) para inativar.",
+                                    "disabled": true
                                 }
                             ],
-                            "code": 200,
-                            "body": "{\"id\":1,\"statement_text\":\"architecto\",\"created_at\":\"2026-06-18T04:39:47.000000Z\",\"updated_at\":\"2026-06-18T04:39:47.000000Z\"}",
-                            "name": ""
-                        }
-                    ]
-                },
-                {
-                    "name": "PUT api\/settings",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/settings",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/settings"
+                            "raw": "{{baseUrl}}\/api\/oficio-templates\/:id?activate=",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "16",
+                                    "description": "The ID of the oficio template."
+                                }
+                            ]
                         },
-                        "method": "PUT",
+                        "method": "DELETE",
                         "header": [
                             {
                                 "key": "Content-Type",
@@ -1700,127 +1528,27 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"statement_text\":\"architecto\"}"
+                            "raw": "{\"activate\":false}"
                         },
-                        "description": ""
+                        "description": "Quando `activate=false` (padr\u00e3o), inativa o template. Quando `activate=true`, reativa."
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
                             "code": 200,
-                            "body": "{\"id\":1,\"statement_text\":\"architecto\",\"created_at\":\"2026-06-18T04:39:47.000000Z\",\"updated_at\":\"2026-06-18T04:39:47.000000Z\"}",
+                            "body": "{ \"id\": 1, \"name\": \"Solicita\u00e7\u00e3o Padr\u00e3o\", \"is_active\": false }",
                             "name": ""
                         }
                     ]
-                },
+                }
+            ]
+        },
+        {
+            "name": "Mensagens",
+            "description": "",
+            "item": [
                 {
-                    "name": "GET api\/settings\/smtp",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/settings\/smtp",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/settings\/smtp"
-                        },
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": ""
-                    },
-                    "response": [
-                        {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 200,
-                            "body": "{\"host\":null,\"port\":null,\"username\":null,\"from_name\":null,\"from_email\":null,\"use_tls\":false,\"has_password\":false}",
-                            "name": ""
-                        }
-                    ]
-                },
-                {
-                    "name": "PUT api\/settings\/smtp",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/settings\/smtp",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/settings\/smtp"
-                        },
-                        "method": "PUT",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"host\":\"b\",\"port\":2,\"username\":\"g\",\"password\":\"|]|{+-\",\"from_name\":\"v\",\"from_email\":\"jdach@example.org\",\"use_tls\":false}"
-                        },
-                        "description": ""
-                    },
-                    "response": [
-                        {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 500,
-                            "body": "{\n    \"message\": \"Server Error\"\n}",
-                            "name": ""
-                        }
-                    ]
-                },
-                {
-                    "name": "GET api\/messages",
+                    "name": "Listar mensagens",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -1840,32 +1568,19 @@
                             }
                         ],
                         "body": null,
-                        "description": ""
+                        "description": "Retorna lista paginada de mensagens (envios de of\u00edcio) com status e destinat\u00e1rio."
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
                             "code": 200,
-                            "body": "{\"current_page\":1,\"data\":[],\"first_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/messages?page=1\",\"from\":null,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/messages?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\\/\\\/localhost\\\/api\\\/messages?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/localhost\\\/api\\\/messages\",\"per_page\":20,\"prev_page_url\":null,\"to\":null,\"total\":0}",
+                            "body": "{\n  \"current_page\": 1,\n  \"data\": [{\n    \"id\": 1,\n    \"status\": \"SENT\",\n    \"sent_at\": \"2026-07-03T15:00:00.000000Z\",\n    \"oficio\": { \"id\": 1, \"number\": \"001\/2026\", \"subject\": \"Solicita\u00e7\u00e3o de Informa\u00e7\u00f5es\" },\n    \"responsible\": { \"id\": 1, \"name\": \"Jo\u00e3o da Silva\", \"email\": \"joao@oab.org.br\" }\n  }],\n  \"per_page\": 20,\n  \"total\": 1\n}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "GET api\/messages\/{id}",
+                    "name": "Exibir mensagem",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -1876,7 +1591,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "16",
+                                    "value": "1",
                                     "description": "The ID of the message."
                                 }
                             ]
@@ -1897,28 +1612,294 @@
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"id\": 1,\n  \"status\": \"SENT\",\n  \"sent_at\": \"2026-07-03T15:00:00.000000Z\",\n  \"oficio\": { \"id\": 1, \"number\": \"001\/2026\" },\n  \"responsible\": { \"id\": 1, \"name\": \"Jo\u00e3o da Silva\", \"email\": \"joao@oab.org.br\" }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
                             "code": 404,
-                            "body": "{\n    \"message\": \"No query results for model [App\\\\Models\\\\Message] 16\"\n}",
+                            "body": "{\"message\": \"No query results for model [App\\\\Models\\\\Message]\"}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "GET api\/worker-logs",
+                    "name": "Download do PDF",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/messages\/:message_id\/pdf",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/messages\/:message_id\/pdf",
+                            "variable": [
+                                {
+                                    "id": "message_id",
+                                    "key": "message_id",
+                                    "value": "1",
+                                    "description": "The ID of the message."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Baixa o PDF gerado para a mensagem diretamente do Cloudflare R2.\nDispon\u00edvel apenas para mensagens com status `SENT` que j\u00e1 tiveram o PDF gerado."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"description\": \"Arquivo PDF retornado como download bin\u00e1rio\"}",
+                            "name": "PDF dispon\u00edvel"
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\"message\": \"PDF n\u00e3o dispon\u00edvel para esta mensagem\"}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\"message\": \"PDF ainda n\u00e3o foi gerado\"}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Configura\u00e7\u00f5es",
+            "description": "",
+            "item": [
+                {
+                    "name": "Exibir configura\u00e7\u00f5es",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/settings",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/settings"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Retorna as configura\u00e7\u00f5es globais do sistema (cabe\u00e7alho, rodap\u00e9, signat\u00e1rios)."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"id\": 1,\n  \"header\": \"<p>Cabe\u00e7alho institucional...<\/p>\",\n  \"footer\": \"<p>Rodap\u00e9 institucional...<\/p>\",\n  \"authorized_signers\": [{ \"id\": 1, \"name\": \"Hugo Barbosa\", \"position\": \"Diretor\" }]\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Atualizar configura\u00e7\u00f5es",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/settings",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/settings"
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"header\":\"architecto\",\"footer\":\"architecto\",\"signers\":[{\"type\":\"position\",\"id\":16}]}"
+                        },
+                        "description": "Atualiza cabe\u00e7alho, rodap\u00e9 e signat\u00e1rios autorizados dos of\u00edcios."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"id\": 1,\n  \"header\": \"<p>Novo cabe\u00e7alho...<\/p>\",\n  \"footer\": \"<p>Novo rodap\u00e9...<\/p>\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SMTP",
+            "description": "",
+            "item": [
+                {
+                    "name": "Exibir configura\u00e7\u00e3o SMTP",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/settings\/smtp",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/settings\/smtp"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Retorna a configura\u00e7\u00e3o SMTP ativa do sistema (senha omitida)."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"id\": 1,\n  \"host\": \"smtp-relay.brevo.com\",\n  \"port\": 587,\n  \"username\": \"b07e8f001@smtp-brevo.com\",\n  \"from_email\": \"noreply@example.com\",\n  \"from_name\": \"Sistema de Of\u00edcios\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\"message\": \"SMTP n\u00e3o configurado\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Atualizar configura\u00e7\u00e3o SMTP",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/settings\/smtp",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/settings\/smtp"
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"host\":\"b\",\"port\":2,\"username\":\"g\",\"password\":\"|]|{+-\",\"from_name\":\"v\",\"from_email\":\"jdach@example.org\",\"use_tls\":true}"
+                        },
+                        "description": "Atualiza as credenciais SMTP e notifica o emailWorker em tempo real via RabbitMQ."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"id\": 1,\n  \"host\": \"smtp-relay.brevo.com\",\n  \"port\": 587,\n  \"username\": \"b07e8f001@smtp-brevo.com\",\n  \"from_email\": \"noreply@example.com\",\n  \"from_name\": \"Sistema de Of\u00edcios\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Valida\u00e7\u00e3o de Documentos",
+            "description": "",
+            "item": [
+                {
+                    "name": "Verificar autenticidade de of\u00edcio",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/validacao",
+                            "query": [
+                                {
+                                    "key": "codigo",
+                                    "value": "550e8400-e29b-41d4-a716-446655440000",
+                                    "description": "UUID de valida\u00e7\u00e3o do of\u00edcio (impresso no documento).",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/validacao?codigo=550e8400-e29b-41d4-a716-446655440000"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"codigo\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\"}"
+                        },
+                        "description": "Rota p\u00fablica. Verifica se existe um PDF v\u00e1lido para o c\u00f3digo de valida\u00e7\u00e3o impresso no of\u00edcio.\nO `codigo` \u00e9 um UUID diferente do hash do arquivo \u2014 \u00e9 o `validation_hash` gerado no momento do envio.\nEm caso de sucesso, retorna uma URL tempor\u00e1ria (60 minutos) para download do PDF no Cloudflare R2.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"message\": \"a PDF exists for this hash\",\n  \"path\": \"https:\/\/r2.cloudflarestorage.com\/oficios\/abc123.pdf?X-Amz-Signature=...\"\n}",
+                            "name": "Documento v\u00e1lido"
+                        },
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"don't exists a PDF for this hash\"\n}",
+                            "name": "Documento n\u00e3o encontrado"
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\"message\": \"The codigo field must be a valid UUID.\", \"errors\": { \"codigo\": [\"The codigo field must be a valid UUID.\"] }}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Logs de Workers",
+            "description": "",
+            "item": [
+                {
+                    "name": "Listar logs",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -1938,38 +1919,63 @@
                             }
                         ],
                         "body": null,
-                        "description": ""
+                        "description": "Retorna lista paginada de logs gerados pelos workers (pdfWorker e emailWorker),\nordenados do mais recente para o mais antigo."
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
                             "code": 200,
-                            "body": "{\"current_page\":1,\"data\":[{\"id\":1,\"correlation_id\":\"architecto\",\"code\":\"architecto\",\"message\":\"architecto\",\"status\":16,\"queue_name\":\"architecto\",\"event_type\":\"architecto\",\"metadata\":null,\"user_id\":\"architecto\",\"created_at\":\"2026-06-18T04:39:47.000000Z\",\"updated_at\":\"2026-06-18T04:39:47.000000Z\"}],\"first_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/worker-logs?page=1\",\"from\":1,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/localhost\\\/api\\\/worker-logs?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\\/\\\/localhost\\\/api\\\/worker-logs?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/localhost\\\/api\\\/worker-logs\",\"per_page\":20,\"prev_page_url\":null,\"to\":1,\"total\":1}",
+                            "body": "{\n  \"current_page\": 1,\n  \"data\": [{\n    \"id\": 1,\n    \"worker\": \"pdfWorker\",\n    \"queue\": \"oficios_queue\",\n    \"code\": \"PDF_GENERATED\",\n    \"status\": \"success\",\n    \"message\": \"PDF gerado com sucesso\",\n    \"userId\": 1,\n    \"correlationId\": \"abc123\",\n    \"metadata\": null,\n    \"created_at\": \"2026-07-03T15:00:00.000000Z\"\n  }],\n  \"per_page\": 50,\n  \"total\": 1\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Backups",
+            "description": "",
+            "item": [
+                {
+                    "name": "Listar backups",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/backups",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/backups"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Retorna todos os backups registrados, ordenados do mais recente para o mais antigo.\nDurante a listagem, a disponibilidade dos backups manuais armazenados na R2 \u00e9 verificada\ne atualizada automaticamente.\nO campo `download_url` cont\u00e9m uma URL presignada v\u00e1lida por 1 hora (apenas para backups dispon\u00edveis na R2)."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"current_page\": 1,\n  \"data\": [\n    {\n      \"id\": 2,\n      \"type\": \"manual\",\n      \"storage_type\": \"r2\",\n      \"user_id\": 1,\n      \"filename\": \"backup-2026-07-03_15-30-00.zip\",\n      \"r2_path\": \"backups\/manual\/backup-2026-07-03_15-30-00.zip\",\n      \"is_available\": true,\n      \"created_at\": \"2026-07-03T15:30:00.000000Z\",\n      \"user\": { \"id\": 1, \"name\": \"Hugo Barbosa\" },\n      \"download_url\": \"https:\/\/r2.cloudflarestorage.com\/...\"\n    },\n    {\n      \"id\": 1,\n      \"type\": \"automatic\",\n      \"storage_type\": \"r2\",\n      \"user_id\": null,\n      \"filename\": \"backup-2026-07-03_00-00-00.zip\",\n      \"r2_path\": \"backups\/auto\/backup-2026-07-03_00-00-00.zip\",\n      \"is_available\": true,\n      \"created_at\": \"2026-07-03T00:00:00.000000Z\",\n      \"user\": null,\n      \"download_url\": \"https:\/\/r2.cloudflarestorage.com\/...\"\n    }\n  ],\n  \"per_page\": 20,\n  \"total\": 2\n}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "POST api\/worker-logs",
+                    "name": "Backup manual",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/worker-logs",
+                            "path": "api\/backups\/manual",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/worker-logs"
+                            "raw": "{{baseUrl}}\/api\/backups\/manual"
                         },
                         "method": "POST",
                         "header": [
@@ -1984,28 +1990,189 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"correlationId\":\"architecto\",\"code\":\"architecto\",\"message\":\"architecto\",\"status\":16,\"queueName\":\"architecto\",\"eventType\":\"architecto\",\"userId\":\"architecto\"}"
+                            "raw": "{\"storage\":\"r2\"}"
                         },
-                        "description": ""
+                        "description": "Gera um backup manual do banco de dados. O par\u00e2metro `storage` define o destino:\n- `r2`: armazena no Cloudflare R2 e registra como dispon\u00edvel para download posterior.\n- `download`: retorna o arquivo ZIP diretamente como download. Registrado como indispon\u00edvel (sem c\u00f3pia armazenada).\n\nRequer permiss\u00e3o `configuracoes.acessar` ou usu\u00e1rio marcado como `is_dev`."
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"success\": true, \"message\": \"Backup manual salvo na R2 com sucesso\"}",
+                            "name": "Armazenado na R2"
+                        },
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"description\": \"Arquivo ZIP retornado como download bin\u00e1rio\"}",
+                            "name": "Download"
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\"message\": \"This action is unauthorized.\"}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\"message\": \"The storage field is required.\", \"errors\": { \"storage\": [\"The storage field is required.\"] }}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Broker (Interno)",
+            "description": "",
+            "item": [
+                {
+                    "name": "Configura\u00e7\u00e3o SMTP para broker",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/broker\/smtp-config",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/broker\/smtp-config"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "X-Broker-Api-Key",
+                                "value": "{BROKER_API_KEY} required"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Endpoint interno usado pelo emailWorker para obter as credenciais SMTP.\nAutenticado via chave de API do broker (`X-Broker-Api-Key`), n\u00e3o por Sanctum.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"host\": \"smtp-relay.brevo.com\",\n  \"port\": 587,\n  \"username\": \"b07e8f001@smtp-brevo.com\",\n  \"password\": \"xsmtpsib-...\",\n  \"from_email\": \"noreply@example.com\",\n  \"from_name\": \"Sistema de Of\u00edcios\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\": \"Unauthorized\"}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\"message\": \"SMTP n\u00e3o configurado\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Registrar log de worker",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/worker-logs",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/worker-logs"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "X-Broker-Api-Key",
+                                "value": "{BROKER_API_KEY} required"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"correlationId\":\"architecto\",\"code\":\"architecto\",\"message\":\"architecto\",\"status\":\"warn\",\"queueName\":\"architecto\",\"worker\":\"architecto\",\"eventType\":\"architecto\"}"
+                        },
+                        "description": "Endpoint interno usado pelos workers para registrar logs de execu\u00e7\u00e3o.\nAutenticado via chave de API do broker (`X-Broker-Api-Key`), n\u00e3o por Sanctum.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
                             "code": 201,
-                            "body": "{\"correlation_id\":\"architecto\",\"code\":\"architecto\",\"message\":\"architecto\",\"status\":16,\"queue_name\":\"architecto\",\"event_type\":\"architecto\",\"metadata\":null,\"user_id\":\"architecto\",\"updated_at\":\"2026-06-18T06:52:21.000000Z\",\"created_at\":\"2026-06-18T06:52:21.000000Z\",\"id\":2}",
+                            "body": "{\n  \"id\": 2,\n  \"worker\": \"emailWorker\",\n  \"queue\": \"email_queue\",\n  \"code\": \"EMAIL_SENT\",\n  \"status\": \"success\",\n  \"message\": \"Email enviado com sucesso para joao@oab.org.br\",\n  \"created_at\": \"2026-07-03T15:05:00.000000Z\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\": \"Unauthorized\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Backup autom\u00e1tico",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/backups\/auto",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/backups\/auto"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "X-Broker-Api-Key",
+                                "value": "{BROKER_API_KEY} required"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Gera um backup do banco de dados e armazena no Cloudflare R2 (bucket de backup).\nExecuta automaticamente a limpeza: remove backups autom\u00e1ticos com mais de 5 dias\ne garante que no m\u00e1ximo 5 backups autom\u00e1ticos permane\u00e7am dispon\u00edveis.\n\nAutenticado via chave de API do broker (`X-Broker-Api-Key`), n\u00e3o por Sanctum.\nDeve ser chamado pelo cron do servidor.\n\n**Exemplo de chamada via cron:**\n```\ncurl -X POST https:\/\/seu-dominio.com\/api\/backups\/auto \\\n  -H \"X-Broker-Api-Key: SUA_CHAVE_AQUI\"\n```",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"success\": true, \"message\": \"Backup autom\u00e1tico realizado com sucesso\"}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\": \"Unauthorized\"}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\"message\": \"Nenhum arquivo de backup foi gerado (exit code: 1)\"}",
                             "name": ""
                         }
                     ]

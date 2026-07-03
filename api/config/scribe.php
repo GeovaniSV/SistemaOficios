@@ -149,14 +149,23 @@ return [
     ],
 
     'groups' => [
-        // Endpoints which don't have a @group will be placed in this default group.
         'default' => 'Endpoints',
-
-        // By default, Scribe will sort groups alphabetically, and endpoints in the order their routes are defined.
-        // You can override this by listing the groups, subgroups and endpoints here in the order you want them.
-        // See https://scribe.knuckles.wtf/blog/laravel-v4#easier-sorting and https://scribe.knuckles.wtf/laravel/reference/config#order for details
-        // Note: does not work for `external` docs types
-        'order' => [],
+        'order' => [
+            'Autenticação',
+            'Usuários',
+            'Cargos',
+            'Papéis',
+            'Contatos',
+            'Ofícios',
+            'Templates de Ofício',
+            'Mensagens',
+            'Configurações',
+            'SMTP',
+            'Validação de Documentos',
+            'Logs de Workers',
+            'Backups',
+            'Broker (Interno)',
+        ],
     ],
 
     // Custom logo path. This will be used as the value of the src attribute for the <img> tag,

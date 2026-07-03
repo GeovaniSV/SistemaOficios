@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\BackupController;
 use App\Http\Controllers\Api\ValidacaoController;
 use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\MessageController;
@@ -20,6 +21,7 @@ Route::get('validacao', [ValidacaoController::class, 'validate']);
 Route::middleware('broker.auth')->group(function () {
     Route::get('broker/smtp-config', [SmtpConfigController::class, 'brokerShow']);
     Route::post('worker-logs', [WorkerLogController::class, 'store']);
+    Route::post('backups/auto', [BackupController::class, 'auto']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -53,4 +55,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('messages/{message}/pdf', [MessageController::class, 'downloadPdf']);
 
     Route::get('worker-logs', [WorkerLogController::class, 'index']);
+
+    Route::get('backups', [BackupController::class, 'index']);
+    Route::post('backups/manual', [BackupController::class, 'manual']);
 });

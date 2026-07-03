@@ -1,0 +1,88 @@
+name: 'Validação de Documentos'
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/validacao
+    metadata:
+      custom: []
+      groupName: 'Validação de Documentos'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Verificar autenticidade de ofício'
+      description: |-
+        Rota pública. Verifica se existe um PDF válido para o código de validação impresso no ofício.
+        O `codigo` é um UUID diferente do hash do arquivo — é o `validation_hash` gerado no momento do envio.
+        Em caso de sucesso, retorna uma URL temporária (60 minutos) para download do PDF no Cloudflare R2.
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      codigo:
+        custom: []
+        name: codigo
+        description: 'UUID de validação do ofício (impresso no documento).'
+        required: true
+        example: 550e8400-e29b-41d4-a716-446655440000
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      codigo: 550e8400-e29b-41d4-a716-446655440000
+    bodyParameters:
+      codigo:
+        custom: []
+        name: codigo
+        description: 'Must be a valid UUID.'
+        required: true
+        example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      codigo: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "a PDF exists for this hash",
+            "path": "https://r2.cloudflarestorage.com/oficios/abc123.pdf?X-Amz-Signature=..."
+          }
+        headers: []
+        description: 'Documento válido'
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "success": false,
+            "message": "don't exists a PDF for this hash"
+          }
+        headers: []
+        description: 'Documento não encontrado'
+      -
+        custom: []
+        status: 422
+        content: '{"message": "The codigo field must be a valid UUID.", "errors": { "codigo": ["The codigo field must be a valid UUID."] }}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null

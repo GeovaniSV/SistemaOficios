@@ -8,7 +8,46 @@ servers:
     url: 'http://localhost'
 tags:
   -
-    name: Endpoints
+    name: Autenticação
+    description: ''
+  -
+    name: Usuários
+    description: ''
+  -
+    name: Cargos
+    description: ''
+  -
+    name: Papéis
+    description: ''
+  -
+    name: Contatos
+    description: ''
+  -
+    name: Ofícios
+    description: ''
+  -
+    name: 'Templates de Ofício'
+    description: ''
+  -
+    name: Mensagens
+    description: ''
+  -
+    name: Configurações
+    description: ''
+  -
+    name: SMTP
+    description: ''
+  -
+    name: 'Validação de Documentos'
+    description: ''
+  -
+    name: 'Logs de Workers'
+    description: ''
+  -
+    name: Backups
+    description: ''
+  -
+    name: 'Broker (Interno)'
     description: ''
 components:
   securitySchemes:
@@ -22,12 +61,75 @@ security:
 paths:
   /api/auth/login:
     post:
-      summary: ''
-      operationId: postApiAuthLogin
-      description: ''
+      summary: Login
+      operationId: login
+      description: 'Autentica o usuário e retorna um token Bearer Sanctum.'
       parameters: []
       responses:
-        422:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  token: 1|AbCdEf...
+                  user:
+                    id: 1
+                    name: 'Hugo Barbosa'
+                    email: hugo@example.com
+                    is_dev: false
+                    position:
+                      id: 1
+                      name: Diretor
+                    roles:
+                      -
+                        id: 1
+                        name: admin
+                properties:
+                  token:
+                    type: string
+                    example: 1|AbCdEf...
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: 'Hugo Barbosa'
+                      email:
+                        type: string
+                        example: hugo@example.com
+                      is_dev:
+                        type: boolean
+                        example: false
+                      position:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Diretor
+                      roles:
+                        type: array
+                        example:
+                          -
+                            id: 1
+                            name: admin
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: admin
+        401:
           description: ''
           content:
             application/json:
@@ -35,24 +137,12 @@ paths:
                 type: object
                 example:
                   message: 'Credenciais inválidas.'
-                  errors:
-                    email:
-                      - 'Credenciais inválidas.'
                 properties:
                   message:
                     type: string
                     example: 'Credenciais inválidas.'
-                  errors:
-                    type: object
-                    properties:
-                      email:
-                        type: array
-                        example:
-                          - 'Credenciais inválidas.'
-                        items:
-                          type: string
       tags:
-        - Endpoints
+        - Autenticação
       requestBody:
         required: true
         content:
@@ -72,32 +162,11 @@ paths:
                 - email
                 - password
       security: []
-  /api/broker/smtp-config:
-    get:
-      summary: ''
-      operationId: getApiBrokerSmtpConfig
-      description: ''
-      parameters: []
-      responses:
-        401:
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  message: Unauthorized
-                properties:
-                  message:
-                    type: string
-                    example: Unauthorized
-      tags:
-        - Endpoints
   /api/auth/logout:
     post:
-      summary: ''
-      operationId: postApiAuthLogout
-      description: ''
+      summary: Logout
+      operationId: logout
+      description: 'Revoga o token de acesso atual.'
       parameters: []
       responses:
         200:
@@ -113,12 +182,12 @@ paths:
                     type: string
                     example: 'Logout realizado com sucesso.'
       tags:
-        - Endpoints
+        - Autenticação
   /api/auth/logout-all:
     post:
-      summary: ''
-      operationId: postApiAuthLogoutAll
-      description: ''
+      summary: 'Logout de todos os dispositivos'
+      operationId: logoutDeTodosOsDispositivos
+      description: 'Revoga todos os tokens Sanctum do usuário autenticado.'
       parameters: []
       responses:
         200:
@@ -134,12 +203,12 @@ paths:
                     type: string
                     example: 'Todos os tokens revogados.'
       tags:
-        - Endpoints
+        - Autenticação
   /api/auth/me:
     get:
-      summary: ''
-      operationId: getApiAuthMe
-      description: ''
+      summary: 'Usuário autenticado'
+      operationId: usurioAutenticado
+      description: 'Retorna os dados do usuário logado, incluindo cargo e papéis.'
       parameters: []
       responses:
         200:
@@ -149,56 +218,74 @@ paths:
               schema:
                 type: object
                 example:
-                  id: 2
-                  name: Administrador
-                  email: admin@admin.com
-                  cpf: 000.000.000-01
-                  position_id: null
+                  id: 1
+                  name: 'Hugo Barbosa'
+                  email: hugo@example.com
                   is_active: true
                   is_dev: false
-                  last_login: null
-                  created_at: '2026-06-16T05:55:44.000000Z'
-                  updated_at: '2026-06-16T05:55:44.000000Z'
+                  position:
+                    id: 1
+                    name: Diretor
+                    is_active: true
+                  roles:
+                    -
+                      id: 1
+                      name: admin
+                      status: Ativo
                 properties:
                   id:
                     type: integer
-                    example: 2
+                    example: 1
                   name:
                     type: string
-                    example: Administrador
+                    example: 'Hugo Barbosa'
                   email:
                     type: string
-                    example: admin@admin.com
-                  cpf:
-                    type: string
-                    example: 000.000.000-01
-                  position_id:
-                    type: string
-                    example: null
-                    nullable: true
+                    example: hugo@example.com
                   is_active:
                     type: boolean
                     example: true
                   is_dev:
                     type: boolean
                     example: false
-                  last_login:
-                    type: string
-                    example: null
-                    nullable: true
-                  created_at:
-                    type: string
-                    example: '2026-06-16T05:55:44.000000Z'
-                  updated_at:
-                    type: string
-                    example: '2026-06-16T05:55:44.000000Z'
+                  position:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: Diretor
+                      is_active:
+                        type: boolean
+                        example: true
+                  roles:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        name: admin
+                        status: Ativo
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: admin
+                        status:
+                          type: string
+                          example: Ativo
       tags:
-        - Endpoints
+        - Autenticação
   /api/users:
     get:
-      summary: ''
-      operationId: getApiUsers
-      description: ''
+      summary: 'Listar usuários'
+      operationId: listarUsurios
+      description: 'Retorna lista paginada de usuários com cargo e papéis.'
       parameters: []
       responses:
         200:
@@ -211,41 +298,19 @@ paths:
                   current_page: 1
                   data:
                     -
-                      id: 2
-                      name: Administrador
-                      email: admin@admin.com
-                      cpf: 000.000.000-01
-                      position_id: null
+                      id: 1
+                      name: 'Hugo Barbosa'
+                      email: hugo@example.com
                       is_active: true
                       is_dev: false
-                      last_login: null
-                      created_at: '2026-06-16T05:55:44.000000Z'
-                      updated_at: '2026-06-16T05:55:44.000000Z'
-                  first_page_url: 'http://localhost/api/users?page=1'
-                  from: 1
-                  last_page: 1
-                  last_page_url: 'http://localhost/api/users?page=1'
-                  links:
-                    -
-                      url: null
-                      label: '&laquo; Previous'
-                      page: null
-                      active: false
-                    -
-                      url: 'http://localhost/api/users?page=1'
-                      label: '1'
-                      page: 1
-                      active: true
-                    -
-                      url: null
-                      label: 'Next &raquo;'
-                      page: null
-                      active: false
-                  next_page_url: null
-                  path: 'http://localhost/api/users'
+                      position:
+                        id: 1
+                        name: Diretor
+                      roles:
+                        -
+                          id: 1
+                          name: admin
                   per_page: 20
-                  prev_page_url: null
-                  to: 1
                   total: 1
                 properties:
                   current_page:
@@ -255,126 +320,107 @@ paths:
                     type: array
                     example:
                       -
-                        id: 2
-                        name: Administrador
-                        email: admin@admin.com
-                        cpf: 000.000.000-01
-                        position_id: null
+                        id: 1
+                        name: 'Hugo Barbosa'
+                        email: hugo@example.com
                         is_active: true
                         is_dev: false
-                        last_login: null
-                        created_at: '2026-06-16T05:55:44.000000Z'
-                        updated_at: '2026-06-16T05:55:44.000000Z'
+                        position:
+                          id: 1
+                          name: Diretor
+                        roles:
+                          -
+                            id: 1
+                            name: admin
                     items:
                       type: object
                       properties:
                         id:
                           type: integer
-                          example: 2
+                          example: 1
                         name:
                           type: string
-                          example: Administrador
+                          example: 'Hugo Barbosa'
                         email:
                           type: string
-                          example: admin@admin.com
-                        cpf:
-                          type: string
-                          example: 000.000.000-01
-                        position_id:
-                          type: string
-                          example: null
-                          nullable: true
+                          example: hugo@example.com
                         is_active:
                           type: boolean
                           example: true
                         is_dev:
                           type: boolean
                           example: false
-                        last_login:
-                          type: string
-                          example: null
-                          nullable: true
-                        created_at:
-                          type: string
-                          example: '2026-06-16T05:55:44.000000Z'
-                        updated_at:
-                          type: string
-                          example: '2026-06-16T05:55:44.000000Z'
-                  first_page_url:
-                    type: string
-                    example: 'http://localhost/api/users?page=1'
-                  from:
-                    type: integer
-                    example: 1
-                  last_page:
-                    type: integer
-                    example: 1
-                  last_page_url:
-                    type: string
-                    example: 'http://localhost/api/users?page=1'
-                  links:
-                    type: array
-                    example:
-                      -
-                        url: null
-                        label: '&laquo; Previous'
-                        page: null
-                        active: false
-                      -
-                        url: 'http://localhost/api/users?page=1'
-                        label: '1'
-                        page: 1
-                        active: true
-                      -
-                        url: null
-                        label: 'Next &raquo;'
-                        page: null
-                        active: false
-                    items:
-                      type: object
-                      properties:
-                        url:
-                          type: string
-                          example: null
-                          nullable: true
-                        label:
-                          type: string
-                          example: '&laquo; Previous'
-                        page:
-                          type: string
-                          example: null
-                          nullable: true
-                        active:
-                          type: boolean
-                          example: false
-                  next_page_url:
-                    type: string
-                    example: null
-                    nullable: true
-                  path:
-                    type: string
-                    example: 'http://localhost/api/users'
+                        position:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: Diretor
+                        roles:
+                          type: array
+                          example:
+                            -
+                              id: 1
+                              name: admin
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 1
+                              name:
+                                type: string
+                                example: admin
                   per_page:
                     type: integer
                     example: 20
-                  prev_page_url:
-                    type: string
-                    example: null
-                    nullable: true
-                  to:
-                    type: integer
-                    example: 1
                   total:
                     type: integer
                     example: 1
       tags:
-        - Endpoints
+        - Usuários
     post:
-      summary: ''
-      operationId: postApiUsers
+      summary: 'Criar usuário'
+      operationId: criarUsurio
       description: ''
       parameters: []
       responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 2
+                  name: 'Maria Silva'
+                  email: maria@example.com
+                  is_active: true
+                  position: null
+                  roles: []
+                properties:
+                  id:
+                    type: integer
+                    example: 2
+                  name:
+                    type: string
+                    example: 'Maria Silva'
+                  email:
+                    type: string
+                    example: maria@example.com
+                  is_active:
+                    type: boolean
+                    example: true
+                  position:
+                    type: string
+                    example: null
+                    nullable: true
+                  roles:
+                    type: array
+                    example: []
         422:
           description: ''
           content:
@@ -382,41 +428,25 @@ paths:
               schema:
                 type: object
                 example:
-                  message: 'The cpf field format is invalid. (and 2 more errors)'
+                  message: 'The email has already been taken.'
                   errors:
-                    cpf:
-                      - 'The cpf field format is invalid.'
-                    position_id:
-                      - 'The selected position id is invalid.'
-                    role:
-                      - 'The selected role is invalid.'
+                    email:
+                      - 'The email has already been taken.'
                 properties:
                   message:
                     type: string
-                    example: 'The cpf field format is invalid. (and 2 more errors)'
+                    example: 'The email has already been taken.'
                   errors:
                     type: object
                     properties:
-                      cpf:
+                      email:
                         type: array
                         example:
-                          - 'The cpf field format is invalid.'
-                        items:
-                          type: string
-                      position_id:
-                        type: array
-                        example:
-                          - 'The selected position id is invalid.'
-                        items:
-                          type: string
-                      role:
-                        type: array
-                        example:
-                          - 'The selected role is invalid.'
+                          - 'The email has already been taken.'
                         items:
                           type: string
       tags:
-        - Endpoints
+        - Usuários
       requestBody:
         required: true
         content:
@@ -457,11 +487,70 @@ paths:
                 - password
   '/api/users/{id}':
     get:
-      summary: ''
-      operationId: getApiUsersId
+      summary: 'Exibir usuário'
+      operationId: exibirUsurio
       description: ''
       parameters: []
       responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 1
+                  name: 'Hugo Barbosa'
+                  email: hugo@example.com
+                  is_active: true
+                  is_dev: false
+                  position:
+                    id: 1
+                    name: Diretor
+                  roles:
+                    -
+                      id: 1
+                      name: admin
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: 'Hugo Barbosa'
+                  email:
+                    type: string
+                    example: hugo@example.com
+                  is_active:
+                    type: boolean
+                    example: true
+                  is_dev:
+                    type: boolean
+                    example: false
+                  position:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: Diretor
+                  roles:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        name: admin
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: admin
         404:
           description: ''
           content:
@@ -469,61 +558,76 @@ paths:
               schema:
                 type: object
                 example:
-                  message: ''
+                  message: 'No query results for model [App\Models\User]'
                 properties:
                   message:
                     type: string
-                    example: ''
+                    example: 'No query results for model [App\Models\User]'
       tags:
-        - Endpoints
+        - Usuários
     put:
-      summary: ''
-      operationId: putApiUsersId
+      summary: 'Atualizar usuário'
+      operationId: atualizarUsurio
       description: ''
       parameters: []
       responses:
-        422:
+        200:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: 'The cpf field format is invalid. (and 2 more errors)'
-                  errors:
-                    cpf:
-                      - 'The cpf field format is invalid.'
-                    position_id:
-                      - 'The selected position id is invalid.'
-                    role:
-                      - 'The selected role is invalid.'
+                  id: 1
+                  name: 'Hugo Barbosa Atualizado'
+                  email: hugo@example.com
+                  is_active: true
+                  position:
+                    id: 1
+                    name: Diretor
+                  roles:
+                    -
+                      id: 1
+                      name: admin
                 properties:
-                  message:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
                     type: string
-                    example: 'The cpf field format is invalid. (and 2 more errors)'
-                  errors:
+                    example: 'Hugo Barbosa Atualizado'
+                  email:
+                    type: string
+                    example: hugo@example.com
+                  is_active:
+                    type: boolean
+                    example: true
+                  position:
                     type: object
                     properties:
-                      cpf:
-                        type: array
-                        example:
-                          - 'The cpf field format is invalid.'
-                        items:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: Diretor
+                  roles:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        name: admin
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
                           type: string
-                      position_id:
-                        type: array
-                        example:
-                          - 'The selected position id is invalid.'
-                        items:
-                          type: string
-                      role:
-                        type: array
-                        example:
-                          - 'The selected role is invalid.'
-                        items:
-                          type: string
+                          example: admin
       tags:
-        - Endpoints
+        - Usuários
       requestBody:
         required: false
         content:
@@ -559,11 +663,57 @@ paths:
                   example: architecto
                   nullable: true
     delete:
-      summary: ''
-      operationId: deleteApiUsersId
-      description: ''
-      parameters: []
+      summary: 'Inativar / Reativar usuário'
+      operationId: inativarReativarUsurio
+      description: "Quando `activate=false` (padrão), inativa o usuário e revoga todos os seus tokens.\nQuando `activate=true`, reativa o usuário.\nUsuários marcados como `is_dev` não podem ser inativados."
+      parameters:
+        -
+          in: query
+          name: activate
+          description: 'Passa `true` para reativar, `false` (padrão) para inativar.'
+          example: false
+          required: false
+          schema:
+            type: boolean
+            description: 'Passa `true` para reativar, `false` (padrão) para inativar.'
+            example: false
       responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 1
+                  name: 'Hugo Barbosa'
+                  is_active: false
+                  position:
+                    id: 1
+                    name: Diretor
+                  roles: []
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: 'Hugo Barbosa'
+                  is_active:
+                    type: boolean
+                    example: false
+                  position:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: Diretor
+                  roles:
+                    type: array
+                    example: []
         404:
           description: ''
           content:
@@ -571,13 +721,24 @@ paths:
               schema:
                 type: object
                 example:
-                  message: ''
+                  message: 'No query results for model [App\Models\User]'
                 properties:
                   message:
                     type: string
-                    example: ''
+                    example: 'No query results for model [App\Models\User]'
       tags:
-        - Endpoints
+        - Usuários
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                activate:
+                  type: boolean
+                  description: ''
+                  example: true
     parameters:
       -
         in: path
@@ -587,41 +748,11 @@ paths:
         required: true
         schema:
           type: integer
-  '/api/users/{user_id}/restore':
-    patch:
-      summary: ''
-      operationId: patchApiUsersUser_idRestore
-      description: ''
-      parameters: []
-      responses:
-        404:
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  message: ''
-                properties:
-                  message:
-                    type: string
-                    example: ''
-      tags:
-        - Endpoints
-    parameters:
-      -
-        in: path
-        name: user_id
-        description: 'The ID of the user.'
-        example: 1
-        required: true
-        schema:
-          type: integer
   /api/positions:
     get:
-      summary: ''
-      operationId: getApiPositions
-      description: ''
+      summary: 'Listar cargos'
+      operationId: listarCargos
+      description: 'Retorna lista paginada de cargos.'
       parameters: []
       responses:
         200:
@@ -632,114 +763,47 @@ paths:
                 type: object
                 example:
                   current_page: 1
-                  data: []
-                  first_page_url: 'http://localhost/api/positions?page=1'
-                  from: null
-                  last_page: 1
-                  last_page_url: 'http://localhost/api/positions?page=1'
-                  links:
+                  data:
                     -
-                      url: null
-                      label: '&laquo; Previous'
-                      page: null
-                      active: false
-                    -
-                      url: 'http://localhost/api/positions?page=1'
-                      label: '1'
-                      page: 1
-                      active: true
-                    -
-                      url: null
-                      label: 'Next &raquo;'
-                      page: null
-                      active: false
-                  next_page_url: null
-                  path: 'http://localhost/api/positions'
+                      id: 1
+                      name: Diretor
+                      is_active: true
                   per_page: 20
-                  prev_page_url: null
-                  to: null
-                  total: 0
+                  total: 1
                 properties:
                   current_page:
                     type: integer
                     example: 1
                   data:
                     type: array
-                    example: []
-                  first_page_url:
-                    type: string
-                    example: 'http://localhost/api/positions?page=1'
-                  from:
-                    type: string
-                    example: null
-                    nullable: true
-                  last_page:
-                    type: integer
-                    example: 1
-                  last_page_url:
-                    type: string
-                    example: 'http://localhost/api/positions?page=1'
-                  links:
-                    type: array
                     example:
                       -
-                        url: null
-                        label: '&laquo; Previous'
-                        page: null
-                        active: false
-                      -
-                        url: 'http://localhost/api/positions?page=1'
-                        label: '1'
-                        page: 1
-                        active: true
-                      -
-                        url: null
-                        label: 'Next &raquo;'
-                        page: null
-                        active: false
+                        id: 1
+                        name: Diretor
+                        is_active: true
                     items:
                       type: object
                       properties:
-                        url:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
                           type: string
-                          example: null
-                          nullable: true
-                        label:
-                          type: string
-                          example: '&laquo; Previous'
-                        page:
-                          type: string
-                          example: null
-                          nullable: true
-                        active:
+                          example: Diretor
+                        is_active:
                           type: boolean
-                          example: false
-                  next_page_url:
-                    type: string
-                    example: null
-                    nullable: true
-                  path:
-                    type: string
-                    example: 'http://localhost/api/positions'
+                          example: true
                   per_page:
                     type: integer
                     example: 20
-                  prev_page_url:
-                    type: string
-                    example: null
-                    nullable: true
-                  to:
-                    type: string
-                    example: null
-                    nullable: true
                   total:
                     type: integer
-                    example: 0
+                    example: 1
       tags:
-        - Endpoints
+        - Cargos
     post:
-      summary: ''
-      operationId: postApiPositions
+      summary: 'Criar cargo'
+      operationId: criarCargo
       description: ''
       parameters: []
       responses:
@@ -750,33 +814,21 @@ paths:
               schema:
                 type: object
                 example:
-                  name: b
-                  description: 'Et animi quos velit et fugiat.'
+                  id: 2
+                  name: Secretário
                   is_active: true
-                  updated_at: '2026-06-18T06:52:16.000000Z'
-                  created_at: '2026-06-18T06:52:16.000000Z'
-                  id: 1
                 properties:
+                  id:
+                    type: integer
+                    example: 2
                   name:
                     type: string
-                    example: b
-                  description:
-                    type: string
-                    example: 'Et animi quos velit et fugiat.'
+                    example: Secretário
                   is_active:
                     type: boolean
                     example: true
-                  updated_at:
-                    type: string
-                    example: '2026-06-18T06:52:16.000000Z'
-                  created_at:
-                    type: string
-                    example: '2026-06-18T06:52:16.000000Z'
-                  id:
-                    type: integer
-                    example: 1
       tags:
-        - Endpoints
+        - Cargos
       requestBody:
         required: true
         content:
@@ -801,8 +853,8 @@ paths:
                 - name
   '/api/positions/{id}':
     get:
-      summary: ''
-      operationId: getApiPositionsId
+      summary: 'Exibir cargo'
+      operationId: exibirCargo
       description: ''
       parameters: []
       responses:
@@ -814,35 +866,35 @@ paths:
                 type: object
                 example:
                   id: 1
-                  name: b
-                  description: 'Et animi quos velit et fugiat.'
+                  name: Diretor
                   is_active: true
-                  created_at: '2026-06-18T06:52:16.000000Z'
-                  updated_at: '2026-06-18T06:52:16.000000Z'
                 properties:
                   id:
                     type: integer
                     example: 1
                   name:
                     type: string
-                    example: b
-                  description:
-                    type: string
-                    example: 'Et animi quos velit et fugiat.'
+                    example: Diretor
                   is_active:
                     type: boolean
                     example: true
-                  created_at:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'No query results for model [App\Models\Position]'
+                properties:
+                  message:
                     type: string
-                    example: '2026-06-18T06:52:16.000000Z'
-                  updated_at:
-                    type: string
-                    example: '2026-06-18T06:52:16.000000Z'
+                    example: 'No query results for model [App\Models\Position]'
       tags:
-        - Endpoints
+        - Cargos
     put:
-      summary: ''
-      operationId: putApiPositionsId
+      summary: 'Atualizar cargo'
+      operationId: atualizarCargo
       description: ''
       parameters: []
       responses:
@@ -854,32 +906,20 @@ paths:
                 type: object
                 example:
                   id: 1
-                  name: b
-                  description: 'Et animi quos velit et fugiat.'
+                  name: 'Diretor Geral'
                   is_active: true
-                  created_at: '2026-06-18T06:52:16.000000Z'
-                  updated_at: '2026-06-18T06:52:16.000000Z'
                 properties:
                   id:
                     type: integer
                     example: 1
                   name:
                     type: string
-                    example: b
-                  description:
-                    type: string
-                    example: 'Et animi quos velit et fugiat.'
+                    example: 'Diretor Geral'
                   is_active:
                     type: boolean
                     example: true
-                  created_at:
-                    type: string
-                    example: '2026-06-18T06:52:16.000000Z'
-                  updated_at:
-                    type: string
-                    example: '2026-06-18T06:52:16.000000Z'
       tags:
-        - Endpoints
+        - Cargos
       requestBody:
         required: false
         content:
@@ -901,34 +941,68 @@ paths:
                   description: ''
                   example: true
     delete:
-      summary: ''
-      operationId: deleteApiPositionsId
-      description: ''
-      parameters: []
+      summary: 'Inativar / Reativar cargo'
+      operationId: inativarReativarCargo
+      description: 'Quando `activate=false` (padrão), inativa o cargo. Quando `activate=true`, reativa.'
+      parameters:
+        -
+          in: query
+          name: activate
+          description: 'Passa `true` para reativar, `false` (padrão) para inativar.'
+          example: false
+          required: false
+          schema:
+            type: boolean
+            description: 'Passa `true` para reativar, `false` (padrão) para inativar.'
+            example: false
       responses:
-        204:
+        200:
           description: ''
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
-                example: ''
+                type: object
+                example:
+                  id: 1
+                  name: Diretor
+                  is_active: false
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: Diretor
+                  is_active:
+                    type: boolean
+                    example: false
       tags:
-        - Endpoints
+        - Cargos
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                activate:
+                  type: boolean
+                  description: ''
+                  example: false
     parameters:
       -
         in: path
         name: id
         description: 'The ID of the position.'
-        example: 1
+        example: 16
         required: true
         schema:
           type: integer
-  /api/contacts:
+  /api/roles:
     get:
-      summary: ''
-      operationId: getApiContacts
-      description: ''
+      summary: 'Listar papéis'
+      operationId: listarPapis
+      description: 'Retorna lista paginada de papéis (roles) com suas permissões.'
       parameters: []
       responses:
         200:
@@ -942,143 +1016,14 @@ paths:
                   data:
                     -
                       id: 1
-                      type: PJ
-                      doc: '12345678000195'
-                      name: 'Empresa Teste LTDA'
-                      address_id: 1
-                      is_active: true
-                      created_at: '2026-06-16T05:57:37.000000Z'
-                      updated_at: '2026-06-18T04:39:45.000000Z'
-                      formatted_doc: 12.345.678/0001-95
-                      address:
-                        id: 1
-                        cep: '01310100'
-                        logradouro: 'Avenida Paulista'
-                        numero: '1000'
-                        bairro: 'Bela Vista'
-                        cidade: 'Sao Paulo'
-                        estado: SP
-                        created_at: '2026-06-16T05:57:37.000000Z'
-                        updated_at: '2026-06-16T05:57:37.000000Z'
-                      responsibles:
+                      name: admin
+                      status: Ativo
+                      permissions:
                         -
                           id: 1
-                          contact_id: 1
-                          name: 'Joao Silva'
-                          email: joao.silva@empresateste.com
-                          treatment: null
-                          position: 'Diretor Executivo'
-                          department: Diretoria
-                          created_at: '2026-06-16T05:57:37.000000Z'
-                          updated_at: '2026-06-16T05:57:37.000000Z'
-                        -
-                          id: 2
-                          contact_id: 1
-                          name: 'Maria Souza'
-                          email: maria.souza@empresateste.com
-                          treatment: null
-                          position: 'Gerente Juridica'
-                          department: Juridico
-                          created_at: '2026-06-16T05:57:37.000000Z'
-                          updated_at: '2026-06-16T05:57:37.000000Z'
-                    -
-                      id: 2
-                      type: PJ
-                      doc: '98765432000100'
-                      name: 'Nova Empresa LTDA'
-                      address_id: 2
-                      is_active: true
-                      created_at: '2026-06-16T05:59:19.000000Z'
-                      updated_at: '2026-06-16T05:59:19.000000Z'
-                      formatted_doc: 98.765.432/0001-00
-                      address:
-                        id: 2
-                        cep: '20040020'
-                        logradouro: 'Avenida Rio Branco'
-                        numero: '45'
-                        bairro: Centro
-                        cidade: 'Rio de Janeiro'
-                        estado: RJ
-                        created_at: '2026-06-16T05:59:19.000000Z'
-                        updated_at: '2026-06-16T05:59:19.000000Z'
-                      responsibles:
-                        -
-                          id: 3
-                          contact_id: 2
-                          name: 'Joao Silva'
-                          email: joao.silva@novaempresa.com
-                          treatment: Sr.
-                          position: 'Diretor Executivo'
-                          department: Diretoria
-                          created_at: '2026-06-16T05:59:19.000000Z'
-                          updated_at: '2026-06-16T05:59:19.000000Z'
-                        -
-                          id: 4
-                          contact_id: 2
-                          name: 'Maria Souza'
-                          email: maria.souza@novaempresa.com
-                          treatment: Dra.
-                          position: 'Gerente Juridica'
-                          department: Juridico
-                          created_at: '2026-06-16T05:59:19.000000Z'
-                          updated_at: '2026-06-16T05:59:19.000000Z'
-                    -
-                      id: 3
-                      type: PF
-                      doc: '04118035146'
-                      name: 'Hugo Moreira Barbosa'
-                      address_id: 3
-                      is_active: true
-                      created_at: '2026-06-16T06:05:45.000000Z'
-                      updated_at: '2026-06-16T06:05:45.000000Z'
-                      formatted_doc: 041.180.351-46
-                      address:
-                        id: 3
-                        cep: '93848239'
-                        logradouro: 'Avenida dos Ingás'
-                        numero: '2504'
-                        bairro: 'Jardim Imperial'
-                        cidade: Sinop
-                        estado: MT
-                        created_at: '2026-06-16T06:05:45.000000Z'
-                        updated_at: '2026-06-16T06:05:45.000000Z'
-                      responsibles:
-                        -
-                          id: 5
-                          contact_id: 3
-                          name: 'Hugo Moreira'
-                          email: hugomoreirabarbosa2@gmail.com
-                          treatment: Magnífico
-                          position: Sim
-                          department: Isso
-                          created_at: '2026-06-16T06:05:45.000000Z'
-                          updated_at: '2026-06-16T06:05:45.000000Z'
-                  first_page_url: 'http://localhost/api/contacts?page=1'
-                  from: 1
-                  last_page: 1
-                  last_page_url: 'http://localhost/api/contacts?page=1'
-                  links:
-                    -
-                      url: null
-                      label: '&laquo; Previous'
-                      page: null
-                      active: false
-                    -
-                      url: 'http://localhost/api/contacts?page=1'
-                      label: '1'
-                      page: 1
-                      active: true
-                    -
-                      url: null
-                      label: 'Next &raquo;'
-                      page: null
-                      active: false
-                  next_page_url: null
-                  path: 'http://localhost/api/contacts'
+                          name: configuracoes.acessar
                   per_page: 20
-                  prev_page_url: null
-                  to: 3
-                  total: 3
+                  total: 1
                 properties:
                   current_page:
                     type: integer
@@ -1088,320 +1033,439 @@ paths:
                     example:
                       -
                         id: 1
-                        type: PJ
-                        doc: '12345678000195'
-                        name: 'Empresa Teste LTDA'
-                        address_id: 1
-                        is_active: true
-                        created_at: '2026-06-16T05:57:37.000000Z'
-                        updated_at: '2026-06-18T04:39:45.000000Z'
-                        formatted_doc: 12.345.678/0001-95
-                        address:
-                          id: 1
-                          cep: '01310100'
-                          logradouro: 'Avenida Paulista'
-                          numero: '1000'
-                          bairro: 'Bela Vista'
-                          cidade: 'Sao Paulo'
-                          estado: SP
-                          created_at: '2026-06-16T05:57:37.000000Z'
-                          updated_at: '2026-06-16T05:57:37.000000Z'
-                        responsibles:
+                        name: admin
+                        status: Ativo
+                        permissions:
                           -
                             id: 1
-                            contact_id: 1
-                            name: 'Joao Silva'
-                            email: joao.silva@empresateste.com
-                            treatment: null
-                            position: 'Diretor Executivo'
-                            department: Diretoria
-                            created_at: '2026-06-16T05:57:37.000000Z'
-                            updated_at: '2026-06-16T05:57:37.000000Z'
-                          -
-                            id: 2
-                            contact_id: 1
-                            name: 'Maria Souza'
-                            email: maria.souza@empresateste.com
-                            treatment: null
-                            position: 'Gerente Juridica'
-                            department: Juridico
-                            created_at: '2026-06-16T05:57:37.000000Z'
-                            updated_at: '2026-06-16T05:57:37.000000Z'
-                      -
-                        id: 2
-                        type: PJ
-                        doc: '98765432000100'
-                        name: 'Nova Empresa LTDA'
-                        address_id: 2
-                        is_active: true
-                        created_at: '2026-06-16T05:59:19.000000Z'
-                        updated_at: '2026-06-16T05:59:19.000000Z'
-                        formatted_doc: 98.765.432/0001-00
-                        address:
-                          id: 2
-                          cep: '20040020'
-                          logradouro: 'Avenida Rio Branco'
-                          numero: '45'
-                          bairro: Centro
-                          cidade: 'Rio de Janeiro'
-                          estado: RJ
-                          created_at: '2026-06-16T05:59:19.000000Z'
-                          updated_at: '2026-06-16T05:59:19.000000Z'
-                        responsibles:
-                          -
-                            id: 3
-                            contact_id: 2
-                            name: 'Joao Silva'
-                            email: joao.silva@novaempresa.com
-                            treatment: Sr.
-                            position: 'Diretor Executivo'
-                            department: Diretoria
-                            created_at: '2026-06-16T05:59:19.000000Z'
-                            updated_at: '2026-06-16T05:59:19.000000Z'
-                          -
-                            id: 4
-                            contact_id: 2
-                            name: 'Maria Souza'
-                            email: maria.souza@novaempresa.com
-                            treatment: Dra.
-                            position: 'Gerente Juridica'
-                            department: Juridico
-                            created_at: '2026-06-16T05:59:19.000000Z'
-                            updated_at: '2026-06-16T05:59:19.000000Z'
-                      -
-                        id: 3
-                        type: PF
-                        doc: '04118035146'
-                        name: 'Hugo Moreira Barbosa'
-                        address_id: 3
-                        is_active: true
-                        created_at: '2026-06-16T06:05:45.000000Z'
-                        updated_at: '2026-06-16T06:05:45.000000Z'
-                        formatted_doc: 041.180.351-46
-                        address:
-                          id: 3
-                          cep: '93848239'
-                          logradouro: 'Avenida dos Ingás'
-                          numero: '2504'
-                          bairro: 'Jardim Imperial'
-                          cidade: Sinop
-                          estado: MT
-                          created_at: '2026-06-16T06:05:45.000000Z'
-                          updated_at: '2026-06-16T06:05:45.000000Z'
-                        responsibles:
-                          -
-                            id: 5
-                            contact_id: 3
-                            name: 'Hugo Moreira'
-                            email: hugomoreirabarbosa2@gmail.com
-                            treatment: Magnífico
-                            position: Sim
-                            department: Isso
-                            created_at: '2026-06-16T06:05:45.000000Z'
-                            updated_at: '2026-06-16T06:05:45.000000Z'
+                            name: configuracoes.acessar
                     items:
                       type: object
                       properties:
                         id:
                           type: integer
                           example: 1
-                        type:
-                          type: string
-                          example: PJ
-                        doc:
-                          type: string
-                          example: '12345678000195'
                         name:
                           type: string
-                          example: 'Empresa Teste LTDA'
-                        address_id:
-                          type: integer
-                          example: 1
-                        is_active:
-                          type: boolean
-                          example: true
-                        created_at:
+                          example: admin
+                        status:
                           type: string
-                          example: '2026-06-16T05:57:37.000000Z'
-                        updated_at:
-                          type: string
-                          example: '2026-06-18T04:39:45.000000Z'
-                        formatted_doc:
-                          type: string
-                          example: 12.345.678/0001-95
-                        address:
-                          type: object
-                          properties:
-                            id:
-                              type: integer
-                              example: 1
-                            cep:
-                              type: string
-                              example: '01310100'
-                            logradouro:
-                              type: string
-                              example: 'Avenida Paulista'
-                            numero:
-                              type: string
-                              example: '1000'
-                            bairro:
-                              type: string
-                              example: 'Bela Vista'
-                            cidade:
-                              type: string
-                              example: 'Sao Paulo'
-                            estado:
-                              type: string
-                              example: SP
-                            created_at:
-                              type: string
-                              example: '2026-06-16T05:57:37.000000Z'
-                            updated_at:
-                              type: string
-                              example: '2026-06-16T05:57:37.000000Z'
-                        responsibles:
+                          example: Ativo
+                        permissions:
                           type: array
                           example:
                             -
                               id: 1
-                              contact_id: 1
-                              name: 'Joao Silva'
-                              email: joao.silva@empresateste.com
-                              treatment: null
-                              position: 'Diretor Executivo'
-                              department: Diretoria
-                              created_at: '2026-06-16T05:57:37.000000Z'
-                              updated_at: '2026-06-16T05:57:37.000000Z'
-                            -
-                              id: 2
-                              contact_id: 1
-                              name: 'Maria Souza'
-                              email: maria.souza@empresateste.com
-                              treatment: null
-                              position: 'Gerente Juridica'
-                              department: Juridico
-                              created_at: '2026-06-16T05:57:37.000000Z'
-                              updated_at: '2026-06-16T05:57:37.000000Z'
+                              name: configuracoes.acessar
                           items:
                             type: object
                             properties:
                               id:
                                 type: integer
                                 example: 1
-                              contact_id:
-                                type: integer
-                                example: 1
                               name:
                                 type: string
-                                example: 'Joao Silva'
-                              email:
-                                type: string
-                                example: joao.silva@empresateste.com
-                              treatment:
-                                type: string
-                                example: null
-                                nullable: true
-                              position:
-                                type: string
-                                example: 'Diretor Executivo'
-                              department:
-                                type: string
-                                example: Diretoria
-                              created_at:
-                                type: string
-                                example: '2026-06-16T05:57:37.000000Z'
-                              updated_at:
-                                type: string
-                                example: '2026-06-16T05:57:37.000000Z'
-                  first_page_url:
-                    type: string
-                    example: 'http://localhost/api/contacts?page=1'
-                  from:
-                    type: integer
-                    example: 1
-                  last_page:
-                    type: integer
-                    example: 1
-                  last_page_url:
-                    type: string
-                    example: 'http://localhost/api/contacts?page=1'
-                  links:
-                    type: array
-                    example:
-                      -
-                        url: null
-                        label: '&laquo; Previous'
-                        page: null
-                        active: false
-                      -
-                        url: 'http://localhost/api/contacts?page=1'
-                        label: '1'
-                        page: 1
-                        active: true
-                      -
-                        url: null
-                        label: 'Next &raquo;'
-                        page: null
-                        active: false
-                    items:
-                      type: object
-                      properties:
-                        url:
-                          type: string
-                          example: null
-                          nullable: true
-                        label:
-                          type: string
-                          example: '&laquo; Previous'
-                        page:
-                          type: string
-                          example: null
-                          nullable: true
-                        active:
-                          type: boolean
-                          example: false
-                  next_page_url:
-                    type: string
-                    example: null
-                    nullable: true
-                  path:
-                    type: string
-                    example: 'http://localhost/api/contacts'
+                                example: configuracoes.acessar
                   per_page:
                     type: integer
                     example: 20
-                  prev_page_url:
-                    type: string
-                    example: null
-                    nullable: true
-                  to:
-                    type: integer
-                    example: 3
                   total:
                     type: integer
-                    example: 3
+                    example: 1
       tags:
-        - Endpoints
+        - Papéis
     post:
-      summary: ''
-      operationId: postApiContacts
+      summary: 'Criar papel'
+      operationId: criarPapel
       description: ''
       parameters: []
       responses:
-        500:
+        201:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: 'Server Error'
+                  id: 2
+                  name: editor
+                  status: Ativo
+                  permissions: []
+                properties:
+                  id:
+                    type: integer
+                    example: 2
+                  name:
+                    type: string
+                    example: editor
+                  status:
+                    type: string
+                    example: Ativo
+                  permissions:
+                    type: array
+                    example: []
+      tags:
+        - Papéis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 191 characters.'
+                  example: b
+                description:
+                  type: string
+                  description: 'Must not be greater than 191 characters.'
+                  example: 'Et animi quos velit et fugiat.'
+                status:
+                  type: string
+                  description: ''
+                  example: Ativo
+                  enum:
+                    - Ativo
+                    - Inativo
+                permissions:
+                  type: array
+                  description: 'The <code>name</code> of an existing record in the permissions table.'
+                  example:
+                    - architecto
+                  items:
+                    type: string
+              required:
+                - name
+                - description
+                - status
+  '/api/roles/{id}':
+    get:
+      summary: 'Exibir papel'
+      operationId: exibirPapel
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 1
+                  name: admin
+                  status: Ativo
+                  permissions:
+                    -
+                      id: 1
+                      name: configuracoes.acessar
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: admin
+                  status:
+                    type: string
+                    example: Ativo
+                  permissions:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        name: configuracoes.acessar
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: configuracoes.acessar
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'No query results for model [Role]'
                 properties:
                   message:
                     type: string
-                    example: 'Server Error'
+                    example: 'No query results for model [Role]'
       tags:
-        - Endpoints
+        - Papéis
+    put:
+      summary: 'Atualizar papel'
+      operationId: atualizarPapel
+      description: 'Atualiza nome, status e permissões do papel.'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 1
+                  name: admin
+                  status: Ativo
+                  permissions:
+                    -
+                      id: 1
+                      name: configuracoes.acessar
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: admin
+                  status:
+                    type: string
+                    example: Ativo
+                  permissions:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        name: configuracoes.acessar
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: configuracoes.acessar
+      tags:
+        - Papéis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 191 characters.'
+                  example: b
+                description:
+                  type: string
+                  description: 'Must not be greater than 191 characters.'
+                  example: 'Et animi quos velit et fugiat.'
+                status:
+                  type: string
+                  description: ''
+                  example: Inativo
+                  enum:
+                    - Ativo
+                    - Inativo
+                permissions:
+                  type: array
+                  description: 'The <code>name</code> of an existing record in the permissions table.'
+                  example:
+                    - architecto
+                  items:
+                    type: string
+              required:
+                - name
+                - description
+                - status
+    delete:
+      summary: 'Inativar / Reativar papel'
+      operationId: inativarReativarPapel
+      description: 'Quando `activate=false` (padrão), muda o status para `Inativo`. Quando `activate=true`, muda para `Ativo`.'
+      parameters:
+        -
+          in: query
+          name: activate
+          description: 'Passa `true` para reativar, `false` (padrão) para inativar.'
+          example: false
+          required: false
+          schema:
+            type: boolean
+            description: 'Passa `true` para reativar, `false` (padrão) para inativar.'
+            example: false
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 1
+                  name: admin
+                  status: Inativo
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: admin
+                  status:
+                    type: string
+                    example: Inativo
+      tags:
+        - Papéis
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                activate:
+                  type: boolean
+                  description: ''
+                  example: false
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the role.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  /api/contacts:
+    get:
+      summary: 'Listar contatos'
+      operationId: listarContatos
+      description: 'Retorna lista paginada de contatos. Filtre pelo status com o parâmetro `is_active`.'
+      parameters:
+        -
+          in: query
+          name: is_active
+          description: 'Filtra por status ativo/inativo. Omita para retornar todos.'
+          example: true
+          required: false
+          schema:
+            type: boolean
+            description: 'Filtra por status ativo/inativo. Omita para retornar todos.'
+            example: true
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  current_page: 1
+                  data:
+                    -
+                      id: 1
+                      name: 'OAB Nacional'
+                      tipo: PJ
+                      email: oab@oab.org.br
+                      is_active: true
+                      address:
+                        street: 'SHS Q. 6'
+                        city: Brasília
+                        state: DF
+                  per_page: 20
+                  total: 1
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        name: 'OAB Nacional'
+                        tipo: PJ
+                        email: oab@oab.org.br
+                        is_active: true
+                        address:
+                          street: 'SHS Q. 6'
+                          city: Brasília
+                          state: DF
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: 'OAB Nacional'
+                        tipo:
+                          type: string
+                          example: PJ
+                        email:
+                          type: string
+                          example: oab@oab.org.br
+                        is_active:
+                          type: boolean
+                          example: true
+                        address:
+                          type: object
+                          properties:
+                            street:
+                              type: string
+                              example: 'SHS Q. 6'
+                            city:
+                              type: string
+                              example: Brasília
+                            state:
+                              type: string
+                              example: DF
+                  per_page:
+                    type: integer
+                    example: 20
+                  total:
+                    type: integer
+                    example: 1
+      tags:
+        - Contatos
+    post:
+      summary: 'Criar contato'
+      operationId: criarContato
+      description: ''
+      parameters: []
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 2
+                  name: 'TRT 10ª Região'
+                  tipo: PJ
+                  email: trt10@trt10.jus.br
+                  is_active: true
+                properties:
+                  id:
+                    type: integer
+                    example: 2
+                  name:
+                    type: string
+                    example: 'TRT 10ª Região'
+                  tipo:
+                    type: string
+                    example: PJ
+                  email:
+                    type: string
+                    example: trt10@trt10.jus.br
+                  is_active:
+                    type: boolean
+                    example: true
+      tags:
+        - Contatos
       requestBody:
         required: true
         content:
@@ -1502,8 +1566,8 @@ paths:
                 - responsibles
   '/api/contacts/{id}':
     get:
-      summary: ''
-      operationId: getApiContactsId
+      summary: 'Exibir contato'
+      operationId: exibirContato
       description: ''
       parameters: []
       responses:
@@ -1515,179 +1579,88 @@ paths:
                 type: object
                 example:
                   id: 1
-                  type: PJ
-                  doc: '12345678000195'
-                  name: 'Empresa Teste LTDA'
-                  address_id: 1
+                  name: 'OAB Nacional'
+                  tipo: PJ
+                  email: oab@oab.org.br
                   is_active: true
-                  created_at: '2026-06-16T05:57:37.000000Z'
-                  updated_at: '2026-06-18T04:39:45.000000Z'
-                  formatted_doc: 12.345.678/0001-95
                   address:
-                    id: 1
-                    cep: '01310100'
-                    logradouro: 'Avenida Paulista'
-                    numero: '1000'
-                    bairro: 'Bela Vista'
-                    cidade: 'Sao Paulo'
-                    estado: SP
-                    created_at: '2026-06-16T05:57:37.000000Z'
-                    updated_at: '2026-06-16T05:57:37.000000Z'
-                  responsibles:
-                    -
-                      id: 1
-                      contact_id: 1
-                      name: 'Joao Silva'
-                      email: joao.silva@empresateste.com
-                      treatment: null
-                      position: 'Diretor Executivo'
-                      department: Diretoria
-                      created_at: '2026-06-16T05:57:37.000000Z'
-                      updated_at: '2026-06-16T05:57:37.000000Z'
-                    -
-                      id: 2
-                      contact_id: 1
-                      name: 'Maria Souza'
-                      email: maria.souza@empresateste.com
-                      treatment: null
-                      position: 'Gerente Juridica'
-                      department: Juridico
-                      created_at: '2026-06-16T05:57:37.000000Z'
-                      updated_at: '2026-06-16T05:57:37.000000Z'
+                    street: 'SHS Q. 6'
+                    city: Brasília
+                    state: DF
                 properties:
                   id:
                     type: integer
                     example: 1
-                  type:
-                    type: string
-                    example: PJ
-                  doc:
-                    type: string
-                    example: '12345678000195'
                   name:
                     type: string
-                    example: 'Empresa Teste LTDA'
-                  address_id:
-                    type: integer
-                    example: 1
+                    example: 'OAB Nacional'
+                  tipo:
+                    type: string
+                    example: PJ
+                  email:
+                    type: string
+                    example: oab@oab.org.br
                   is_active:
                     type: boolean
                     example: true
-                  created_at:
-                    type: string
-                    example: '2026-06-16T05:57:37.000000Z'
-                  updated_at:
-                    type: string
-                    example: '2026-06-18T04:39:45.000000Z'
-                  formatted_doc:
-                    type: string
-                    example: 12.345.678/0001-95
                   address:
                     type: object
                     properties:
-                      id:
-                        type: integer
-                        example: 1
-                      cep:
+                      street:
                         type: string
-                        example: '01310100'
-                      logradouro:
+                        example: 'SHS Q. 6'
+                      city:
                         type: string
-                        example: 'Avenida Paulista'
-                      numero:
+                        example: Brasília
+                      state:
                         type: string
-                        example: '1000'
-                      bairro:
-                        type: string
-                        example: 'Bela Vista'
-                      cidade:
-                        type: string
-                        example: 'Sao Paulo'
-                      estado:
-                        type: string
-                        example: SP
-                      created_at:
-                        type: string
-                        example: '2026-06-16T05:57:37.000000Z'
-                      updated_at:
-                        type: string
-                        example: '2026-06-16T05:57:37.000000Z'
-                  responsibles:
-                    type: array
-                    example:
-                      -
-                        id: 1
-                        contact_id: 1
-                        name: 'Joao Silva'
-                        email: joao.silva@empresateste.com
-                        treatment: null
-                        position: 'Diretor Executivo'
-                        department: Diretoria
-                        created_at: '2026-06-16T05:57:37.000000Z'
-                        updated_at: '2026-06-16T05:57:37.000000Z'
-                      -
-                        id: 2
-                        contact_id: 1
-                        name: 'Maria Souza'
-                        email: maria.souza@empresateste.com
-                        treatment: null
-                        position: 'Gerente Juridica'
-                        department: Juridico
-                        created_at: '2026-06-16T05:57:37.000000Z'
-                        updated_at: '2026-06-16T05:57:37.000000Z'
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                          example: 1
-                        contact_id:
-                          type: integer
-                          example: 1
-                        name:
-                          type: string
-                          example: 'Joao Silva'
-                        email:
-                          type: string
-                          example: joao.silva@empresateste.com
-                        treatment:
-                          type: string
-                          example: null
-                          nullable: true
-                        position:
-                          type: string
-                          example: 'Diretor Executivo'
-                        department:
-                          type: string
-                          example: Diretoria
-                        created_at:
-                          type: string
-                          example: '2026-06-16T05:57:37.000000Z'
-                        updated_at:
-                          type: string
-                          example: '2026-06-16T05:57:37.000000Z'
-      tags:
-        - Endpoints
-    put:
-      summary: ''
-      operationId: putApiContactsId
-      description: ''
-      parameters: []
-      responses:
-        500:
+                        example: DF
+        404:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: 'Server Error'
+                  message: 'Contato não encontrado.'
                 properties:
                   message:
                     type: string
-                    example: 'Server Error'
+                    example: 'Contato não encontrado.'
       tags:
-        - Endpoints
+        - Contatos
+    put:
+      summary: 'Atualizar contato'
+      operationId: atualizarContato
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 1
+                  name: 'OAB Nacional Atualizado'
+                  tipo: PJ
+                  is_active: true
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: 'OAB Nacional Atualizado'
+                  tipo:
+                    type: string
+                    example: PJ
+                  is_active:
+                    type: boolean
+                    example: true
+      tags:
+        - Contatos
       requestBody:
         required: true
         content:
@@ -1787,10 +1760,20 @@ paths:
                 - address
                 - responsibles
     delete:
-      summary: ''
-      operationId: deleteApiContactsId
-      description: ''
-      parameters: []
+      summary: 'Inativar / Reativar contato'
+      operationId: inativarReativarContato
+      description: 'Quando `activate=false` (padrão), inativa o contato. Quando `activate=true`, reativa.'
+      parameters:
+        -
+          in: query
+          name: activate
+          description: 'Passa `true` para reativar, `false` (padrão) para inativar.'
+          example: false
+          required: false
+          schema:
+            type: boolean
+            description: 'Passa `true` para reativar, `false` (padrão) para inativar.'
+            example: false
       responses:
         200:
           description: ''
@@ -1800,159 +1783,20 @@ paths:
                 type: object
                 example:
                   id: 1
-                  type: PJ
-                  doc: '12345678000195'
-                  name: 'Empresa Teste LTDA'
-                  address_id: 1
+                  name: 'OAB Nacional'
                   is_active: false
-                  created_at: '2026-06-16T05:57:37.000000Z'
-                  updated_at: '2026-06-18T06:52:17.000000Z'
-                  formatted_doc: 12.345.678/0001-95
-                  address:
-                    id: 1
-                    cep: '01310100'
-                    logradouro: 'Avenida Paulista'
-                    numero: '1000'
-                    bairro: 'Bela Vista'
-                    cidade: 'Sao Paulo'
-                    estado: SP
-                    created_at: '2026-06-16T05:57:37.000000Z'
-                    updated_at: '2026-06-16T05:57:37.000000Z'
-                  responsibles:
-                    -
-                      id: 1
-                      contact_id: 1
-                      name: 'Joao Silva'
-                      email: joao.silva@empresateste.com
-                      treatment: null
-                      position: 'Diretor Executivo'
-                      department: Diretoria
-                      created_at: '2026-06-16T05:57:37.000000Z'
-                      updated_at: '2026-06-16T05:57:37.000000Z'
-                    -
-                      id: 2
-                      contact_id: 1
-                      name: 'Maria Souza'
-                      email: maria.souza@empresateste.com
-                      treatment: null
-                      position: 'Gerente Juridica'
-                      department: Juridico
-                      created_at: '2026-06-16T05:57:37.000000Z'
-                      updated_at: '2026-06-16T05:57:37.000000Z'
                 properties:
                   id:
                     type: integer
                     example: 1
-                  type:
-                    type: string
-                    example: PJ
-                  doc:
-                    type: string
-                    example: '12345678000195'
                   name:
                     type: string
-                    example: 'Empresa Teste LTDA'
-                  address_id:
-                    type: integer
-                    example: 1
+                    example: 'OAB Nacional'
                   is_active:
                     type: boolean
                     example: false
-                  created_at:
-                    type: string
-                    example: '2026-06-16T05:57:37.000000Z'
-                  updated_at:
-                    type: string
-                    example: '2026-06-18T06:52:17.000000Z'
-                  formatted_doc:
-                    type: string
-                    example: 12.345.678/0001-95
-                  address:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                        example: 1
-                      cep:
-                        type: string
-                        example: '01310100'
-                      logradouro:
-                        type: string
-                        example: 'Avenida Paulista'
-                      numero:
-                        type: string
-                        example: '1000'
-                      bairro:
-                        type: string
-                        example: 'Bela Vista'
-                      cidade:
-                        type: string
-                        example: 'Sao Paulo'
-                      estado:
-                        type: string
-                        example: SP
-                      created_at:
-                        type: string
-                        example: '2026-06-16T05:57:37.000000Z'
-                      updated_at:
-                        type: string
-                        example: '2026-06-16T05:57:37.000000Z'
-                  responsibles:
-                    type: array
-                    example:
-                      -
-                        id: 1
-                        contact_id: 1
-                        name: 'Joao Silva'
-                        email: joao.silva@empresateste.com
-                        treatment: null
-                        position: 'Diretor Executivo'
-                        department: Diretoria
-                        created_at: '2026-06-16T05:57:37.000000Z'
-                        updated_at: '2026-06-16T05:57:37.000000Z'
-                      -
-                        id: 2
-                        contact_id: 1
-                        name: 'Maria Souza'
-                        email: maria.souza@empresateste.com
-                        treatment: null
-                        position: 'Gerente Juridica'
-                        department: Juridico
-                        created_at: '2026-06-16T05:57:37.000000Z'
-                        updated_at: '2026-06-16T05:57:37.000000Z'
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                          example: 1
-                        contact_id:
-                          type: integer
-                          example: 1
-                        name:
-                          type: string
-                          example: 'Joao Silva'
-                        email:
-                          type: string
-                          example: joao.silva@empresateste.com
-                        treatment:
-                          type: string
-                          example: null
-                          nullable: true
-                        position:
-                          type: string
-                          example: 'Diretor Executivo'
-                        department:
-                          type: string
-                          example: Diretoria
-                        created_at:
-                          type: string
-                          example: '2026-06-16T05:57:37.000000Z'
-                        updated_at:
-                          type: string
-                          example: '2026-06-16T05:57:37.000000Z'
       tags:
-        - Endpoints
+        - Contatos
       requestBody:
         required: false
         content:
@@ -1963,21 +1807,21 @@ paths:
                 activate:
                   type: boolean
                   description: ''
-                  example: false
+                  example: true
     parameters:
       -
         in: path
         name: id
-        description: 'The ID of the contact.'
+        description: 'ID do contato.'
         example: 1
         required: true
         schema:
           type: integer
   '/api/contacts/{id}/responsibles':
     get:
-      summary: ''
-      operationId: getApiContactsIdResponsibles
-      description: ''
+      summary: 'Responsáveis do contato'
+      operationId: responsveisDoContato
+      description: 'Retorna a lista de responsáveis (pessoas físicas) vinculados ao contato.'
       parameters: []
       responses:
         200:
@@ -1992,68 +1836,41 @@ paths:
                     id:
                       type: integer
                       example: 1
-                    contact_id:
-                      type: integer
-                      example: 1
                     name:
                       type: string
-                      example: 'Joao Silva'
+                      example: 'João da Silva'
                     email:
                       type: string
-                      example: joao.silva@empresateste.com
+                      example: joao@oab.org.br
                     treatment:
                       type: string
-                      example: null
-                      nullable: true
+                      example: Dr.
                     position:
                       type: string
-                      example: 'Diretor Executivo'
-                    department:
-                      type: string
-                      example: Diretoria
-                    created_at:
-                      type: string
-                      example: '2026-06-16T05:57:37.000000Z'
-                    updated_at:
-                      type: string
-                      example: '2026-06-16T05:57:37.000000Z'
+                      example: Presidente
                 example:
                   -
                     id: 1
-                    contact_id: 1
-                    name: 'Joao Silva'
-                    email: joao.silva@empresateste.com
-                    treatment: null
-                    position: 'Diretor Executivo'
-                    department: Diretoria
-                    created_at: '2026-06-16T05:57:37.000000Z'
-                    updated_at: '2026-06-16T05:57:37.000000Z'
-                  -
-                    id: 2
-                    contact_id: 1
-                    name: 'Maria Souza'
-                    email: maria.souza@empresateste.com
-                    treatment: null
-                    position: 'Gerente Juridica'
-                    department: Juridico
-                    created_at: '2026-06-16T05:57:37.000000Z'
-                    updated_at: '2026-06-16T05:57:37.000000Z'
+                    name: 'João da Silva'
+                    email: joao@oab.org.br
+                    treatment: Dr.
+                    position: Presidente
       tags:
-        - Endpoints
+        - Contatos
     parameters:
       -
         in: path
         name: id
-        description: 'The ID of the contact.'
+        description: 'ID do contato.'
         example: 1
         required: true
         schema:
           type: integer
   /api/oficios:
     get:
-      summary: ''
-      operationId: getApiOficios
-      description: ''
+      summary: 'Listar ofícios'
+      operationId: listarOfcios
+      description: 'Retorna lista paginada de ofícios com remetente e destinatários.'
       parameters: []
       responses:
         200:
@@ -2068,123 +1885,12 @@ paths:
                     -
                       id: 1
                       number: 001/2026
-                      subject: sdghsdhsd
-                      author_id: 1
-                      destination_contact_id: 3
+                      subject: 'Solicitação de Informações'
+                      status: DRAFT
                       priority: MEDIUM
-                      content: bvkgtfukgliygh
-                      department: null
-                      status: DRAFT
-                      created_at: '2026-06-16T06:15:16.000000Z'
-                      updated_at: '2026-06-16T06:15:16.000000Z'
-                      destination_contact:
-                        id: 3
-                        type: PF
-                        doc: '04118035146'
-                        name: 'Hugo Moreira Barbosa'
-                        address_id: 3
-                        is_active: true
-                        created_at: '2026-06-16T06:05:45.000000Z'
-                        updated_at: '2026-06-16T06:05:45.000000Z'
-                        formatted_doc: 041.180.351-46
-                      responsibles:
-                        -
-                          id: 5
-                          contact_id: 3
-                          name: 'Hugo Moreira'
-                          email: hugomoreirabarbosa2@gmail.com
-                          treatment: Magnífico
-                          position: Sim
-                          department: Isso
-                          created_at: '2026-06-16T06:05:45.000000Z'
-                          updated_at: '2026-06-16T06:05:45.000000Z'
-                          pivot:
-                            oficio_id: 1
-                            responsible_id: 5
-                      author:
-                        id: 1
-                        name: Dev
-                        email: dev@dev.com
-                        cpf: 000.000.000-00
-                        position_id: null
-                        is_active: true
-                        is_dev: true
-                        last_login: '2026-06-16T06:04:13.000000Z'
-                        created_at: '2026-06-16T05:55:44.000000Z'
-                        updated_at: '2026-06-16T06:04:13.000000Z'
-                    -
-                      id: 2
-                      number: 002/2026
-                      subject: sdghsdhsd
-                      author_id: 1
-                      destination_contact_id: 3
-                      priority: LOW
-                      content: gkugvugyhvhu
-                      department: null
-                      status: DRAFT
-                      created_at: '2026-06-16T06:18:45.000000Z'
-                      updated_at: '2026-06-16T06:18:45.000000Z'
-                      destination_contact:
-                        id: 3
-                        type: PF
-                        doc: '04118035146'
-                        name: 'Hugo Moreira Barbosa'
-                        address_id: 3
-                        is_active: true
-                        created_at: '2026-06-16T06:05:45.000000Z'
-                        updated_at: '2026-06-16T06:05:45.000000Z'
-                        formatted_doc: 041.180.351-46
-                      responsibles:
-                        -
-                          id: 5
-                          contact_id: 3
-                          name: 'Hugo Moreira'
-                          email: hugomoreirabarbosa2@gmail.com
-                          treatment: Magnífico
-                          position: Sim
-                          department: Isso
-                          created_at: '2026-06-16T06:05:45.000000Z'
-                          updated_at: '2026-06-16T06:05:45.000000Z'
-                          pivot:
-                            oficio_id: 2
-                            responsible_id: 5
-                      author:
-                        id: 1
-                        name: Dev
-                        email: dev@dev.com
-                        cpf: 000.000.000-00
-                        position_id: null
-                        is_active: true
-                        is_dev: true
-                        last_login: '2026-06-16T06:04:13.000000Z'
-                        created_at: '2026-06-16T05:55:44.000000Z'
-                        updated_at: '2026-06-16T06:04:13.000000Z'
-                  first_page_url: 'http://localhost/api/oficios?page=1'
-                  from: 1
-                  last_page: 1
-                  last_page_url: 'http://localhost/api/oficios?page=1'
-                  links:
-                    -
-                      url: null
-                      label: '&laquo; Previous'
-                      page: null
-                      active: false
-                    -
-                      url: 'http://localhost/api/oficios?page=1'
-                      label: '1'
-                      page: 1
-                      active: true
-                    -
-                      url: null
-                      label: 'Next &raquo;'
-                      page: null
-                      active: false
-                  next_page_url: null
-                  path: 'http://localhost/api/oficios'
+                      created_at: '2026-07-03T00:00:00.000000Z'
                   per_page: 20
-                  prev_page_url: null
-                  to: 2
-                  total: 2
+                  total: 1
                 properties:
                   current_page:
                     type: integer
@@ -2195,97 +1901,10 @@ paths:
                       -
                         id: 1
                         number: 001/2026
-                        subject: sdghsdhsd
-                        author_id: 1
-                        destination_contact_id: 3
+                        subject: 'Solicitação de Informações'
+                        status: DRAFT
                         priority: MEDIUM
-                        content: bvkgtfukgliygh
-                        department: null
-                        status: DRAFT
-                        created_at: '2026-06-16T06:15:16.000000Z'
-                        updated_at: '2026-06-16T06:15:16.000000Z'
-                        destination_contact:
-                          id: 3
-                          type: PF
-                          doc: '04118035146'
-                          name: 'Hugo Moreira Barbosa'
-                          address_id: 3
-                          is_active: true
-                          created_at: '2026-06-16T06:05:45.000000Z'
-                          updated_at: '2026-06-16T06:05:45.000000Z'
-                          formatted_doc: 041.180.351-46
-                        responsibles:
-                          -
-                            id: 5
-                            contact_id: 3
-                            name: 'Hugo Moreira'
-                            email: hugomoreirabarbosa2@gmail.com
-                            treatment: Magnífico
-                            position: Sim
-                            department: Isso
-                            created_at: '2026-06-16T06:05:45.000000Z'
-                            updated_at: '2026-06-16T06:05:45.000000Z'
-                            pivot:
-                              oficio_id: 1
-                              responsible_id: 5
-                        author:
-                          id: 1
-                          name: Dev
-                          email: dev@dev.com
-                          cpf: 000.000.000-00
-                          position_id: null
-                          is_active: true
-                          is_dev: true
-                          last_login: '2026-06-16T06:04:13.000000Z'
-                          created_at: '2026-06-16T05:55:44.000000Z'
-                          updated_at: '2026-06-16T06:04:13.000000Z'
-                      -
-                        id: 2
-                        number: 002/2026
-                        subject: sdghsdhsd
-                        author_id: 1
-                        destination_contact_id: 3
-                        priority: LOW
-                        content: gkugvugyhvhu
-                        department: null
-                        status: DRAFT
-                        created_at: '2026-06-16T06:18:45.000000Z'
-                        updated_at: '2026-06-16T06:18:45.000000Z'
-                        destination_contact:
-                          id: 3
-                          type: PF
-                          doc: '04118035146'
-                          name: 'Hugo Moreira Barbosa'
-                          address_id: 3
-                          is_active: true
-                          created_at: '2026-06-16T06:05:45.000000Z'
-                          updated_at: '2026-06-16T06:05:45.000000Z'
-                          formatted_doc: 041.180.351-46
-                        responsibles:
-                          -
-                            id: 5
-                            contact_id: 3
-                            name: 'Hugo Moreira'
-                            email: hugomoreirabarbosa2@gmail.com
-                            treatment: Magnífico
-                            position: Sim
-                            department: Isso
-                            created_at: '2026-06-16T06:05:45.000000Z'
-                            updated_at: '2026-06-16T06:05:45.000000Z'
-                            pivot:
-                              oficio_id: 2
-                              responsible_id: 5
-                        author:
-                          id: 1
-                          name: Dev
-                          email: dev@dev.com
-                          cpf: 000.000.000-00
-                          position_id: null
-                          is_active: true
-                          is_dev: true
-                          last_login: '2026-06-16T06:04:13.000000Z'
-                          created_at: '2026-06-16T05:55:44.000000Z'
-                          updated_at: '2026-06-16T06:04:13.000000Z'
+                        created_at: '2026-07-03T00:00:00.000000Z'
                     items:
                       type: object
                       properties:
@@ -2297,226 +1916,58 @@ paths:
                           example: 001/2026
                         subject:
                           type: string
-                          example: sdghsdhsd
-                        author_id:
-                          type: integer
-                          example: 1
-                        destination_contact_id:
-                          type: integer
-                          example: 3
-                        priority:
-                          type: string
-                          example: MEDIUM
-                        content:
-                          type: string
-                          example: bvkgtfukgliygh
-                        department:
-                          type: string
-                          example: null
-                          nullable: true
+                          example: 'Solicitação de Informações'
                         status:
                           type: string
                           example: DRAFT
+                        priority:
+                          type: string
+                          example: MEDIUM
                         created_at:
                           type: string
-                          example: '2026-06-16T06:15:16.000000Z'
-                        updated_at:
-                          type: string
-                          example: '2026-06-16T06:15:16.000000Z'
-                        destination_contact:
-                          type: object
-                          properties:
-                            id:
-                              type: integer
-                              example: 3
-                            type:
-                              type: string
-                              example: PF
-                            doc:
-                              type: string
-                              example: '04118035146'
-                            name:
-                              type: string
-                              example: 'Hugo Moreira Barbosa'
-                            address_id:
-                              type: integer
-                              example: 3
-                            is_active:
-                              type: boolean
-                              example: true
-                            created_at:
-                              type: string
-                              example: '2026-06-16T06:05:45.000000Z'
-                            updated_at:
-                              type: string
-                              example: '2026-06-16T06:05:45.000000Z'
-                            formatted_doc:
-                              type: string
-                              example: 041.180.351-46
-                        responsibles:
-                          type: array
-                          example:
-                            -
-                              id: 5
-                              contact_id: 3
-                              name: 'Hugo Moreira'
-                              email: hugomoreirabarbosa2@gmail.com
-                              treatment: Magnífico
-                              position: Sim
-                              department: Isso
-                              created_at: '2026-06-16T06:05:45.000000Z'
-                              updated_at: '2026-06-16T06:05:45.000000Z'
-                              pivot:
-                                oficio_id: 1
-                                responsible_id: 5
-                          items:
-                            type: object
-                            properties:
-                              id:
-                                type: integer
-                                example: 5
-                              contact_id:
-                                type: integer
-                                example: 3
-                              name:
-                                type: string
-                                example: 'Hugo Moreira'
-                              email:
-                                type: string
-                                example: hugomoreirabarbosa2@gmail.com
-                              treatment:
-                                type: string
-                                example: Magnífico
-                              position:
-                                type: string
-                                example: Sim
-                              department:
-                                type: string
-                                example: Isso
-                              created_at:
-                                type: string
-                                example: '2026-06-16T06:05:45.000000Z'
-                              updated_at:
-                                type: string
-                                example: '2026-06-16T06:05:45.000000Z'
-                              pivot:
-                                type: object
-                                properties:
-                                  oficio_id:
-                                    type: integer
-                                    example: 1
-                                  responsible_id:
-                                    type: integer
-                                    example: 5
-                        author:
-                          type: object
-                          properties:
-                            id:
-                              type: integer
-                              example: 1
-                            name:
-                              type: string
-                              example: Dev
-                            email:
-                              type: string
-                              example: dev@dev.com
-                            cpf:
-                              type: string
-                              example: 000.000.000-00
-                            position_id:
-                              type: string
-                              example: null
-                              nullable: true
-                            is_active:
-                              type: boolean
-                              example: true
-                            is_dev:
-                              type: boolean
-                              example: true
-                            last_login:
-                              type: string
-                              example: '2026-06-16T06:04:13.000000Z'
-                            created_at:
-                              type: string
-                              example: '2026-06-16T05:55:44.000000Z'
-                            updated_at:
-                              type: string
-                              example: '2026-06-16T06:04:13.000000Z'
-                  first_page_url:
-                    type: string
-                    example: 'http://localhost/api/oficios?page=1'
-                  from:
-                    type: integer
-                    example: 1
-                  last_page:
-                    type: integer
-                    example: 1
-                  last_page_url:
-                    type: string
-                    example: 'http://localhost/api/oficios?page=1'
-                  links:
-                    type: array
-                    example:
-                      -
-                        url: null
-                        label: '&laquo; Previous'
-                        page: null
-                        active: false
-                      -
-                        url: 'http://localhost/api/oficios?page=1'
-                        label: '1'
-                        page: 1
-                        active: true
-                      -
-                        url: null
-                        label: 'Next &raquo;'
-                        page: null
-                        active: false
-                    items:
-                      type: object
-                      properties:
-                        url:
-                          type: string
-                          example: null
-                          nullable: true
-                        label:
-                          type: string
-                          example: '&laquo; Previous'
-                        page:
-                          type: string
-                          example: null
-                          nullable: true
-                        active:
-                          type: boolean
-                          example: false
-                  next_page_url:
-                    type: string
-                    example: null
-                    nullable: true
-                  path:
-                    type: string
-                    example: 'http://localhost/api/oficios'
+                          example: '2026-07-03T00:00:00.000000Z'
                   per_page:
                     type: integer
                     example: 20
-                  prev_page_url:
-                    type: string
-                    example: null
-                    nullable: true
-                  to:
-                    type: integer
-                    example: 2
                   total:
                     type: integer
-                    example: 2
+                    example: 1
       tags:
-        - Endpoints
+        - Ofícios
     post:
-      summary: ''
-      operationId: postApiOficios
-      description: ''
+      summary: 'Criar ofício'
+      operationId: criarOfcio
+      description: 'Cria um novo ofício com status `DRAFT`. O número é gerado automaticamente.'
       parameters: []
       responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 2
+                  number: 002/2026
+                  subject: 'Novo Ofício'
+                  status: DRAFT
+                  priority: LOW
+                properties:
+                  id:
+                    type: integer
+                    example: 2
+                  number:
+                    type: string
+                    example: 002/2026
+                  subject:
+                    type: string
+                    example: 'Novo Ofício'
+                  status:
+                    type: string
+                    example: DRAFT
+                  priority:
+                    type: string
+                    example: LOW
         422:
           description: ''
           content:
@@ -2524,33 +1975,25 @@ paths:
               schema:
                 type: object
                 example:
-                  message: 'The selected destination contact id is invalid. (and 1 more error)'
+                  message: 'The subject field is required.'
                   errors:
-                    destination_contact_id:
-                      - 'The selected destination contact id is invalid.'
-                    responsibles:
-                      - 'The responsibles field is required.'
+                    subject:
+                      - 'The subject field is required.'
                 properties:
                   message:
                     type: string
-                    example: 'The selected destination contact id is invalid. (and 1 more error)'
+                    example: 'The subject field is required.'
                   errors:
                     type: object
                     properties:
-                      destination_contact_id:
+                      subject:
                         type: array
                         example:
-                          - 'The selected destination contact id is invalid.'
-                        items:
-                          type: string
-                      responsibles:
-                        type: array
-                        example:
-                          - 'The responsibles field is required.'
+                          - 'The subject field is required.'
                         items:
                           type: string
       tags:
-        - Endpoints
+        - Ofícios
       requestBody:
         required: true
         content:
@@ -2565,11 +2008,12 @@ paths:
                 destination_contact_id:
                   type: string
                   description: 'The <code>id</code> of an existing record in the contacts table.'
-                  example: architecto
+                  example: null
+                  nullable: true
                 priority:
                   type: string
                   description: ''
-                  example: MEDIUM
+                  example: LOW
                   enum:
                     - LOW
                     - MEDIUM
@@ -2590,15 +2034,18 @@ paths:
                   example: null
                   items:
                     type: string
+                submit:
+                  type: boolean
+                  description: ''
+                  example: true
               required:
                 - subject
-                - destination_contact_id
                 - priority
                 - content
   '/api/oficios/{id}':
     get:
-      summary: ''
-      operationId: getApiOficiosId
+      summary: 'Exibir ofício'
+      operationId: exibirOfcio
       description: ''
       parameters: []
       responses:
@@ -2611,51 +2058,14 @@ paths:
                 example:
                   id: 1
                   number: 001/2026
-                  subject: sdghsdhsd
-                  author_id: 1
-                  destination_contact_id: 3
-                  priority: MEDIUM
-                  content: bvkgtfukgliygh
-                  department: null
+                  subject: 'Solicitação de Informações'
+                  content: '<p>Conteúdo do ofício...</p>'
                   status: DRAFT
-                  created_at: '2026-06-16T06:15:16.000000Z'
-                  updated_at: '2026-06-16T06:15:16.000000Z'
-                  destination_contact:
-                    id: 3
-                    type: PF
-                    doc: '04118035146'
-                    name: 'Hugo Moreira Barbosa'
-                    address_id: 3
-                    is_active: true
-                    created_at: '2026-06-16T06:05:45.000000Z'
-                    updated_at: '2026-06-16T06:05:45.000000Z'
-                    formatted_doc: 041.180.351-46
-                  responsibles:
-                    -
-                      id: 5
-                      contact_id: 3
-                      name: 'Hugo Moreira'
-                      email: hugomoreirabarbosa2@gmail.com
-                      treatment: Magnífico
-                      position: Sim
-                      department: Isso
-                      created_at: '2026-06-16T06:05:45.000000Z'
-                      updated_at: '2026-06-16T06:05:45.000000Z'
-                      pivot:
-                        oficio_id: 1
-                        responsible_id: 5
+                  priority: MEDIUM
                   author:
                     id: 1
-                    name: Dev
-                    email: dev@dev.com
-                    cpf: 000.000.000-00
-                    position_id: null
-                    is_active: true
-                    is_dev: true
-                    last_login: '2026-06-16T06:04:13.000000Z'
-                    created_at: '2026-06-16T05:55:44.000000Z'
-                    updated_at: '2026-06-16T06:04:13.000000Z'
-                  rejection_infos: []
+                    name: 'Hugo Barbosa'
+                  messages: []
                 properties:
                   id:
                     type: integer
@@ -2665,117 +2075,16 @@ paths:
                     example: 001/2026
                   subject:
                     type: string
-                    example: sdghsdhsd
-                  author_id:
-                    type: integer
-                    example: 1
-                  destination_contact_id:
-                    type: integer
-                    example: 3
-                  priority:
-                    type: string
-                    example: MEDIUM
+                    example: 'Solicitação de Informações'
                   content:
                     type: string
-                    example: bvkgtfukgliygh
-                  department:
-                    type: string
-                    example: null
-                    nullable: true
+                    example: '<p>Conteúdo do ofício...</p>'
                   status:
                     type: string
                     example: DRAFT
-                  created_at:
+                  priority:
                     type: string
-                    example: '2026-06-16T06:15:16.000000Z'
-                  updated_at:
-                    type: string
-                    example: '2026-06-16T06:15:16.000000Z'
-                  destination_contact:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                        example: 3
-                      type:
-                        type: string
-                        example: PF
-                      doc:
-                        type: string
-                        example: '04118035146'
-                      name:
-                        type: string
-                        example: 'Hugo Moreira Barbosa'
-                      address_id:
-                        type: integer
-                        example: 3
-                      is_active:
-                        type: boolean
-                        example: true
-                      created_at:
-                        type: string
-                        example: '2026-06-16T06:05:45.000000Z'
-                      updated_at:
-                        type: string
-                        example: '2026-06-16T06:05:45.000000Z'
-                      formatted_doc:
-                        type: string
-                        example: 041.180.351-46
-                  responsibles:
-                    type: array
-                    example:
-                      -
-                        id: 5
-                        contact_id: 3
-                        name: 'Hugo Moreira'
-                        email: hugomoreirabarbosa2@gmail.com
-                        treatment: Magnífico
-                        position: Sim
-                        department: Isso
-                        created_at: '2026-06-16T06:05:45.000000Z'
-                        updated_at: '2026-06-16T06:05:45.000000Z'
-                        pivot:
-                          oficio_id: 1
-                          responsible_id: 5
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                          example: 5
-                        contact_id:
-                          type: integer
-                          example: 3
-                        name:
-                          type: string
-                          example: 'Hugo Moreira'
-                        email:
-                          type: string
-                          example: hugomoreirabarbosa2@gmail.com
-                        treatment:
-                          type: string
-                          example: Magnífico
-                        position:
-                          type: string
-                          example: Sim
-                        department:
-                          type: string
-                          example: Isso
-                        created_at:
-                          type: string
-                          example: '2026-06-16T06:05:45.000000Z'
-                        updated_at:
-                          type: string
-                          example: '2026-06-16T06:05:45.000000Z'
-                        pivot:
-                          type: object
-                          properties:
-                            oficio_id:
-                              type: integer
-                              example: 1
-                            responsible_id:
-                              type: integer
-                              example: 5
+                    example: MEDIUM
                   author:
                     type: object
                     properties:
@@ -2784,77 +2093,56 @@ paths:
                         example: 1
                       name:
                         type: string
-                        example: Dev
-                      email:
-                        type: string
-                        example: dev@dev.com
-                      cpf:
-                        type: string
-                        example: 000.000.000-00
-                      position_id:
-                        type: string
-                        example: null
-                        nullable: true
-                      is_active:
-                        type: boolean
-                        example: true
-                      is_dev:
-                        type: boolean
-                        example: true
-                      last_login:
-                        type: string
-                        example: '2026-06-16T06:04:13.000000Z'
-                      created_at:
-                        type: string
-                        example: '2026-06-16T05:55:44.000000Z'
-                      updated_at:
-                        type: string
-                        example: '2026-06-16T06:04:13.000000Z'
-                  rejection_infos:
+                        example: 'Hugo Barbosa'
+                  messages:
                     type: array
                     example: []
-      tags:
-        - Endpoints
-    put:
-      summary: ''
-      operationId: putApiOficiosId
-      description: ''
-      parameters: []
-      responses:
-        422:
+        404:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: 'The selected destination contact id is invalid. (and 1 more error)'
-                  errors:
-                    destination_contact_id:
-                      - 'The selected destination contact id is invalid.'
-                    responsibles:
-                      - 'The responsibles field is required.'
+                  message: 'No query results for model [App\Models\Oficio]'
                 properties:
                   message:
                     type: string
-                    example: 'The selected destination contact id is invalid. (and 1 more error)'
-                  errors:
-                    type: object
-                    properties:
-                      destination_contact_id:
-                        type: array
-                        example:
-                          - 'The selected destination contact id is invalid.'
-                        items:
-                          type: string
-                      responsibles:
-                        type: array
-                        example:
-                          - 'The responsibles field is required.'
-                        items:
-                          type: string
+                    example: 'No query results for model [App\Models\Oficio]'
       tags:
-        - Endpoints
+        - Ofícios
+    put:
+      summary: 'Atualizar ofício'
+      operationId: atualizarOfcio
+      description: 'Apenas ofícios em status `DRAFT` ou `RETURNED` podem ser editados.'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 1
+                  number: 001/2026
+                  subject: 'Assunto Atualizado'
+                  status: DRAFT
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  number:
+                    type: string
+                    example: 001/2026
+                  subject:
+                    type: string
+                    example: 'Assunto Atualizado'
+                  status:
+                    type: string
+                    example: DRAFT
+      tags:
+        - Ofícios
       requestBody:
         required: true
         content:
@@ -2869,11 +2157,12 @@ paths:
                 destination_contact_id:
                   type: string
                   description: 'The <code>id</code> of an existing record in the contacts table.'
-                  example: architecto
+                  example: null
+                  nullable: true
                 priority:
                   type: string
                   description: ''
-                  example: MEDIUM
+                  example: LOW
                   enum:
                     - LOW
                     - MEDIUM
@@ -2899,7 +2188,6 @@ paths:
                   example: true
               required:
                 - subject
-                - destination_contact_id
                 - priority
                 - content
     parameters:
@@ -2913,25 +2201,45 @@ paths:
           type: integer
   '/api/oficios/{oficio_id}/review':
     post:
-      summary: ''
-      operationId: postApiOficiosOficio_idReview
-      description: ''
+      summary: 'Revisar ofício'
+      operationId: revisarOfcio
+      description: 'Aprova (`APPROVED`) ou rejeita/devolve (`REJECTED`/`RETURNED`) o ofício.'
       parameters: []
       responses:
-        409:
+        200:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: 'Esta ação não é permitida para o status atual do ofício'
+                  id: 1
+                  number: 001/2026
+                  status: APPROVED
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  number:
+                    type: string
+                    example: 001/2026
+                  status:
+                    type: string
+                    example: APPROVED
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'This action is unauthorized.'
                 properties:
                   message:
                     type: string
-                    example: 'Esta ação não é permitida para o status atual do ofício'
+                    example: 'This action is unauthorized.'
       tags:
-        - Endpoints
+        - Ofícios
       requestBody:
         required: true
         content:
@@ -2963,7 +2271,7 @@ paths:
                 priority:
                   type: string
                   description: ''
-                  example: HIGH
+                  example: MEDIUM
                   enum:
                     - LOW
                     - MEDIUM
@@ -2995,25 +2303,41 @@ paths:
           type: integer
   '/api/oficios/{oficio_id}/send':
     post:
-      summary: ''
-      operationId: postApiOficiosOficio_idSend
-      description: ''
+      summary: 'Enviar ofício'
+      operationId: enviarOfcio
+      description: "Enfileira o ofício para geração de PDF e envio de e-mail. O status muda para `SENT`.\nRequer que o ofício esteja `APPROVED`."
       parameters: []
       responses:
-        409:
+        200:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: 'Esta ação não é permitida para o status atual do ofício'
+                  success: true
+                  message: 'Ofício enviado com sucesso.'
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: 'Ofício enviado com sucesso.'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Ofício não está aprovado para envio.'
                 properties:
                   message:
                     type: string
-                    example: 'Esta ação não é permitida para o status atual do ofício'
+                    example: 'Ofício não está aprovado para envio.'
       tags:
-        - Endpoints
+        - Ofícios
     parameters:
       -
         in: path
@@ -3025,8 +2349,8 @@ paths:
           type: integer
   /api/oficio-templates:
     get:
-      summary: ''
-      operationId: getApiOficioTemplates
+      summary: 'Listar templates'
+      operationId: listarTemplates
       description: ''
       parameters: []
       responses:
@@ -3041,35 +2365,10 @@ paths:
                   data:
                     -
                       id: 1
-                      name: b
-                      content: architecto
-                      created_at: '2026-06-18T04:39:47.000000Z'
-                      updated_at: '2026-06-18T04:39:47.000000Z'
-                  first_page_url: 'http://localhost/api/oficio-templates?page=1'
-                  from: 1
-                  last_page: 1
-                  last_page_url: 'http://localhost/api/oficio-templates?page=1'
-                  links:
-                    -
-                      url: null
-                      label: '&laquo; Previous'
-                      page: null
-                      active: false
-                    -
-                      url: 'http://localhost/api/oficio-templates?page=1'
-                      label: '1'
-                      page: 1
-                      active: true
-                    -
-                      url: null
-                      label: 'Next &raquo;'
-                      page: null
-                      active: false
-                  next_page_url: null
-                  path: 'http://localhost/api/oficio-templates'
+                      name: 'Solicitação Padrão'
+                      content: '<p>Modelo de ofício...</p>'
+                      is_active: true
                   per_page: 20
-                  prev_page_url: null
-                  to: 1
                   total: 1
                 properties:
                   current_page:
@@ -3080,10 +2379,9 @@ paths:
                     example:
                       -
                         id: 1
-                        name: b
-                        content: architecto
-                        created_at: '2026-06-18T04:39:47.000000Z'
-                        updated_at: '2026-06-18T04:39:47.000000Z'
+                        name: 'Solicitação Padrão'
+                        content: '<p>Modelo de ofício...</p>'
+                        is_active: true
                     items:
                       type: object
                       properties:
@@ -3092,88 +2390,24 @@ paths:
                           example: 1
                         name:
                           type: string
-                          example: b
+                          example: 'Solicitação Padrão'
                         content:
                           type: string
-                          example: architecto
-                        created_at:
-                          type: string
-                          example: '2026-06-18T04:39:47.000000Z'
-                        updated_at:
-                          type: string
-                          example: '2026-06-18T04:39:47.000000Z'
-                  first_page_url:
-                    type: string
-                    example: 'http://localhost/api/oficio-templates?page=1'
-                  from:
-                    type: integer
-                    example: 1
-                  last_page:
-                    type: integer
-                    example: 1
-                  last_page_url:
-                    type: string
-                    example: 'http://localhost/api/oficio-templates?page=1'
-                  links:
-                    type: array
-                    example:
-                      -
-                        url: null
-                        label: '&laquo; Previous'
-                        page: null
-                        active: false
-                      -
-                        url: 'http://localhost/api/oficio-templates?page=1'
-                        label: '1'
-                        page: 1
-                        active: true
-                      -
-                        url: null
-                        label: 'Next &raquo;'
-                        page: null
-                        active: false
-                    items:
-                      type: object
-                      properties:
-                        url:
-                          type: string
-                          example: null
-                          nullable: true
-                        label:
-                          type: string
-                          example: '&laquo; Previous'
-                        page:
-                          type: string
-                          example: null
-                          nullable: true
-                        active:
+                          example: '<p>Modelo de ofício...</p>'
+                        is_active:
                           type: boolean
-                          example: false
-                  next_page_url:
-                    type: string
-                    example: null
-                    nullable: true
-                  path:
-                    type: string
-                    example: 'http://localhost/api/oficio-templates'
+                          example: true
                   per_page:
                     type: integer
                     example: 20
-                  prev_page_url:
-                    type: string
-                    example: null
-                    nullable: true
-                  to:
-                    type: integer
-                    example: 1
                   total:
                     type: integer
                     example: 1
       tags:
-        - Endpoints
+        - 'Templates de Ofício'
     post:
-      summary: ''
-      operationId: postApiOficioTemplates
+      summary: 'Criar template'
+      operationId: criarTemplate
       description: ''
       parameters: []
       responses:
@@ -3184,29 +2418,25 @@ paths:
               schema:
                 type: object
                 example:
-                  name: b
-                  content: architecto
-                  updated_at: '2026-06-18T06:52:18.000000Z'
-                  created_at: '2026-06-18T06:52:18.000000Z'
                   id: 2
+                  name: Convocação
+                  content: '<p>...</p>'
+                  is_active: true
                 properties:
-                  name:
-                    type: string
-                    example: b
-                  content:
-                    type: string
-                    example: architecto
-                  updated_at:
-                    type: string
-                    example: '2026-06-18T06:52:18.000000Z'
-                  created_at:
-                    type: string
-                    example: '2026-06-18T06:52:18.000000Z'
                   id:
                     type: integer
                     example: 2
+                  name:
+                    type: string
+                    example: Convocação
+                  content:
+                    type: string
+                    example: '<p>...</p>'
+                  is_active:
+                    type: boolean
+                    example: true
       tags:
-        - Endpoints
+        - 'Templates de Ofício'
       requestBody:
         required: true
         content:
@@ -3227,8 +2457,8 @@ paths:
                 - content
   '/api/oficio-templates/{id}':
     get:
-      summary: ''
-      operationId: getApiOficioTemplatesId
+      summary: 'Exibir template'
+      operationId: exibirTemplate
       description: ''
       parameters: []
       responses:
@@ -3240,31 +2470,39 @@ paths:
                 type: object
                 example:
                   id: 1
-                  name: b
-                  content: architecto
-                  created_at: '2026-06-18T04:39:47.000000Z'
-                  updated_at: '2026-06-18T04:39:47.000000Z'
+                  name: 'Solicitação Padrão'
+                  content: '<p>Modelo de ofício...</p>'
+                  is_active: true
                 properties:
                   id:
                     type: integer
                     example: 1
                   name:
                     type: string
-                    example: b
+                    example: 'Solicitação Padrão'
                   content:
                     type: string
-                    example: architecto
-                  created_at:
+                    example: '<p>Modelo de ofício...</p>'
+                  is_active:
+                    type: boolean
+                    example: true
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'No query results for model [App\Models\OficioTemplate]'
+                properties:
+                  message:
                     type: string
-                    example: '2026-06-18T04:39:47.000000Z'
-                  updated_at:
-                    type: string
-                    example: '2026-06-18T04:39:47.000000Z'
+                    example: 'No query results for model [App\Models\OficioTemplate]'
       tags:
-        - Endpoints
+        - 'Templates de Ofício'
     put:
-      summary: ''
-      operationId: putApiOficioTemplatesId
+      summary: 'Atualizar template'
+      operationId: atualizarTemplate
       description: ''
       parameters: []
       responses:
@@ -3276,28 +2514,24 @@ paths:
                 type: object
                 example:
                   id: 1
-                  name: b
-                  content: architecto
-                  created_at: '2026-06-18T04:39:47.000000Z'
-                  updated_at: '2026-06-18T04:39:47.000000Z'
+                  name: 'Solicitação Atualizada'
+                  content: '<p>Modelo atualizado...</p>'
+                  is_active: true
                 properties:
                   id:
                     type: integer
                     example: 1
                   name:
                     type: string
-                    example: b
+                    example: 'Solicitação Atualizada'
                   content:
                     type: string
-                    example: architecto
-                  created_at:
-                    type: string
-                    example: '2026-06-18T04:39:47.000000Z'
-                  updated_at:
-                    type: string
-                    example: '2026-06-18T04:39:47.000000Z'
+                    example: '<p>Modelo atualizado...</p>'
+                  is_active:
+                    type: boolean
+                    example: true
       tags:
-        - Endpoints
+        - 'Templates de Ofício'
       requestBody:
         required: true
         content:
@@ -3316,20 +2550,294 @@ paths:
               required:
                 - name
                 - content
+    delete:
+      summary: 'Inativar / Reativar template'
+      operationId: inativarReativarTemplate
+      description: 'Quando `activate=false` (padrão), inativa o template. Quando `activate=true`, reativa.'
+      parameters:
+        -
+          in: query
+          name: activate
+          description: 'Passa `true` para reativar, `false` (padrão) para inativar.'
+          example: false
+          required: false
+          schema:
+            type: boolean
+            description: 'Passa `true` para reativar, `false` (padrão) para inativar.'
+            example: false
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 1
+                  name: 'Solicitação Padrão'
+                  is_active: false
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: 'Solicitação Padrão'
+                  is_active:
+                    type: boolean
+                    example: false
+      tags:
+        - 'Templates de Ofício'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                activate:
+                  type: boolean
+                  description: ''
+                  example: false
     parameters:
       -
         in: path
         name: id
         description: 'The ID of the oficio template.'
+        example: 16
+        required: true
+        schema:
+          type: integer
+  /api/messages:
+    get:
+      summary: 'Listar mensagens'
+      operationId: listarMensagens
+      description: 'Retorna lista paginada de mensagens (envios de ofício) com status e destinatário.'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  current_page: 1
+                  data:
+                    -
+                      id: 1
+                      status: SENT
+                      sent_at: '2026-07-03T15:00:00.000000Z'
+                      oficio:
+                        id: 1
+                        number: 001/2026
+                        subject: 'Solicitação de Informações'
+                      responsible:
+                        id: 1
+                        name: 'João da Silva'
+                        email: joao@oab.org.br
+                  per_page: 20
+                  total: 1
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        status: SENT
+                        sent_at: '2026-07-03T15:00:00.000000Z'
+                        oficio:
+                          id: 1
+                          number: 001/2026
+                          subject: 'Solicitação de Informações'
+                        responsible:
+                          id: 1
+                          name: 'João da Silva'
+                          email: joao@oab.org.br
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        status:
+                          type: string
+                          example: SENT
+                        sent_at:
+                          type: string
+                          example: '2026-07-03T15:00:00.000000Z'
+                        oficio:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            number:
+                              type: string
+                              example: 001/2026
+                            subject:
+                              type: string
+                              example: 'Solicitação de Informações'
+                        responsible:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: 'João da Silva'
+                            email:
+                              type: string
+                              example: joao@oab.org.br
+                  per_page:
+                    type: integer
+                    example: 20
+                  total:
+                    type: integer
+                    example: 1
+      tags:
+        - Mensagens
+  '/api/messages/{id}':
+    get:
+      summary: 'Exibir mensagem'
+      operationId: exibirMensagem
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 1
+                  status: SENT
+                  sent_at: '2026-07-03T15:00:00.000000Z'
+                  oficio:
+                    id: 1
+                    number: 001/2026
+                  responsible:
+                    id: 1
+                    name: 'João da Silva'
+                    email: joao@oab.org.br
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  status:
+                    type: string
+                    example: SENT
+                  sent_at:
+                    type: string
+                    example: '2026-07-03T15:00:00.000000Z'
+                  oficio:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      number:
+                        type: string
+                        example: 001/2026
+                  responsible:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: 'João da Silva'
+                      email:
+                        type: string
+                        example: joao@oab.org.br
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'No query results for model [App\Models\Message]'
+                properties:
+                  message:
+                    type: string
+                    example: 'No query results for model [App\Models\Message]'
+      tags:
+        - Mensagens
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the message.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  '/api/messages/{message_id}/pdf':
+    get:
+      summary: 'Download do PDF'
+      operationId: downloadDoPDF
+      description: "Baixa o PDF gerado para a mensagem diretamente do Cloudflare R2.\nDisponível apenas para mensagens com status `SENT` que já tiveram o PDF gerado."
+      parameters: []
+      responses:
+        200:
+          description: 'PDF disponível'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  description: 'Arquivo PDF retornado como download binário'
+                properties:
+                  description:
+                    type: string
+                    example: 'Arquivo PDF retornado como download binário'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  -
+                    description: ''
+                    type: object
+                    example:
+                      message: 'PDF não disponível para esta mensagem'
+                    properties:
+                      message:
+                        type: string
+                        example: 'PDF não disponível para esta mensagem'
+                  -
+                    description: ''
+                    type: object
+                    example:
+                      message: 'PDF ainda não foi gerado'
+                    properties:
+                      message:
+                        type: string
+                        example: 'PDF ainda não foi gerado'
+      tags:
+        - Mensagens
+    parameters:
+      -
+        in: path
+        name: message_id
+        description: 'The ID of the message.'
         example: 1
         required: true
         schema:
           type: integer
   /api/settings:
     get:
-      summary: ''
-      operationId: getApiSettings
-      description: ''
+      summary: 'Exibir configurações'
+      operationId: exibirConfiguraes
+      description: 'Retorna as configurações globais do sistema (cabeçalho, rodapé, signatários).'
       parameters: []
       responses:
         200:
@@ -3340,28 +2848,48 @@ paths:
                 type: object
                 example:
                   id: 1
-                  statement_text: architecto
-                  created_at: '2026-06-18T04:39:47.000000Z'
-                  updated_at: '2026-06-18T04:39:47.000000Z'
+                  header: '<p>Cabeçalho institucional...</p>'
+                  footer: '<p>Rodapé institucional...</p>'
+                  authorized_signers:
+                    -
+                      id: 1
+                      name: 'Hugo Barbosa'
+                      position: Diretor
                 properties:
                   id:
                     type: integer
                     example: 1
-                  statement_text:
+                  header:
                     type: string
-                    example: architecto
-                  created_at:
+                    example: '<p>Cabeçalho institucional...</p>'
+                  footer:
                     type: string
-                    example: '2026-06-18T04:39:47.000000Z'
-                  updated_at:
-                    type: string
-                    example: '2026-06-18T04:39:47.000000Z'
+                    example: '<p>Rodapé institucional...</p>'
+                  authorized_signers:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        name: 'Hugo Barbosa'
+                        position: Diretor
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: 'Hugo Barbosa'
+                        position:
+                          type: string
+                          example: Diretor
       tags:
-        - Endpoints
+        - Configurações
     put:
-      summary: ''
-      operationId: putApiSettings
-      description: ''
+      summary: 'Atualizar configurações'
+      operationId: atualizarConfiguraes
+      description: 'Atualiza cabeçalho, rodapé e signatários autorizados dos ofícios.'
       parameters: []
       responses:
         200:
@@ -3372,24 +2900,20 @@ paths:
                 type: object
                 example:
                   id: 1
-                  statement_text: architecto
-                  created_at: '2026-06-18T04:39:47.000000Z'
-                  updated_at: '2026-06-18T04:39:47.000000Z'
+                  header: '<p>Novo cabeçalho...</p>'
+                  footer: '<p>Novo rodapé...</p>'
                 properties:
                   id:
                     type: integer
                     example: 1
-                  statement_text:
+                  header:
                     type: string
-                    example: architecto
-                  created_at:
+                    example: '<p>Novo cabeçalho...</p>'
+                  footer:
                     type: string
-                    example: '2026-06-18T04:39:47.000000Z'
-                  updated_at:
-                    type: string
-                    example: '2026-06-18T04:39:47.000000Z'
+                    example: '<p>Novo rodapé...</p>'
       tags:
-        - Endpoints
+        - Configurações
       requestBody:
         required: true
         content:
@@ -3397,17 +2921,43 @@ paths:
             schema:
               type: object
               properties:
-                statement_text:
+                header:
                   type: string
                   description: ''
                   example: architecto
+                footer:
+                  type: string
+                  description: ''
+                  example: architecto
+                signers:
+                  type: array
+                  description: ''
+                  example: null
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        description: ''
+                        example: position
+                        enum:
+                          - user
+                          - position
+                      id:
+                        type: integer
+                        description: ''
+                        example: 16
+                    required:
+                      - type
+                      - id
               required:
-                - statement_text
+                - header
+                - footer
   /api/settings/smtp:
     get:
-      summary: ''
-      operationId: getApiSettingsSmtp
-      description: ''
+      summary: 'Exibir configuração SMTP'
+      operationId: exibirConfiguraoSMTP
+      description: 'Retorna a configuração SMTP ativa do sistema (senha omitida).'
       parameters: []
       responses:
         200:
@@ -3417,62 +2967,85 @@ paths:
               schema:
                 type: object
                 example:
-                  host: null
-                  port: null
-                  username: null
-                  from_name: null
-                  from_email: null
-                  use_tls: false
-                  has_password: false
+                  id: 1
+                  host: smtp-relay.brevo.com
+                  port: 587
+                  username: b07e8f001@smtp-brevo.com
+                  from_email: noreply@example.com
+                  from_name: 'Sistema de Ofícios'
                 properties:
+                  id:
+                    type: integer
+                    example: 1
                   host:
                     type: string
-                    example: null
-                    nullable: true
+                    example: smtp-relay.brevo.com
                   port:
-                    type: string
-                    example: null
-                    nullable: true
+                    type: integer
+                    example: 587
                   username:
                     type: string
-                    example: null
-                    nullable: true
-                  from_name:
-                    type: string
-                    example: null
-                    nullable: true
+                    example: b07e8f001@smtp-brevo.com
                   from_email:
                     type: string
-                    example: null
-                    nullable: true
-                  use_tls:
-                    type: boolean
-                    example: false
-                  has_password:
-                    type: boolean
-                    example: false
-      tags:
-        - Endpoints
-    put:
-      summary: ''
-      operationId: putApiSettingsSmtp
-      description: ''
-      parameters: []
-      responses:
-        500:
+                    example: noreply@example.com
+                  from_name:
+                    type: string
+                    example: 'Sistema de Ofícios'
+        404:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: 'Server Error'
+                  message: 'SMTP não configurado'
                 properties:
                   message:
                     type: string
-                    example: 'Server Error'
+                    example: 'SMTP não configurado'
       tags:
-        - Endpoints
+        - SMTP
+    put:
+      summary: 'Atualizar configuração SMTP'
+      operationId: atualizarConfiguraoSMTP
+      description: 'Atualiza as credenciais SMTP e notifica o emailWorker em tempo real via RabbitMQ.'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 1
+                  host: smtp-relay.brevo.com
+                  port: 587
+                  username: b07e8f001@smtp-brevo.com
+                  from_email: noreply@example.com
+                  from_name: 'Sistema de Ofícios'
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  host:
+                    type: string
+                    example: smtp-relay.brevo.com
+                  port:
+                    type: integer
+                    example: 587
+                  username:
+                    type: string
+                    example: b07e8f001@smtp-brevo.com
+                  from_email:
+                    type: string
+                    example: noreply@example.com
+                  from_name:
+                    type: string
+                    example: 'Sistema de Ofícios'
+      tags:
+        - SMTP
       requestBody:
         required: true
         content:
@@ -3508,7 +3081,7 @@ paths:
                 use_tls:
                   type: boolean
                   description: ''
-                  example: false
+                  example: true
               required:
                 - host
                 - port
@@ -3516,161 +3089,104 @@ paths:
                 - from_name
                 - from_email
                 - use_tls
-  /api/messages:
+  /api/validacao:
     get:
-      summary: ''
-      operationId: getApiMessages
-      description: ''
-      parameters: []
+      summary: 'Verificar autenticidade de ofício'
+      operationId: verificarAutenticidadeDeOfcio
+      description: "Rota pública. Verifica se existe um PDF válido para o código de validação impresso no ofício.\nO `codigo` é um UUID diferente do hash do arquivo — é o `validation_hash` gerado no momento do envio.\nEm caso de sucesso, retorna uma URL temporária (60 minutos) para download do PDF no Cloudflare R2."
+      parameters:
+        -
+          in: query
+          name: codigo
+          description: 'UUID de validação do ofício (impresso no documento).'
+          example: 550e8400-e29b-41d4-a716-446655440000
+          required: true
+          schema:
+            type: string
+            description: 'UUID de validação do ofício (impresso no documento).'
+            example: 550e8400-e29b-41d4-a716-446655440000
       responses:
         200:
           description: ''
           content:
             application/json:
               schema:
-                type: object
-                example:
-                  current_page: 1
-                  data: []
-                  first_page_url: 'http://localhost/api/messages?page=1'
-                  from: null
-                  last_page: 1
-                  last_page_url: 'http://localhost/api/messages?page=1'
-                  links:
-                    -
-                      url: null
-                      label: '&laquo; Previous'
-                      page: null
-                      active: false
-                    -
-                      url: 'http://localhost/api/messages?page=1'
-                      label: '1'
-                      page: 1
-                      active: true
-                    -
-                      url: null
-                      label: 'Next &raquo;'
-                      page: null
-                      active: false
-                  next_page_url: null
-                  path: 'http://localhost/api/messages'
-                  per_page: 20
-                  prev_page_url: null
-                  to: null
-                  total: 0
-                properties:
-                  current_page:
-                    type: integer
-                    example: 1
-                  data:
-                    type: array
-                    example: []
-                  first_page_url:
-                    type: string
-                    example: 'http://localhost/api/messages?page=1'
-                  from:
-                    type: string
-                    example: null
-                    nullable: true
-                  last_page:
-                    type: integer
-                    example: 1
-                  last_page_url:
-                    type: string
-                    example: 'http://localhost/api/messages?page=1'
-                  links:
-                    type: array
+                oneOf:
+                  -
+                    description: 'Documento válido'
+                    type: object
                     example:
-                      -
-                        url: null
-                        label: '&laquo; Previous'
-                        page: null
-                        active: false
-                      -
-                        url: 'http://localhost/api/messages?page=1'
-                        label: '1'
-                        page: 1
-                        active: true
-                      -
-                        url: null
-                        label: 'Next &raquo;'
-                        page: null
-                        active: false
-                    items:
-                      type: object
-                      properties:
-                        url:
-                          type: string
-                          example: null
-                          nullable: true
-                        label:
-                          type: string
-                          example: '&laquo; Previous'
-                        page:
-                          type: string
-                          example: null
-                          nullable: true
-                        active:
-                          type: boolean
-                          example: false
-                  next_page_url:
-                    type: string
-                    example: null
-                    nullable: true
-                  path:
-                    type: string
-                    example: 'http://localhost/api/messages'
-                  per_page:
-                    type: integer
-                    example: 20
-                  prev_page_url:
-                    type: string
-                    example: null
-                    nullable: true
-                  to:
-                    type: string
-                    example: null
-                    nullable: true
-                  total:
-                    type: integer
-                    example: 0
-      tags:
-        - Endpoints
-  '/api/messages/{id}':
-    get:
-      summary: ''
-      operationId: getApiMessagesId
-      description: ''
-      parameters: []
-      responses:
-        404:
+                      success: true
+                      message: 'a PDF exists for this hash'
+                      path: 'https://r2.cloudflarestorage.com/oficios/abc123.pdf?X-Amz-Signature=...'
+                    properties:
+                      success:
+                        type: boolean
+                        example: true
+                      message:
+                        type: string
+                        example: 'a PDF exists for this hash'
+                      path:
+                        type: string
+                        example: 'https://r2.cloudflarestorage.com/oficios/abc123.pdf?X-Amz-Signature=...'
+                  -
+                    description: 'Documento não encontrado'
+                    type: object
+                    example:
+                      success: false
+                      message: "don't exists a PDF for this hash"
+                    properties:
+                      success:
+                        type: boolean
+                        example: false
+                      message:
+                        type: string
+                        example: "don't exists a PDF for this hash"
+        422:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: 'No query results for model [App\Models\Message] 16'
+                  message: 'The codigo field must be a valid UUID.'
+                  errors:
+                    codigo:
+                      - 'The codigo field must be a valid UUID.'
                 properties:
                   message:
                     type: string
-                    example: 'No query results for model [App\Models\Message] 16'
+                    example: 'The codigo field must be a valid UUID.'
+                  errors:
+                    type: object
+                    properties:
+                      codigo:
+                        type: array
+                        example:
+                          - 'The codigo field must be a valid UUID.'
+                        items:
+                          type: string
       tags:
-        - Endpoints
-    parameters:
-      -
-        in: path
-        name: id
-        description: 'The ID of the message.'
-        example: 16
+        - 'Validação de Documentos'
+      requestBody:
         required: true
-        schema:
-          type: integer
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                codigo:
+                  type: string
+                  description: 'Must be a valid UUID.'
+                  example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+              required:
+                - codigo
+      security: []
   /api/worker-logs:
     get:
-      summary: ''
-      operationId: getApiWorkerLogs
-      description: ''
+      summary: 'Listar logs'
+      operationId: listarLogs
+      description: "Retorna lista paginada de logs gerados pelos workers (pdfWorker e emailWorker),\nordenados do mais recente para o mais antigo."
       parameters: []
       responses:
         200:
@@ -3684,41 +3200,16 @@ paths:
                   data:
                     -
                       id: 1
-                      correlation_id: architecto
-                      code: architecto
-                      message: architecto
-                      status: 16
-                      queue_name: architecto
-                      event_type: architecto
+                      worker: pdfWorker
+                      queue: oficios_queue
+                      code: PDF_GENERATED
+                      status: success
+                      message: 'PDF gerado com sucesso'
+                      userId: 1
+                      correlationId: abc123
                       metadata: null
-                      user_id: architecto
-                      created_at: '2026-06-18T04:39:47.000000Z'
-                      updated_at: '2026-06-18T04:39:47.000000Z'
-                  first_page_url: 'http://localhost/api/worker-logs?page=1'
-                  from: 1
-                  last_page: 1
-                  last_page_url: 'http://localhost/api/worker-logs?page=1'
-                  links:
-                    -
-                      url: null
-                      label: '&laquo; Previous'
-                      page: null
-                      active: false
-                    -
-                      url: 'http://localhost/api/worker-logs?page=1'
-                      label: '1'
-                      page: 1
-                      active: true
-                    -
-                      url: null
-                      label: 'Next &raquo;'
-                      page: null
-                      active: false
-                  next_page_url: null
-                  path: 'http://localhost/api/worker-logs'
-                  per_page: 20
-                  prev_page_url: null
-                  to: 1
+                      created_at: '2026-07-03T15:00:00.000000Z'
+                  per_page: 50
                   total: 1
                 properties:
                   current_page:
@@ -3729,127 +3220,69 @@ paths:
                     example:
                       -
                         id: 1
-                        correlation_id: architecto
-                        code: architecto
-                        message: architecto
-                        status: 16
-                        queue_name: architecto
-                        event_type: architecto
+                        worker: pdfWorker
+                        queue: oficios_queue
+                        code: PDF_GENERATED
+                        status: success
+                        message: 'PDF gerado com sucesso'
+                        userId: 1
+                        correlationId: abc123
                         metadata: null
-                        user_id: architecto
-                        created_at: '2026-06-18T04:39:47.000000Z'
-                        updated_at: '2026-06-18T04:39:47.000000Z'
+                        created_at: '2026-07-03T15:00:00.000000Z'
                     items:
                       type: object
                       properties:
                         id:
                           type: integer
                           example: 1
-                        correlation_id:
+                        worker:
                           type: string
-                          example: architecto
+                          example: pdfWorker
+                        queue:
+                          type: string
+                          example: oficios_queue
                         code:
                           type: string
-                          example: architecto
+                          example: PDF_GENERATED
+                        status:
+                          type: string
+                          example: success
                         message:
                           type: string
-                          example: architecto
-                        status:
+                          example: 'PDF gerado com sucesso'
+                        userId:
                           type: integer
-                          example: 16
-                        queue_name:
+                          example: 1
+                        correlationId:
                           type: string
-                          example: architecto
-                        event_type:
-                          type: string
-                          example: architecto
+                          example: abc123
                         metadata:
                           type: string
                           example: null
                           nullable: true
-                        user_id:
-                          type: string
-                          example: architecto
                         created_at:
                           type: string
-                          example: '2026-06-18T04:39:47.000000Z'
-                        updated_at:
-                          type: string
-                          example: '2026-06-18T04:39:47.000000Z'
-                  first_page_url:
-                    type: string
-                    example: 'http://localhost/api/worker-logs?page=1'
-                  from:
-                    type: integer
-                    example: 1
-                  last_page:
-                    type: integer
-                    example: 1
-                  last_page_url:
-                    type: string
-                    example: 'http://localhost/api/worker-logs?page=1'
-                  links:
-                    type: array
-                    example:
-                      -
-                        url: null
-                        label: '&laquo; Previous'
-                        page: null
-                        active: false
-                      -
-                        url: 'http://localhost/api/worker-logs?page=1'
-                        label: '1'
-                        page: 1
-                        active: true
-                      -
-                        url: null
-                        label: 'Next &raquo;'
-                        page: null
-                        active: false
-                    items:
-                      type: object
-                      properties:
-                        url:
-                          type: string
-                          example: null
-                          nullable: true
-                        label:
-                          type: string
-                          example: '&laquo; Previous'
-                        page:
-                          type: string
-                          example: null
-                          nullable: true
-                        active:
-                          type: boolean
-                          example: false
-                  next_page_url:
-                    type: string
-                    example: null
-                    nullable: true
-                  path:
-                    type: string
-                    example: 'http://localhost/api/worker-logs'
+                          example: '2026-07-03T15:00:00.000000Z'
                   per_page:
                     type: integer
-                    example: 20
-                  prev_page_url:
-                    type: string
-                    example: null
-                    nullable: true
-                  to:
-                    type: integer
-                    example: 1
+                    example: 50
                   total:
                     type: integer
                     example: 1
       tags:
-        - Endpoints
+        - 'Logs de Workers'
     post:
-      summary: ''
-      operationId: postApiWorkerLogs
-      description: ''
-      parameters: []
+      summary: 'Registrar log de worker'
+      operationId: registrarLogDeWorker
+      description: "Endpoint interno usado pelos workers para registrar logs de execução.\nAutenticado via chave de API do broker (`X-Broker-Api-Key`), não por Sanctum."
+      parameters:
+        -
+          in: header
+          name: X-Broker-Api-Key
+          description: ''
+          example: '{BROKER_API_KEY} required'
+          schema:
+            type: string
       responses:
         201:
           description: ''
@@ -3858,54 +3291,49 @@ paths:
               schema:
                 type: object
                 example:
-                  correlation_id: architecto
-                  code: architecto
-                  message: architecto
-                  status: 16
-                  queue_name: architecto
-                  event_type: architecto
-                  metadata: null
-                  user_id: architecto
-                  updated_at: '2026-06-18T06:52:21.000000Z'
-                  created_at: '2026-06-18T06:52:21.000000Z'
                   id: 2
+                  worker: emailWorker
+                  queue: email_queue
+                  code: EMAIL_SENT
+                  status: success
+                  message: 'Email enviado com sucesso para joao@oab.org.br'
+                  created_at: '2026-07-03T15:05:00.000000Z'
                 properties:
-                  correlation_id:
-                    type: string
-                    example: architecto
-                  code:
-                    type: string
-                    example: architecto
-                  message:
-                    type: string
-                    example: architecto
-                  status:
-                    type: integer
-                    example: 16
-                  queue_name:
-                    type: string
-                    example: architecto
-                  event_type:
-                    type: string
-                    example: architecto
-                  metadata:
-                    type: string
-                    example: null
-                    nullable: true
-                  user_id:
-                    type: string
-                    example: architecto
-                  updated_at:
-                    type: string
-                    example: '2026-06-18T06:52:21.000000Z'
-                  created_at:
-                    type: string
-                    example: '2026-06-18T06:52:21.000000Z'
                   id:
                     type: integer
                     example: 2
+                  worker:
+                    type: string
+                    example: emailWorker
+                  queue:
+                    type: string
+                    example: email_queue
+                  code:
+                    type: string
+                    example: EMAIL_SENT
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: 'Email enviado com sucesso para joao@oab.org.br'
+                  created_at:
+                    type: string
+                    example: '2026-07-03T15:05:00.000000Z'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorized
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
       tags:
-        - Endpoints
+        - 'Broker (Interno)'
       requestBody:
         required: false
         content:
@@ -3929,11 +3357,20 @@ paths:
                   example: architecto
                   nullable: true
                 status:
-                  type: integer
+                  type: string
                   description: ''
-                  example: 16
+                  example: warn
+                  enum:
+                    - success
+                    - error
+                    - warn
                   nullable: true
                 queueName:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: true
+                worker:
                   type: string
                   description: ''
                   example: architecto
@@ -3952,5 +3389,342 @@ paths:
                 userId:
                   type: string
                   description: ''
-                  example: architecto
+                  example: null
                   nullable: true
+      security: []
+  /api/backups:
+    get:
+      summary: 'Listar backups'
+      operationId: listarBackups
+      description: "Retorna todos os backups registrados, ordenados do mais recente para o mais antigo.\nDurante a listagem, a disponibilidade dos backups manuais armazenados na R2 é verificada\ne atualizada automaticamente.\nO campo `download_url` contém uma URL presignada válida por 1 hora (apenas para backups disponíveis na R2)."
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  current_page: 1
+                  data:
+                    -
+                      id: 2
+                      type: manual
+                      storage_type: r2
+                      user_id: 1
+                      filename: backup-2026-07-03_15-30-00.zip
+                      r2_path: backups/manual/backup-2026-07-03_15-30-00.zip
+                      is_available: true
+                      created_at: '2026-07-03T15:30:00.000000Z'
+                      user:
+                        id: 1
+                        name: 'Hugo Barbosa'
+                      download_url: 'https://r2.cloudflarestorage.com/...'
+                    -
+                      id: 1
+                      type: automatic
+                      storage_type: r2
+                      user_id: null
+                      filename: backup-2026-07-03_00-00-00.zip
+                      r2_path: backups/auto/backup-2026-07-03_00-00-00.zip
+                      is_available: true
+                      created_at: '2026-07-03T00:00:00.000000Z'
+                      user: null
+                      download_url: 'https://r2.cloudflarestorage.com/...'
+                  per_page: 20
+                  total: 2
+                properties:
+                  current_page:
+                    type: integer
+                    example: 1
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 2
+                        type: manual
+                        storage_type: r2
+                        user_id: 1
+                        filename: backup-2026-07-03_15-30-00.zip
+                        r2_path: backups/manual/backup-2026-07-03_15-30-00.zip
+                        is_available: true
+                        created_at: '2026-07-03T15:30:00.000000Z'
+                        user:
+                          id: 1
+                          name: 'Hugo Barbosa'
+                        download_url: 'https://r2.cloudflarestorage.com/...'
+                      -
+                        id: 1
+                        type: automatic
+                        storage_type: r2
+                        user_id: null
+                        filename: backup-2026-07-03_00-00-00.zip
+                        r2_path: backups/auto/backup-2026-07-03_00-00-00.zip
+                        is_available: true
+                        created_at: '2026-07-03T00:00:00.000000Z'
+                        user: null
+                        download_url: 'https://r2.cloudflarestorage.com/...'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 2
+                        type:
+                          type: string
+                          example: manual
+                        storage_type:
+                          type: string
+                          example: r2
+                        user_id:
+                          type: integer
+                          example: 1
+                        filename:
+                          type: string
+                          example: backup-2026-07-03_15-30-00.zip
+                        r2_path:
+                          type: string
+                          example: backups/manual/backup-2026-07-03_15-30-00.zip
+                        is_available:
+                          type: boolean
+                          example: true
+                        created_at:
+                          type: string
+                          example: '2026-07-03T15:30:00.000000Z'
+                        user:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: 'Hugo Barbosa'
+                        download_url:
+                          type: string
+                          example: 'https://r2.cloudflarestorage.com/...'
+                  per_page:
+                    type: integer
+                    example: 20
+                  total:
+                    type: integer
+                    example: 2
+      tags:
+        - Backups
+  /api/backups/manual:
+    post:
+      summary: 'Backup manual'
+      operationId: backupManual
+      description: "Gera um backup manual do banco de dados. O parâmetro `storage` define o destino:\n- `r2`: armazena no Cloudflare R2 e registra como disponível para download posterior.\n- `download`: retorna o arquivo ZIP diretamente como download. Registrado como indisponível (sem cópia armazenada).\n\nRequer permissão `configuracoes.acessar` ou usuário marcado como `is_dev`."
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  -
+                    description: 'Armazenado na R2'
+                    type: object
+                    example:
+                      success: true
+                      message: 'Backup manual salvo na R2 com sucesso'
+                    properties:
+                      success:
+                        type: boolean
+                        example: true
+                      message:
+                        type: string
+                        example: 'Backup manual salvo na R2 com sucesso'
+                  -
+                    description: Download
+                    type: object
+                    example:
+                      description: 'Arquivo ZIP retornado como download binário'
+                    properties:
+                      description:
+                        type: string
+                        example: 'Arquivo ZIP retornado como download binário'
+        403:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'This action is unauthorized.'
+                properties:
+                  message:
+                    type: string
+                    example: 'This action is unauthorized.'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'The storage field is required.'
+                  errors:
+                    storage:
+                      - 'The storage field is required.'
+                properties:
+                  message:
+                    type: string
+                    example: 'The storage field is required.'
+                  errors:
+                    type: object
+                    properties:
+                      storage:
+                        type: array
+                        example:
+                          - 'The storage field is required.'
+                        items:
+                          type: string
+      tags:
+        - Backups
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                storage:
+                  type: string
+                  description: 'Destino do backup: `r2` para armazenar na nuvem, `download` para baixar imediatamente.'
+                  example: r2
+              required:
+                - storage
+  /api/broker/smtp-config:
+    get:
+      summary: 'Configuração SMTP para broker'
+      operationId: configuraoSMTPParaBroker
+      description: "Endpoint interno usado pelo emailWorker para obter as credenciais SMTP.\nAutenticado via chave de API do broker (`X-Broker-Api-Key`), não por Sanctum."
+      parameters:
+        -
+          in: header
+          name: X-Broker-Api-Key
+          description: ''
+          example: '{BROKER_API_KEY} required'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  host: smtp-relay.brevo.com
+                  port: 587
+                  username: b07e8f001@smtp-brevo.com
+                  password: xsmtpsib-...
+                  from_email: noreply@example.com
+                  from_name: 'Sistema de Ofícios'
+                properties:
+                  host:
+                    type: string
+                    example: smtp-relay.brevo.com
+                  port:
+                    type: integer
+                    example: 587
+                  username:
+                    type: string
+                    example: b07e8f001@smtp-brevo.com
+                  password:
+                    type: string
+                    example: xsmtpsib-...
+                  from_email:
+                    type: string
+                    example: noreply@example.com
+                  from_name:
+                    type: string
+                    example: 'Sistema de Ofícios'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorized
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'SMTP não configurado'
+                properties:
+                  message:
+                    type: string
+                    example: 'SMTP não configurado'
+      tags:
+        - 'Broker (Interno)'
+      security: []
+  /api/backups/auto:
+    post:
+      summary: 'Backup automático'
+      operationId: backupAutomtico
+      description: "Gera um backup do banco de dados e armazena no Cloudflare R2 (bucket de backup).\nExecuta automaticamente a limpeza: remove backups automáticos com mais de 5 dias\ne garante que no máximo 5 backups automáticos permaneçam disponíveis.\n\nAutenticado via chave de API do broker (`X-Broker-Api-Key`), não por Sanctum.\nDeve ser chamado pelo cron do servidor.\n\n**Exemplo de chamada via cron:**\n```\ncurl -X POST https://seu-dominio.com/api/backups/auto \\\n  -H \"X-Broker-Api-Key: SUA_CHAVE_AQUI\"\n```"
+      parameters:
+        -
+          in: header
+          name: X-Broker-Api-Key
+          description: ''
+          example: '{BROKER_API_KEY} required'
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  message: 'Backup automático realizado com sucesso'
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: 'Backup automático realizado com sucesso'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthorized
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Nenhum arquivo de backup foi gerado (exit code: 1)'
+                properties:
+                  message:
+                    type: string
+                    example: 'Nenhum arquivo de backup foi gerado (exit code: 1)'
+      tags:
+        - 'Broker (Interno)'
+      security: []

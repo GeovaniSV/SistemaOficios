@@ -1,0 +1,191 @@
+name: SMTP
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/settings/smtp
+    metadata:
+      custom: []
+      groupName: SMTP
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Exibir configuração SMTP'
+      description: 'Retorna a configuração SMTP ativa do sistema (senha omitida).'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "id": 1,
+            "host": "smtp-relay.brevo.com",
+            "port": 587,
+            "username": "b07e8f001@smtp-brevo.com",
+            "from_email": "noreply@example.com",
+            "from_name": "Sistema de Ofícios"
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: '{"message": "SMTP não configurado"}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 5|IyfnMVvZ4SX8Csu8DfR1dF6aAp7dksJ6CYTxLAlw317d1179'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: api/settings/smtp
+    metadata:
+      custom: []
+      groupName: SMTP
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Atualizar configuração SMTP'
+      description: 'Atualiza as credenciais SMTP e notifica o emailWorker em tempo real via RabbitMQ.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      host:
+        custom: []
+        name: host
+        description: 'Must not be greater than 255 characters.'
+        required: true
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      port:
+        custom: []
+        name: port
+        description: 'Must be between 1 and 65535.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      username:
+        custom: []
+        name: username
+        description: 'Must not be greater than 255 characters.'
+        required: true
+        example: g
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      password:
+        custom: []
+        name: password
+        description: ''
+        required: false
+        example: '|]|{+-'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      from_name:
+        custom: []
+        name: from_name
+        description: 'Must not be greater than 255 characters.'
+        required: true
+        example: v
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      from_email:
+        custom: []
+        name: from_email
+        description: 'Must be a valid email address. Must not be greater than 255 characters.'
+        required: true
+        example: jdach@example.org
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      use_tls:
+        custom: []
+        name: use_tls
+        description: ''
+        required: true
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      host: b
+      port: 2
+      username: g
+      password: '|]|{+-'
+      from_name: v
+      from_email: jdach@example.org
+      use_tls: true
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "id": 1,
+            "host": "smtp-relay.brevo.com",
+            "port": 587,
+            "username": "b07e8f001@smtp-brevo.com",
+            "from_email": "noreply@example.com",
+            "from_name": "Sistema de Ofícios"
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 5|IyfnMVvZ4SX8Csu8DfR1dF6aAp7dksJ6CYTxLAlw317d1179'
+    controller: null
+    method: null
+    route: null
