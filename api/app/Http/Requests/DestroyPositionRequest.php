@@ -4,11 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DestroyUserRequest extends FormRequest
+class DestroyPositionRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()->can('usuarios.excluir');
+        return true;
     }
 
     public function rules(): array

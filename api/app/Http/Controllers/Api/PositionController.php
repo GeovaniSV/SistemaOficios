@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DestroyPositionRequest;
 use App\Http\Requests\StorePositionRequest;
 use App\Http\Requests\UpdatePositionRequest;
 use App\Models\Position;
@@ -40,10 +41,12 @@ class PositionController extends Controller
         );
     }
 
-    public function destroy(Position $position): JsonResponse
+    public function destroy(DestroyPositionRequest $request, Position $position): JsonResponse
     {
-        $this->service->delete($position);
+        $activate = filter_var($request->input('activate', false), FILTER_VALIDATE_BOOLEAN);
 
-        return response()->json(null, 204);
+        return response()->json(
+            $this->service->toggleActive($position, $activate)
+        );
     }
 }

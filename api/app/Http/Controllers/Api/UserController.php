@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DestroyUserRequest;
-use App\Http\Requests\RestoreUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\ViewUserRequest;
@@ -45,15 +44,10 @@ class UserController extends Controller
 
     public function destroy(DestroyUserRequest $request, User $user): JsonResponse
     {
-        return response()->json(
-            $this->service->softDelete($user)
-        );
-    }
+        $activate = filter_var($request->input('activate', false), FILTER_VALIDATE_BOOLEAN);
 
-    public function restore(RestoreUserRequest $request, User $user): JsonResponse
-    {
         return response()->json(
-            $this->service->restore($user)
+            $this->service->toggleActive($user, $activate)
         );
     }
 }

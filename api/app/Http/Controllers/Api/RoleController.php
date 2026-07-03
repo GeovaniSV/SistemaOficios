@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DestroyRoleRequest;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use App\Http\Requests\ViewRoleRequest;
@@ -37,6 +38,15 @@ class RoleController extends Controller
     {
         return response()->json(
             $this->service->update($role, $request->validated())
+        );
+    }
+
+    public function destroy(DestroyRoleRequest $request, Role $role)
+    {
+        $activate = filter_var($request->input('activate', false), FILTER_VALIDATE_BOOLEAN);
+
+        return response()->json(
+            $this->service->toggleActive($role, $activate)
         );
     }
 }

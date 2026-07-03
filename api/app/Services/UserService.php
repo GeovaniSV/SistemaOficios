@@ -53,26 +53,18 @@ class UserService
         return $user;
     }
 
-    public function softDelete(User $user): User
+    public function toggleActive(User $user, bool $activate): User
     {
         if ($user->is_dev) {
             throw new ModelNotFoundException();
         }
 
-        $user->tokens()->delete();
-        $user->update(['is_active' => false]);
-
-        return $user;
-    }
-
-    public function restore(User $user): User
-    {
-        if ($user->is_dev) {
-            throw new ModelNotFoundException();
+        if (!$activate) {
+            $user->tokens()->delete();
         }
 
-        $user->update(['is_active' => true]);
+        $user->update(['is_active' => $activate]);
 
-        return $user->fresh();
+        return $user->fresh()->load('position', 'roles');
     }
 }

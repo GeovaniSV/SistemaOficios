@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DestroyOficioTemplateRequest;
 use App\Http\Requests\StoreOficioTemplateRequest;
 use App\Http\Requests\UpdateOficioTemplateRequest;
 use App\Http\Requests\ViewOficioTemplateRequest;
@@ -22,40 +23,34 @@ class OficioTemplateController extends Controller
         );
     }
 
-    public function show(
-        ViewOficioTemplateRequest $request,
-        OficioTemplate $oficioTemplate
-    ) {
-
+    public function show(ViewOficioTemplateRequest $request, OficioTemplate $oficioTemplate)
+    {
         return response()->json(
-            $this->service->getById(
-                $oficioTemplate
-            )
+            $this->service->getById($oficioTemplate)
         );
     }
 
-    public function store(
-        StoreOficioTemplateRequest $request
-    ) {
-
+    public function store(StoreOficioTemplateRequest $request)
+    {
         return response()->json(
-            $this->service->create(
-                $request->validated()
-            ),
+            $this->service->create($request->validated()),
             201
         );
     }
 
-    public function update(
-        UpdateOficioTemplateRequest $request,
-        OficioTemplate $oficioTemplate
-    ) {
+    public function update(UpdateOficioTemplateRequest $request, OficioTemplate $oficioTemplate)
+    {
+        return response()->json(
+            $this->service->update($oficioTemplate, $request->validated())
+        );
+    }
+
+    public function destroy(DestroyOficioTemplateRequest $request, OficioTemplate $oficioTemplate)
+    {
+        $activate = filter_var($request->input('activate', false), FILTER_VALIDATE_BOOLEAN);
 
         return response()->json(
-            $this->service->update(
-                $oficioTemplate,
-                $request->validated()
-            )
+            $this->service->toggleActive($oficioTemplate, $activate)
         );
     }
 }

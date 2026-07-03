@@ -4,11 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DestroyUserRequest extends FormRequest
+class DestroyOficioTemplateRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()->can('usuarios.excluir');
+        return $this->user()->can('templates.excluir');
     }
 
     public function rules(): array
