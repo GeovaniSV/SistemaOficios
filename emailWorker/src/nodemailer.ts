@@ -1,5 +1,5 @@
-import "dotenv/config";
 import nodemailer from "nodemailer";
+import { smtpConfig } from "./worker";
 
 export let transporter = nodemailer.createTransport({
   host: process.env.mailer_server,

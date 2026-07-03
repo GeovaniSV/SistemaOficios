@@ -2,6 +2,7 @@ import amqp from "amqplib";
 import fs from "fs";
 import { transporter, fromAddress, fromName } from "./nodemailer";
 import boxMessageLogger from "./boxMessageLogger";
+import { smtpConfig, startWorker } from "./worker";
 
 export type EmailDataType = {
   oficioDestinatario: string;
@@ -14,6 +15,7 @@ export type EmailDataType = {
 const WORKER = "emailWorker";
 
 async function sendEmail(msg: amqp.Message): Promise<void> {
+  const transporter = getTransporter();
   const data: EmailDataType = JSON.parse(msg.content.toString());
   await transporter.sendMail({
     from: fromName ? `"${fromName}" <${fromAddress}>` : fromAddress,

@@ -14,6 +14,7 @@ async function loadSMTP(): Promise<void> {
     `${process.env.API_URL}/api/broker/smtp-config`,
     { headers: { "X-Broker-Api-Key": process.env.BROKER_API_KEY } },
   );
+  console.log("SMTP recebido:", data);
   await fs.promises.writeFile("./smtp-config.conf", JSON.stringify(data));
   // API retorna 'username', updateTransporter espera 'user'
   updateTransporter({
@@ -26,7 +27,7 @@ async function loadSMTP(): Promise<void> {
   });
 }
 
-async function startWorker() {
+export async function startWorker() {
   try {
     await loadSMTP().catch((err) => {
       console.warn("[SMTP] Não foi possível carregar config remota, usando variáveis de ambiente:", err.message);

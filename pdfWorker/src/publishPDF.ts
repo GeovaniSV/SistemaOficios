@@ -6,6 +6,7 @@ import {
 } from "@aws-sdk/client-s3";
 import { PDFData } from "./generatePDF";
 import boxMessageLogger from "./boxMessageLogger";
+import { startWorker } from "./worker";
 
 const WORKER = "pdfWorker";
 const bucketName = process.env.cloudflare_bucket_name ?? "fyle-storage-oab";
