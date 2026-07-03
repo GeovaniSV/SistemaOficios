@@ -17,11 +17,12 @@ class StoreWorkerLogRequest extends FormRequest
             'correlationId' => ['nullable', 'string'],
             'code'          => ['nullable', 'string'],
             'message'       => ['nullable', 'string'],
-            'status'        => ['nullable', 'integer'],
+            'status'        => ['nullable', 'string', 'in:success,error,warn'],
             'queueName'     => ['nullable', 'string'],
+            'worker'        => ['nullable', 'string'],
             'eventType'     => ['nullable', 'string'],
             'metadata'      => ['nullable', 'array'],
-            'userId'        => ['nullable', 'string'],
+            'userId'        => ['nullable'],
         ];
     }
 }

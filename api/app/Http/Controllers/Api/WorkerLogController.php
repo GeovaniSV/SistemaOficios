@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWorkerLogRequest;
+use App\Http\Requests\ViewWorkerLogRequest;
 use App\Services\WorkerLogService;
 
 class WorkerLogController extends Controller
@@ -12,7 +13,7 @@ class WorkerLogController extends Controller
         private WorkerLogService $service
     ) {}
 
-    public function index()
+    public function index(ViewWorkerLogRequest $request)
     {
         return response()->json(
             $this->service->list()

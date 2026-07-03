@@ -53,7 +53,7 @@ class OficioService
                 'content'                => $data['content'],
                 'department'             => $data['department'] ?? null,
                 'author_id'              => Auth::id(),
-                'status'                 => OficioStatusEnum::DRAFT,
+                'status'                 => !empty($data['submit']) ? OficioStatusEnum::PENDING : OficioStatusEnum::DRAFT,
             ]);
 
             $oficio->responsibles()->sync($data['responsibles']);

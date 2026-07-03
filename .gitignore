@@ -13,6 +13,9 @@ build/
 .env.test
 .phpstorm.meta.php
 
+api.env
+smtp-config.conf
+
 # ===== LOGS =====
 logs/
 *.log

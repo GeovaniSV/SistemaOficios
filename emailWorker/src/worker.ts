@@ -1,24 +1,29 @@
 import "dotenv/config";
 import amqp from "amqplib";
 import sendEmailWithRetry from "./sendEmail";
+import { updateTransporter } from "./nodemailer";
 import axios from "axios";
 import fs from "fs";
 import { EmailDataType } from "./sendEmail";
 
-const BROKER_API_KEY = process.env.BROKER_API_KEY;
 const RABBITMQ_URL = process.env.RABBITMQ_URL;
 const queueName = "email_queue";
 
-export let smtpConfig: any = null;
-
-async function loadSMTP() {
+async function loadSMTP(): Promise<void> {
   const { data } = await axios.get(
     `${process.env.API_URL}/api/broker/smtp-config`,
     { headers: { "X-Broker-Api-Key": process.env.BROKER_API_KEY } },
   );
   await fs.promises.writeFile("./smtp-config.conf", JSON.stringify(data));
-
-  smtpConfig = data;
+  // API retorna 'username', updateTransporter espera 'user'
+  updateTransporter({
+    host:       data.host,
+    port:       Number(data.port),
+    user:       data.username,
+    password:   data.password,
+    from_email: data.from_email,
+    from_name:  data.from_name,
+  });
 }
 
 async function startWorker() {
@@ -26,29 +31,37 @@ async function startWorker() {
     await loadSMTP().catch((err) => {
       console.warn("[SMTP] Não foi possível carregar config remota, usando variáveis de ambiente:", err.message);
     });
+
     const connection = await amqp.connect(RABBITMQ_URL!);
     const channel = await connection.createChannel();
     await channel.assertQueue(queueName, { durable: true });
     channel.prefetch(1);
     console.log(`Worker is waiting for messages in queue: ${queueName}`);
+
     channel.consume(
       queueName,
       async (msg) => {
         console.log(" [x] Received %s", msg!.content.toString());
-        if (!msg) {
-          return;
-        }
+        if (!msg) return;
 
-        const msgParser: EmailDataType = JSON.parse(msg.content.toString());
+        try {
+          const msgParser: EmailDataType = JSON.parse(msg.content.toString());
 
-        if (msgParser.event === "SMTP_CONFIG_UPDATED") {
-          loadSMTP();
-        } else {
-          await sendEmailWithRetry(msg);
+          if (msgParser.event === "SMTP_CONFIG_UPDATED") {
+            await loadSMTP().catch((err) => {
+              console.warn("[SMTP] Falha ao recarregar config SMTP:", err.message);
+            });
+          } else {
+            await sendEmailWithRetry(msg);
+          }
+        } catch (err) {
+          console.error("Erro ao processar mensagem:", err);
+        } finally {
+          channel.ack(msg);
         }
       },
       {
-        noAck: true,
+        noAck: false,
       },
     );
 

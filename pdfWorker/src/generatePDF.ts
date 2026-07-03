@@ -2,6 +2,9 @@ var pdfmake = require("pdfmake");
 import publishToqueue from "./publisher";
 import { uploadPDFWithRetry } from "./publishPDF";
 import crypto from "crypto";
+import boxMessageLogger from "./boxMessageLogger";
+
+const WORKER = "pdfWorker";
 
 export type PDFData = {
   oficioNumero: string;
@@ -223,23 +226,45 @@ export async function generatePDF(data: string) {
     },
   };
 
-  const pdfPath = `./pdfs/${pdfData.hash}.pdf`;
-  await pdfmake
-    .createPdf(docDefinition)
-    .write(pdfPath)
-    .then(
-      () => {
-        // uploadPDFWithRetry(data, pdfPath, `${pdfData.hash}.pdf`);
-        publishToqueue({
-          oficioAssunto: pdfData.oficioAssunto,
-          oficioDestinatario: pdfData.oficioDestinatario,
-          oficio: pdfData.hash + ".pdf",
-          userId: pdfData.userId,
-        });
-      },
-      (err: any) => {
-        console.error("Erro ao gerar PDF:", err);
-        throw err;
-      },
-    );
+  const pdfDir = process.env.PDF_PATH ?? "./pdfs";
+  const pdfPath = `${pdfDir}/${pdfData.hash}.pdf`;
+
+  try {
+    await pdfmake.createPdf(docDefinition).write(pdfPath);
+  } catch (err: any) {
+    console.error("Erro ao gerar PDF:", err);
+    await boxMessageLogger({
+      correlationId: crypto.randomUUID(),
+      code:          err.code ?? "PDF_WRITE_ERROR",
+      message:       err.message,
+      status:        "error",
+      worker:        WORKER,
+      queueName:     "oficios_queue",
+      eventType:     "Erro ao gerar PDF",
+      metadata:      { hash: pdfData.hash, timestamp: new Date().toISOString() },
+      userId:        pdfData.userId,
+    });
+    throw err;
+  }
+
+  await boxMessageLogger({
+    correlationId: crypto.randomUUID(),
+    code:          "PDF_GENERATED",
+    message:       `PDF ${pdfData.hash}.pdf gerado com sucesso`,
+    status:        "success",
+    worker:        WORKER,
+    queueName:     "oficios_queue",
+    eventType:     "PDF gerado",
+    metadata:      { hash: pdfData.hash, timestamp: new Date().toISOString() },
+    userId:        pdfData.userId,
+  });
+
+  await uploadPDFWithRetry(data, pdfPath, `${pdfData.hash}.pdf`);
+
+  await publishToqueue({
+    oficioAssunto:      pdfData.oficioAssunto,
+    oficioDestinatario: pdfData.oficioDestinatario,
+    oficio:             pdfData.hash + ".pdf",
+    userId:             pdfData.userId,
+  });
 }
