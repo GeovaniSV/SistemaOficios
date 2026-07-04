@@ -1,12 +1,8 @@
 import "dotenv/config";
 import fs from "fs";
-import {
-  S3Client,
-  PutObjectCommand,
-} from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { PDFData } from "./generatePDF";
 import boxMessageLogger from "./boxMessageLogger";
-import { startWorker } from "./worker";
 
 const WORKER = "pdfWorker";
 const bucketName = process.env.cloudflare_bucket_name ?? "fyle-storage-oab";
@@ -56,14 +52,14 @@ export async function uploadPDFWithRetry(
 
       await boxMessageLogger({
         correlationId: crypto.randomUUID(),
-        code:          "PDF_UPLOADED",
-        message:       `PDF ${fileName} enviado ao R2`,
-        status:        "success",
-        worker:        WORKER,
-        queueName:     "oficios_queue",
-        eventType:     "PDF enviado ao R2",
-        metadata:      { attempt, fileName, timestamp: new Date().toISOString() },
-        userId:        data.userId,
+        code: "PDF_UPLOADED",
+        message: `PDF ${fileName} enviado ao R2`,
+        status: "success",
+        worker: WORKER,
+        queueName: "oficios_queue",
+        eventType: "PDF enviado ao R2",
+        metadata: { attempt, fileName, timestamp: new Date().toISOString() },
+        userId: data.userId,
       });
 
       return;
@@ -71,28 +67,35 @@ export async function uploadPDFWithRetry(
       console.error(`Attempt ${attempt} failed:`, error);
 
       const errorCodes: Record<string, string> = {
-        AuthorizationHeaderMalformed:    "Cabeçalho de autorização inválido.",
-        AuthorizationQueryParametersError: "Parâmetros de autorização inválidos.",
-        ConnectionClosedByRequester:     "Conexão fechada pelo solicitante.",
-        ExpiredToken:                    "Token expirado.",
-        InvalidToken:                    "Token inválido.",
-        InternalError:                   "Erro interno.",
-        InvalidBucketName:               "Nome do bucket inválido.",
+        AuthorizationHeaderMalformed: "Cabeçalho de autorização inválido.",
+        AuthorizationQueryParametersError:
+          "Parâmetros de autorização inválidos.",
+        ConnectionClosedByRequester: "Conexão fechada pelo solicitante.",
+        ExpiredToken: "Token expirado.",
+        InvalidToken: "Token inválido.",
+        InternalError: "Erro interno.",
+        InvalidBucketName: "Nome do bucket inválido.",
       };
 
-      const mustRetry = attempt < retries && Object.keys(errorCodes).includes(error.code);
+      const mustRetry =
+        attempt < retries && Object.keys(errorCodes).includes(error.code);
 
       if (!mustRetry) {
         await boxMessageLogger({
           correlationId: crypto.randomUUID(),
-          code:          error.code,
-          message:       error.message,
-          status:        "error",
-          worker:        WORKER,
-          queueName:     "oficios_queue",
-          eventType:     errorCodes[error.code] ?? "Erro desconhecido no upload",
-          metadata:      { attempt, retries, fileName, timestamp: new Date().toISOString() },
-          userId:        data.userId,
+          code: error.code,
+          message: error.message,
+          status: "error",
+          worker: WORKER,
+          queueName: "oficios_queue",
+          eventType: errorCodes[error.code] ?? "Erro desconhecido no upload",
+          metadata: {
+            attempt,
+            retries,
+            fileName,
+            timestamp: new Date().toISOString(),
+          },
+          userId: data.userId,
         });
         throw error;
       }

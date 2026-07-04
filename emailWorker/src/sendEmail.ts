@@ -2,8 +2,7 @@ import amqp from "amqplib";
 import fs from "fs";
 import { transporter, fromAddress, fromName } from "./nodemailer";
 import boxMessageLogger from "./boxMessageLogger";
-import { smtpConfig, startWorker } from "./worker";
-
+import { startWorker } from "./worker";
 export type EmailDataType = {
   oficioDestinatario: string;
   oficioAssunto: string;
@@ -15,9 +14,9 @@ export type EmailDataType = {
 const WORKER = "emailWorker";
 
 async function sendEmail(msg: amqp.Message): Promise<void> {
-  const transporter = getTransporter();
+  const getTransporter = transporter;
   const data: EmailDataType = JSON.parse(msg.content.toString());
-  await transporter.sendMail({
+  await getTransporter.sendMail({
     from: fromName ? `"${fromName}" <${fromAddress}>` : fromAddress,
     to: data.oficioDestinatario,
     subject: data.oficioAssunto,
@@ -56,33 +55,32 @@ async function sendEmailWithRetry(
       await sendEmail(msg);
       await boxMessageLogger({
         correlationId: String(msg.properties.timestamp ?? ""),
-        code:          "EMAIL_SENT",
-        message:       `Email enviado para ${data.oficioDestinatario}`,
-        status:        "success",
-        worker:        WORKER,
-        queueName:     "email_queue",
-        eventType:     "Email enviado",
-        metadata:      { attempt, timestamp: new Date().toISOString() },
-        userId:        data.userId,
+        code: "EMAIL_SENT",
+        message: `Email enviado para ${data.oficioDestinatario}`,
+        status: "success",
+        worker: WORKER,
+        queueName: "email_queue",
+        eventType: "Email enviado",
+        metadata: { attempt, timestamp: new Date().toISOString() },
+        userId: data.userId,
       });
       return;
     } catch (error: any) {
       console.error(`Attempt ${attempt} failed:`, error);
 
       const errorCodes: Record<string, string> = {
-        ESOCKET:   "Erro de conexão",
+        ESOCKET: "Erro de conexão",
         ETIMEDOUT: "Conexão expirou",
-        EAUTH:     "Falha de autenticação",
-        EDNS:      "Falha na resolução DNS",
-        ETLS:      "Falha no handshake TLS",
-        ENOAUTH:   "Autenticação não fornecida",
-        EMESSAGE:  "Erro na entrega da mensagem",
+        EAUTH: "Falha de autenticação",
+        EDNS: "Falha na resolução DNS",
+        ETLS: "Falha no handshake TLS",
+        ENOAUTH: "Autenticação não fornecida",
+        EMESSAGE: "Erro na entrega da mensagem",
         EPROTOCOL: "Resposta inválida do servidor SMTP",
       };
 
       const mustRetry =
-        attempt < retries &&
-        Object.keys(errorCodes).includes(error.code);
+        attempt < retries && Object.keys(errorCodes).includes(error.code);
 
       if (mustRetry) {
         console.log(`Retrying in ${delay / 1000} seconds...`);
@@ -93,14 +91,14 @@ async function sendEmailWithRetry(
       console.error("All retry attempts failed. Email could not be sent.");
       await boxMessageLogger({
         correlationId: String(msg.properties.correlationId ?? ""),
-        code:          error.code,
-        message:       error.message,
-        status:        "error",
-        worker:        WORKER,
-        queueName:     "email_queue",
-        eventType:     errorCodes[error.code] ?? "Erro desconhecido",
-        metadata:      { attempt, retries, timestamp: new Date().toISOString() },
-        userId:        data.userId,
+        code: error.code,
+        message: error.message,
+        status: "error",
+        worker: WORKER,
+        queueName: "email_queue",
+        eventType: errorCodes[error.code] ?? "Erro desconhecido",
+        metadata: { attempt, retries, timestamp: new Date().toISOString() },
+        userId: data.userId,
       });
       throw error;
     }

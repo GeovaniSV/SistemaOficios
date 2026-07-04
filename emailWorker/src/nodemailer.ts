@@ -1,5 +1,4 @@
 import nodemailer from "nodemailer";
-import { smtpConfig } from "./worker";
 
 export let transporter = nodemailer.createTransport({
   host: process.env.mailer_server,
@@ -11,8 +10,9 @@ export let transporter = nodemailer.createTransport({
   },
 });
 
-export let fromAddress = process.env.mailer_from_email ?? process.env.mailer_user ?? "";
-export let fromName    = process.env.mailer_from_name ?? "Sistema de Ofícios";
+export let fromAddress =
+  process.env.mailer_from_email ?? process.env.mailer_user ?? "";
+export let fromName = process.env.mailer_from_name ?? "Sistema de Ofícios";
 
 export function updateTransporter(config: {
   host: string;
@@ -23,7 +23,14 @@ export function updateTransporter(config: {
   from_name?: string;
 }) {
   if (!config.host || !config.user || !config.password) {
-    console.warn("[SMTP] Configuração incompleta recebida da API — mantendo transporter atual. host:", config.host, "| user:", config.user, "| password:", config.password ? "***" : "(vazio)");
+    console.warn(
+      "[SMTP] Configuração incompleta recebida da API — mantendo transporter atual. host:",
+      config.host,
+      "| user:",
+      config.user,
+      "| password:",
+      config.password ? "***" : "(vazio)",
+    );
     return;
   }
   transporter = nodemailer.createTransport({
@@ -36,6 +43,15 @@ export function updateTransporter(config: {
     },
   });
   if (config.from_email) fromAddress = config.from_email;
-  if (config.from_name)  fromName    = config.from_name;
-  console.log("[SMTP] Transporter atualizado — host:", config.host, "| port:", config.port, "| user:", config.user, "| from:", fromAddress);
+  if (config.from_name) fromName = config.from_name;
+  console.log(
+    "[SMTP] Transporter atualizado — host:",
+    config.host,
+    "| port:",
+    config.port,
+    "| user:",
+    config.user,
+    "| from:",
+    fromAddress,
+  );
 }

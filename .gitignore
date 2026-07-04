@@ -47,3 +47,5 @@ docker-compose.override.yml
 # Arquivos de Organização do Hugo
 
 *.hugo.md
+
+nginx

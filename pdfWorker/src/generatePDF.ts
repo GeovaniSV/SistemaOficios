@@ -4,8 +4,10 @@ import publishToqueue from "./publisher";
 import { uploadPDFWithRetry } from "./publishPDF";
 import crypto from "crypto";
 import boxMessageLogger from "./boxMessageLogger";
+import QRCode from "qrcode";
 
 const WORKER = "pdfWorker";
+const frontURL = process.env.FRONT_URL;
 
 export type PDFData = {
   oficioNumero: string;
@@ -18,7 +20,7 @@ export type PDFData = {
   oficioDestinatario: string;
   oficioAutor: string;
   oficioAutorCargo: string;
-  userId: number;
+  userId: string;
   oficioHeader: string;
   oficioFooter: string;
   hash: string;
@@ -509,36 +511,36 @@ export async function generatePDF(data: string) {
     console.error("Erro ao gerar PDF:", err);
     await boxMessageLogger({
       correlationId: crypto.randomUUID(),
-      code:          err.code ?? "PDF_WRITE_ERROR",
-      message:       err.message,
-      status:        "error",
-      worker:        WORKER,
-      queueName:     "oficios_queue",
-      eventType:     "Erro ao gerar PDF",
-      metadata:      { hash: pdfData.hash, timestamp: new Date().toISOString() },
-      userId:        pdfData.userId,
+      code: err.code ?? "PDF_WRITE_ERROR",
+      message: err.message,
+      status: "error",
+      worker: WORKER,
+      queueName: "oficios_queue",
+      eventType: "Erro ao gerar PDF",
+      metadata: { hash: pdfData.hash, timestamp: new Date().toISOString() },
+      userId: pdfData.userId,
     });
     throw err;
   }
 
   await boxMessageLogger({
     correlationId: crypto.randomUUID(),
-    code:          "PDF_GENERATED",
-    message:       `PDF ${pdfData.hash}.pdf gerado com sucesso`,
-    status:        "success",
-    worker:        WORKER,
-    queueName:     "oficios_queue",
-    eventType:     "PDF gerado",
-    metadata:      { hash: pdfData.hash, timestamp: new Date().toISOString() },
-    userId:        pdfData.userId,
+    code: "PDF_GENERATED",
+    message: `PDF ${pdfData.hash}.pdf gerado com sucesso`,
+    status: "success",
+    worker: WORKER,
+    queueName: "oficios_queue",
+    eventType: "PDF gerado",
+    metadata: { hash: pdfData.hash, timestamp: new Date().toISOString() },
+    userId: pdfData.userId,
   });
 
   await uploadPDFWithRetry(data, pdfPath, `${pdfData.hash}.pdf`);
 
   await publishToqueue({
-    oficioAssunto:      pdfData.oficioAssunto,
+    oficioAssunto: pdfData.oficioAssunto,
     oficioDestinatario: pdfData.oficioDestinatario,
-    oficio:             pdfData.hash + ".pdf",
-    userId:             pdfData.userId,
+    oficio: pdfData.hash + ".pdf",
+    userId: pdfData.userId,
   });
 }
