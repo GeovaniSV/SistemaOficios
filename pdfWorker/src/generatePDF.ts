@@ -24,6 +24,7 @@ export type PDFData = {
   oficioHeader: string;
   oficioFooter: string;
   hash: string;
+  validationHash: string;
 };
 
 const fonts = {
@@ -66,10 +67,11 @@ export async function generatePDF(data: string) {
     oficioHeader: pdfData.oficioHeader,
     oficioFooter: pdfData.oficioFooter,
     hash: pdfData.hash,
+    validationHash: pdfData.validationHash,
   };
 
   const qrDataUrl = await QRCode.toDataURL(
-    `${frontURL}/validacao?codigo=${configuration.hash}`,
+    `${frontURL}/validacao?codigo=${configuration.validationHash}`,
     { width: 300, margin: 2 },
   );
 
@@ -223,7 +225,7 @@ export async function generatePDF(data: string) {
       {
         stack: [
           {
-            text: "PROTOCOLO DE ASSINATURA ELETRONICA",
+            text: "PROTOCOLO DE AUTORIZAÇÃO",
             fontSize: 14,
             bold: true,
             alignment: "center",
@@ -341,7 +343,7 @@ export async function generatePDF(data: string) {
                     margin: [0, 2, 0, 6],
                   },
                   {
-                    text: `Data/Hora: ${"26/06/2026 15:45"} (Horário de Brasília)`,
+                    text: `Data/Hora:  (Horário de Brasília)`,
                     fontSize: 9,
                     color: "#4a90d9",
                   },
@@ -371,7 +373,7 @@ export async function generatePDF(data: string) {
                     margin: [0, 0, 0, 4],
                   },
                   {
-                    text: "ASSINADO",
+                    text: "AUTORIZADO",
                     fontSize: 8,
                     bold: true,
                     color: "#16a34a",
@@ -419,7 +421,7 @@ export async function generatePDF(data: string) {
         margin: [0, 0, 0, 10],
       },
       {
-        text: "A autenticidade deste documento e de suas assinaturas pode ser verificada acessando o portal de validação através do link abaixo:",
+        text: "A autenticidade deste documento e de sua autorização pode ser verificada acessando o portal de validação através do link abaixo ou pelo QRCODE:",
         fontSize: 10,
         color: "#444444",
         margin: [0, 0, 0, 10],
@@ -434,7 +436,7 @@ export async function generatePDF(data: string) {
                   body: [
                     [
                       {
-                        text: `${frontURL}/validacao/${configuration.hash}`,
+                        text: `${frontURL}/validacao`,
                         fontSize: 10,
                         color: "#1d4ed8",
                         border: [true, true, true, true],
@@ -464,7 +466,7 @@ export async function generatePDF(data: string) {
                       body: [
                         [
                           {
-                            text: configuration.hash,
+                            text: configuration.validationHash,
                             fontSize: 9,
                             bold: true,
                             color: "#1a1a1a",

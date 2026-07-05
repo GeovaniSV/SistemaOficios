@@ -3,6 +3,7 @@ import fs from "fs";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { PDFData } from "./generatePDF";
 import boxMessageLogger from "./boxMessageLogger";
+import { startWorker } from "./worker";
 
 const WORKER = "pdfWorker";
 const bucketName = process.env.cloudflare_bucket_name ?? "fyle-storage-oab";
@@ -97,7 +98,7 @@ export async function uploadPDFWithRetry(
           },
           userId: data.userId,
         });
-        throw error;
+        startWorker();
       }
 
       await new Promise((resolve) => setTimeout(resolve, delay));
