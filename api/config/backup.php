@@ -37,13 +37,33 @@ return [
     ],
 
     'notifications' => [
-        'notifications' => [],
+        'notifications' => [
+            \Spatie\Backup\Notifications\Notifications\BackupHasFailedNotification::class       => [],
+            \Spatie\Backup\Notifications\Notifications\UnhealthyBackupWasFoundNotification::class => [],
+            \Spatie\Backup\Notifications\Notifications\CleanupHasFailedNotification::class      => [],
+            \Spatie\Backup\Notifications\Notifications\BackupWasSuccessfulNotification::class   => [],
+            \Spatie\Backup\Notifications\Notifications\HealthyBackupWasFoundNotification::class => [],
+            \Spatie\Backup\Notifications\Notifications\CleanupWasSuccessfulNotification::class  => [],
+        ],
         'notifiable'    => \Spatie\Backup\Notifications\Notifiable::class,
         'mail'          => [
-            'to' => '',
+            'to'   => env('BACKUP_NOTIFICATION_EMAIL', 'noreply@example.com'),
+            'from' => [
+                'address' => env('MAIL_FROM_ADDRESS', 'noreply@example.com'),
+                'name'    => env('MAIL_FROM_NAME', 'Sistema de Ofícios'),
+            ],
         ],
-        'slack'   => ['webhook_url' => ''],
-        'discord' => ['webhook_url' => ''],
+        'slack' => [
+            'webhook_url' => '',
+            'channel'     => null,
+            'username'    => null,
+            'icon'        => null,
+        ],
+        'discord' => [
+            'webhook_url' => '',
+            'username'    => '',
+            'avatar_url'  => '',
+        ],
     ],
 
     'monitor_backups' => [],

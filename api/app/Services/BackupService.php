@@ -7,7 +7,8 @@ use App\Enums\BackupTypeEnum;
 use App\Models\Backup;
 use App\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Facades\Storage;
 use RuntimeException;
 
@@ -15,23 +16,35 @@ class BackupService
 {
     /**
      * Gera o arquivo de backup via spatie e retorna o caminho relativo dentro do disco backup_local.
+     * Registra os arquivos antes/depois para identificar o arquivo recém-criado.
      */
     private function generateBackup(): string
     {
-        $filesBefore = Storage::disk('backup_local')->allFiles();
+        $disk   = Storage::disk('backup_local');
+        $before = collect($disk->allFiles());
 
-        $exitCode = Artisan::call('backup:run', ['--only-db' => true]);
+        $tempDir = sys_get_temp_dir();
+        $result  = Process::path(base_path())
+            ->env([
+                'TEMP'       => $tempDir,
+                'TMP'        => $tempDir,
+                'SystemRoot' => $_SERVER['SystemRoot'] ?? 'C:\\Windows',
+                'PATH'       => $_SERVER['PATH'] ?? getenv('PATH') ?? '',
+            ])
+            ->run([PHP_BINARY, 'artisan', 'backup:run', '--only-db']);
 
-        $filesAfter = Storage::disk('backup_local')->allFiles();
-        $newFiles   = array_values(array_diff($filesAfter, $filesBefore));
-
-        if (empty($newFiles)) {
-            throw new RuntimeException('Nenhum arquivo de backup foi gerado (exit code: ' . $exitCode . ')');
+        if ($result->failed()) {
+            Log::error('[BackupService] backup:run falhou', ['stderr' => $result->errorOutput()]);
         }
 
-        rsort($newFiles);
+        $after    = collect($disk->allFiles());
+        $newFiles = $after->diff($before)->values();
 
-        return $newFiles[0];
+        if ($newFiles->isEmpty()) {
+            throw new RuntimeException('Nenhum arquivo de backup foi gerado. Output: ' . $result->output());
+        }
+
+        return $newFiles->first();
     }
 
     /**

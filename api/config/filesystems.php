@@ -88,6 +88,7 @@ return [
             'use_path_style_endpoint' => true,
             'throw'                   => false,
             'report'                  => false,
+            'http'                    => ['verify' => (bool) env('R2_SSL_VERIFY', true)],
         ],
 
     ],
