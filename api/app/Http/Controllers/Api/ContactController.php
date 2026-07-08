@@ -22,9 +22,13 @@ class ContactController extends Controller
     /**
      * Listar contatos
      *
-     * Retorna lista paginada de contatos. Filtre pelo status com o parâmetro `is_active`.
+     * Retorna lista paginada de contatos.
      *
-     * @queryParam is_active boolean Filtra por status ativo/inativo. Omita para retornar todos. Example: true
+     * @queryParam filter[name] string Filtro de pesquisa parcial pelo nome. Example: OAB
+     * @queryParam filter[doc] string Filtro exato pelo documento (CPF/CNPJ sem máscara). Example: 12345678000190
+     * @queryParam filter[type] string Filtro exato pelo tipo de contato. Example: PJ
+     * @queryParam filter[is_active] boolean Filtra por status ativo/inativo. Omita para retornar todos. Example: true
+     * @queryParam sort string Campo de ordenação. Use "-" para decrescente. Valores permitidos: name, created_at. Example: -created_at
      *
      * @response 200 {
      *   "current_page": 1,
@@ -42,14 +46,8 @@ class ContactController extends Controller
      */
     public function index(ViewContactRequest $request): JsonResponse
     {
-        $isActive = null;
-
-        if ($request->has('is_active')) {
-            $isActive = filter_var($request->input('is_active'), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
-        }
-
         return response()->json(
-            $this->service->list($isActive)
+            $this->service->list()
         );
     }
 

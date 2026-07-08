@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\WorkerLog;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class WorkerLogService
 {
@@ -23,6 +25,17 @@ class WorkerLogService
 
     public function list()
     {
-        return WorkerLog::latest()->paginate(20);
+        return QueryBuilder::for(WorkerLog::class)
+            ->allowedFilters(...[
+                AllowedFilter::exact('worker'),
+                AllowedFilter::exact('status'),
+                AllowedFilter::exact('code'),
+                AllowedFilter::exact('queue_name'),
+                AllowedFilter::exact('correlation_id'),
+                AllowedFilter::partial('message'),
+            ])
+            ->allowedSorts(...['created_at'])
+            ->defaultSort('-created_at')
+            ->paginate(20);
     }
 }

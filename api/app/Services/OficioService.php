@@ -6,6 +6,8 @@ use App\Enums\OficioStatusEnum;
 use App\Models\Oficio;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class OficioService
 {
@@ -16,12 +18,25 @@ class OficioService
 
     public function list()
     {
-        return Oficio::latest()->with([
-            'destinationContact',
-            'responsibles',
-            'author',
-            'messages',
-        ])->paginate(20);
+        return QueryBuilder::for(Oficio::class)
+            ->with([
+                'destinationContact',
+                'responsibles',
+                'author',
+                'messages',
+            ])
+            ->allowedFilters(...[
+                AllowedFilter::partial('subject'),
+                AllowedFilter::partial('number'),
+                AllowedFilter::partial('department'),
+                AllowedFilter::exact('status'),
+                AllowedFilter::exact('priority'),
+                AllowedFilter::exact('destination_contact_id'),
+                AllowedFilter::exact('author_id'),
+            ])
+            ->allowedSorts(...['number', 'subject', 'priority', 'status', 'created_at'])
+            ->defaultSort('-created_at')
+            ->paginate(20);
     }
 
     public function getById(Oficio $oficio): Oficio

@@ -22,10 +22,98 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+    queryParameters:
+      'filter[name]':
+        custom: []
+        name: 'filter[name]'
+        description: 'Filtro de pesquisa parcial pelo nome.'
+        required: false
+        example: Diretor
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[is_active]':
+        custom: []
+        name: 'filter[is_active]'
+        description: 'Filtra por status ativo/inativo.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      sort:
+        custom: []
+        name: sort
+        description: 'Campo de ordenação. Use "-" para decrescente. Valores permitidos: name, created_at.'
+        required: false
+        example: '-created_at'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      'filter[name]': Diretor
+      'filter[is_active]': true
+      sort: '-created_at'
+    bodyParameters:
+      filter:
+        custom: []
+        name: filter
+        description: ''
+        required: false
+        example: null
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.name:
+        custom: []
+        name: filter.name
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.is_active:
+        custom: []
+        name: filter.is_active
+        description: ''
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sort:
+        custom: []
+        name: sort
+        description: ''
+        required: false
+        example: created_at
+        type: string
+        enumValues:
+          - name
+          - '-name'
+          - created_at
+          - '-created_at'
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      filter:
+        name: architecto
+        is_active: true
+      sort: created_at
     fileParameters: []
     responses:
       -
@@ -248,7 +336,7 @@ endpoints:
         name: is_active
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -257,7 +345,7 @@ endpoints:
     cleanBodyParameters:
       name: b
       description: 'Et animi quos velit et fugiat.'
-      is_active: true
+      is_active: false
     fileParameters: []
     responses:
       -
@@ -327,14 +415,14 @@ endpoints:
         name: activate
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      activate: false
+      activate: true
     fileParameters: []
     responses:
       -

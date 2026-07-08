@@ -27,6 +27,12 @@ class BackupController extends Controller
      * e atualizada automaticamente.
      * O campo `download_url` contém uma URL presignada válida por 1 hora (apenas para backups disponíveis na R2).
      *
+     * @queryParam filter[type] string Filtro exato pelo tipo de backup. Example: manual
+     * @queryParam filter[storage_type] string Filtro exato pelo destino de armazenamento. Example: r2
+     * @queryParam filter[filename] string Filtro de pesquisa parcial pelo nome do arquivo. Example: backup-2026
+     * @queryParam filter[is_available] boolean Filtra pela disponibilidade do backup. Example: true
+     * @queryParam sort string Campo de ordenação. Use "-" para decrescente. Valor permitido: created_at. Padrão: -created_at. Example: -created_at
+     *
      * @response 200 {
      *   "current_page": 1,
      *   "data": [

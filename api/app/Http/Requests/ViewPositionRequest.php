@@ -5,11 +5,11 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class ViewContactRequest extends FormRequest
+class ViewPositionRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()->can('contatos.ver');
+        return true;
     }
 
     public function rules(): array
@@ -17,8 +17,6 @@ class ViewContactRequest extends FormRequest
         return [
             'filter'           => ['sometimes', 'array'],
             'filter.name'      => ['sometimes', 'string'],
-            'filter.doc'       => ['sometimes', 'string'],
-            'filter.type'      => ['sometimes', Rule::in(['PF', 'PJ'])],
             'filter.is_active' => ['sometimes', 'boolean'],
             'sort'             => ['sometimes', 'string', Rule::in(['name', '-name', 'created_at', '-created_at'])],
         ];

@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Laravel API Documentation",
-        "_postman_id": "f684306b-b346-4d54-945e-1ce0902e2d70",
+        "_postman_id": "5c867638-db3c-4559-bd96-ca00f338c952",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -171,8 +171,45 @@
                         "url": {
                             "host": "{{baseUrl}}",
                             "path": "api\/users",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/users"
+                            "query": [
+                                {
+                                    "key": "filter%5Bname%5D",
+                                    "value": "Hugo",
+                                    "description": "Filtro de pesquisa parcial pelo nome.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bemail%5D",
+                                    "value": "hugo%40",
+                                    "description": "Filtro de pesquisa parcial pelo email.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bposition_id%5D",
+                                    "value": "1",
+                                    "description": "Filtro exato pelo cargo.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bis_active%5D",
+                                    "value": "1",
+                                    "description": "Filtra por status ativo\/inativo.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Broles%5D",
+                                    "value": "admin",
+                                    "description": "Filtro exato pelo nome do papel (role).",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "sort",
+                                    "value": "-created_at",
+                                    "description": "Campo de ordena\u00e7\u00e3o. Use \"-\" para decrescente. Valores permitidos: name, email, created_at, last_login.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/users?filter%5Bname%5D=Hugo&filter%5Bemail%5D=hugo%40&filter%5Bposition_id%5D=1&filter%5Bis_active%5D=1&filter%5Broles%5D=admin&sort=-created_at"
                         },
                         "method": "GET",
                         "header": [
@@ -185,7 +222,10 @@
                                 "value": "application\/json"
                             }
                         ],
-                        "body": null,
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"filter\":{\"name\":\"architecto\",\"email\":\"gbailey@example.net\",\"position_id\":16,\"is_active\":true,\"roles\":\"architecto\"},\"sort\":\"-created_at\"}"
+                        },
                         "description": "Retorna lista paginada de usu\u00e1rios com cargo e pap\u00e9is."
                     },
                     "response": [
@@ -266,7 +306,10 @@
                                 "value": "application\/json"
                             }
                         ],
-                        "body": null,
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"filter\":{\"name\":\"architecto\",\"email\":\"gbailey@example.net\",\"position_id\":16,\"is_active\":false,\"roles\":\"architecto\"},\"sort\":\"-created_at\"}"
+                        },
                         "description": ""
                     },
                     "response": [
@@ -364,7 +407,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"activate\":true}"
+                            "raw": "{\"activate\":false}"
                         },
                         "description": "Quando `activate=false` (padr\u00e3o), inativa o usu\u00e1rio e revoga todos os seus tokens.\nQuando `activate=true`, reativa o usu\u00e1rio.\nUsu\u00e1rios marcados como `is_dev` n\u00e3o podem ser inativados."
                     },
@@ -395,8 +438,27 @@
                         "url": {
                             "host": "{{baseUrl}}",
                             "path": "api\/positions",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/positions"
+                            "query": [
+                                {
+                                    "key": "filter%5Bname%5D",
+                                    "value": "Diretor",
+                                    "description": "Filtro de pesquisa parcial pelo nome.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bis_active%5D",
+                                    "value": "1",
+                                    "description": "Filtra por status ativo\/inativo.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "sort",
+                                    "value": "-created_at",
+                                    "description": "Campo de ordena\u00e7\u00e3o. Use \"-\" para decrescente. Valores permitidos: name, created_at.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/positions?filter%5Bname%5D=Diretor&filter%5Bis_active%5D=1&sort=-created_at"
                         },
                         "method": "GET",
                         "header": [
@@ -409,7 +471,10 @@
                                 "value": "application\/json"
                             }
                         ],
-                        "body": null,
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"filter\":{\"name\":\"architecto\",\"is_active\":true},\"sort\":\"created_at\"}"
+                        },
                         "description": "Retorna lista paginada de cargos."
                     },
                     "response": [
@@ -532,7 +597,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"is_active\":true}"
+                            "raw": "{\"name\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"is_active\":false}"
                         },
                         "description": ""
                     },
@@ -582,7 +647,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"activate\":false}"
+                            "raw": "{\"activate\":true}"
                         },
                         "description": "Quando `activate=false` (padr\u00e3o), inativa o cargo. Quando `activate=true`, reativa."
                     },
@@ -607,8 +672,27 @@
                         "url": {
                             "host": "{{baseUrl}}",
                             "path": "api\/roles",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/roles"
+                            "query": [
+                                {
+                                    "key": "filter%5Bname%5D",
+                                    "value": "admin",
+                                    "description": "Filtro de pesquisa parcial pelo nome.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bstatus%5D",
+                                    "value": "Ativo",
+                                    "description": "Filtro exato pelo status.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "sort",
+                                    "value": "-created_at",
+                                    "description": "Campo de ordena\u00e7\u00e3o. Use \"-\" para decrescente. Valores permitidos: name, created_at.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/roles?filter%5Bname%5D=admin&filter%5Bstatus%5D=Ativo&sort=-created_at"
                         },
                         "method": "GET",
                         "header": [
@@ -621,7 +705,10 @@
                                 "value": "application\/json"
                             }
                         ],
-                        "body": null,
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"filter\":{\"name\":\"architecto\",\"status\":\"Ativo\"},\"sort\":\"-created_at\"}"
+                        },
                         "description": "Retorna lista paginada de pap\u00e9is (roles) com suas permiss\u00f5es."
                     },
                     "response": [
@@ -655,7 +742,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"status\":\"Ativo\",\"permissions\":[\"architecto\"]}"
+                            "raw": "{\"name\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"status\":\"Inativo\",\"permissions\":[\"architecto\"]}"
                         },
                         "description": ""
                     },
@@ -696,7 +783,10 @@
                                 "value": "application\/json"
                             }
                         ],
-                        "body": null,
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"filter\":{\"name\":\"architecto\",\"status\":\"Inativo\"},\"sort\":\"-created_at\"}"
+                        },
                         "description": ""
                     },
                     "response": [
@@ -744,7 +834,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"status\":\"Inativo\",\"permissions\":[\"architecto\"]}"
+                            "raw": "{\"name\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"status\":\"Ativo\",\"permissions\":[\"architecto\"]}"
                         },
                         "description": "Atualiza nome, status e permiss\u00f5es do papel."
                     },
@@ -821,13 +911,37 @@
                             "path": "api\/contacts",
                             "query": [
                                 {
-                                    "key": "is_active",
+                                    "key": "filter%5Bname%5D",
+                                    "value": "OAB",
+                                    "description": "Filtro de pesquisa parcial pelo nome.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bdoc%5D",
+                                    "value": "12345678000190",
+                                    "description": "Filtro exato pelo documento (CPF\/CNPJ sem m\u00e1scara).",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Btype%5D",
+                                    "value": "PJ",
+                                    "description": "Filtro exato pelo tipo de contato.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bis_active%5D",
                                     "value": "1",
                                     "description": "Filtra por status ativo\/inativo. Omita para retornar todos.",
                                     "disabled": false
+                                },
+                                {
+                                    "key": "sort",
+                                    "value": "-created_at",
+                                    "description": "Campo de ordena\u00e7\u00e3o. Use \"-\" para decrescente. Valores permitidos: name, created_at.",
+                                    "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/contacts?is_active=1"
+                            "raw": "{{baseUrl}}\/api\/contacts?filter%5Bname%5D=OAB&filter%5Bdoc%5D=12345678000190&filter%5Btype%5D=PJ&filter%5Bis_active%5D=1&sort=-created_at"
                         },
                         "method": "GET",
                         "header": [
@@ -840,8 +954,11 @@
                                 "value": "application\/json"
                             }
                         ],
-                        "body": null,
-                        "description": "Retorna lista paginada de contatos. Filtre pelo status com o par\u00e2metro `is_active`."
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"filter\":{\"name\":\"architecto\",\"doc\":\"architecto\",\"type\":\"PF\",\"is_active\":false},\"sort\":\"created_at\"}"
+                        },
+                        "description": "Retorna lista paginada de contatos."
                     },
                     "response": [
                         {
@@ -874,7 +991,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"type\":\"PJ\",\"doc\":\"bngzmiyvdljnik\",\"name\":\"h\",\"address\":{\"cep\":\"bngzmiyv\",\"logradouro\":\"architecto\",\"numero\":\"architecto\",\"bairro\":\"architecto\",\"cidade\":\"architecto\",\"estado\":\"ng\"},\"responsibles\":[{\"name\":\"architecto\",\"email\":\"zbailey@example.net\",\"treatment\":\"architecto\",\"position\":\"architecto\",\"department\":\"architecto\"}]}"
+                            "raw": "{\"type\":\"PF\",\"doc\":\"bngzmiyvdljnik\",\"name\":\"h\",\"address\":{\"cep\":\"bngzmiyv\",\"logradouro\":\"architecto\",\"numero\":\"architecto\",\"bairro\":\"architecto\",\"cidade\":\"architecto\",\"estado\":\"ng\"},\"responsibles\":[{\"name\":\"architecto\",\"email\":\"zbailey@example.net\",\"treatment\":\"architecto\",\"position\":\"architecto\",\"department\":\"architecto\"}]}"
                         },
                         "description": ""
                     },
@@ -915,7 +1032,10 @@
                                 "value": "application\/json"
                             }
                         ],
-                        "body": null,
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"filter\":{\"name\":\"architecto\",\"doc\":\"architecto\",\"type\":\"PJ\",\"is_active\":false},\"sort\":\"created_at\"}"
+                        },
                         "description": ""
                     },
                     "response": [
@@ -963,7 +1083,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"type\":\"PF\",\"doc\":\"bngzmiyvdljnik\",\"name\":\"h\",\"address\":{\"cep\":\"bngzmiyv\",\"logradouro\":\"architecto\",\"numero\":\"architecto\",\"bairro\":\"architecto\",\"cidade\":\"architecto\",\"estado\":\"ng\"},\"responsibles\":[{\"name\":\"architecto\",\"email\":\"zbailey@example.net\",\"treatment\":\"architecto\",\"position\":\"architecto\",\"department\":\"architecto\"}]}"
+                            "raw": "{\"type\":\"PJ\",\"doc\":\"bngzmiyvdljnik\",\"name\":\"h\",\"address\":{\"cep\":\"bngzmiyv\",\"logradouro\":\"architecto\",\"numero\":\"architecto\",\"bairro\":\"architecto\",\"cidade\":\"architecto\",\"estado\":\"ng\"},\"responsibles\":[{\"name\":\"architecto\",\"email\":\"zbailey@example.net\",\"treatment\":\"architecto\",\"position\":\"architecto\",\"department\":\"architecto\"}]}"
                         },
                         "description": ""
                     },
@@ -1054,7 +1174,10 @@
                                 "value": "application\/json"
                             }
                         ],
-                        "body": null,
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"filter\":{\"name\":\"architecto\",\"doc\":\"architecto\",\"type\":\"PF\",\"is_active\":true},\"sort\":\"-name\"}"
+                        },
                         "description": "Retorna a lista de respons\u00e1veis (pessoas f\u00edsicas) vinculados ao contato."
                     },
                     "response": [
@@ -1078,8 +1201,57 @@
                         "url": {
                             "host": "{{baseUrl}}",
                             "path": "api\/oficios",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/oficios"
+                            "query": [
+                                {
+                                    "key": "filter%5Bsubject%5D",
+                                    "value": "Solicita%C3%A7%C3%A3o",
+                                    "description": "Filtro de pesquisa parcial pelo assunto.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bnumber%5D",
+                                    "value": "001",
+                                    "description": "Filtro de pesquisa parcial pelo n\u00famero.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bdepartment%5D",
+                                    "value": "Financeiro",
+                                    "description": "Filtro de pesquisa parcial pelo departamento.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bstatus%5D",
+                                    "value": "DRAFT",
+                                    "description": "Filtro exato pelo status.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bpriority%5D",
+                                    "value": "MEDIUM",
+                                    "description": "Filtro exato pela prioridade.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bdestination_contact_id%5D",
+                                    "value": "1",
+                                    "description": "Filtro exato pelo contato de destino.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bauthor_id%5D",
+                                    "value": "1",
+                                    "description": "Filtro exato pelo autor.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "sort",
+                                    "value": "-created_at",
+                                    "description": "Campo de ordena\u00e7\u00e3o. Use \"-\" para decrescente. Valores permitidos: number, subject, priority, status, created_at. Padr\u00e3o: -created_at.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/oficios?filter%5Bsubject%5D=Solicita%C3%A7%C3%A3o&filter%5Bnumber%5D=001&filter%5Bdepartment%5D=Financeiro&filter%5Bstatus%5D=DRAFT&filter%5Bpriority%5D=MEDIUM&filter%5Bdestination_contact_id%5D=1&filter%5Bauthor_id%5D=1&sort=-created_at"
                         },
                         "method": "GET",
                         "header": [
@@ -1092,7 +1264,10 @@
                                 "value": "application\/json"
                             }
                         ],
-                        "body": null,
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"filter\":{\"subject\":\"architecto\",\"number\":\"architecto\",\"department\":\"architecto\",\"status\":\"APPROVED\",\"priority\":\"URGENT\",\"destination_contact_id\":16,\"author_id\":16},\"sort\":\"-status\"}"
+                        },
                         "description": "Retorna lista paginada de of\u00edcios com remetente e destinat\u00e1rios."
                     },
                     "response": [
@@ -1126,7 +1301,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"subject\":\"b\",\"priority\":\"LOW\",\"content\":\"architecto\",\"department\":\"n\",\"submit\":true}"
+                            "raw": "{\"subject\":\"b\",\"priority\":\"MEDIUM\",\"content\":\"architecto\",\"department\":\"n\",\"submit\":true}"
                         },
                         "description": "Cria um novo of\u00edcio com status `DRAFT`. O n\u00famero \u00e9 gerado automaticamente."
                     },
@@ -1173,7 +1348,10 @@
                                 "value": "application\/json"
                             }
                         ],
-                        "body": null,
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"filter\":{\"subject\":\"architecto\",\"number\":\"architecto\",\"department\":\"architecto\",\"status\":\"REJECTED\",\"priority\":\"HIGH\",\"destination_contact_id\":16,\"author_id\":16},\"sort\":\"number\"}"
+                        },
                         "description": ""
                     },
                     "response": [
@@ -1221,7 +1399,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"subject\":\"b\",\"priority\":\"LOW\",\"content\":\"architecto\",\"department\":\"n\",\"submit\":true}"
+                            "raw": "{\"subject\":\"b\",\"priority\":\"MEDIUM\",\"content\":\"architecto\",\"department\":\"n\",\"submit\":true}"
                         },
                         "description": "Apenas of\u00edcios em status `DRAFT` ou `RETURNED` podem ser editados."
                     },
@@ -1264,7 +1442,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"status\":\"APPROVED\",\"reason\":\"architecto\",\"subject\":\"n\",\"priority\":\"MEDIUM\",\"content\":\"architecto\",\"department\":\"n\"}"
+                            "raw": "{\"status\":\"APPROVED\",\"reason\":\"architecto\",\"subject\":\"n\",\"priority\":\"LOW\",\"content\":\"architecto\",\"department\":\"n\"}"
                         },
                         "description": "Aprova (`APPROVED`) ou rejeita\/devolve (`REJECTED`\/`RETURNED`) o of\u00edcio."
                     },
@@ -1341,8 +1519,27 @@
                         "url": {
                             "host": "{{baseUrl}}",
                             "path": "api\/oficio-templates",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/oficio-templates"
+                            "query": [
+                                {
+                                    "key": "filter%5Bname%5D",
+                                    "value": "Solicita%C3%A7%C3%A3o",
+                                    "description": "Filtro de pesquisa parcial pelo nome.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bis_active%5D",
+                                    "value": "1",
+                                    "description": "Filtra por status ativo\/inativo.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "sort",
+                                    "value": "-created_at",
+                                    "description": "Campo de ordena\u00e7\u00e3o. Use \"-\" para decrescente. Valores permitidos: name, created_at.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/oficio-templates?filter%5Bname%5D=Solicita%C3%A7%C3%A3o&filter%5Bis_active%5D=1&sort=-created_at"
                         },
                         "method": "GET",
                         "header": [
@@ -1355,7 +1552,10 @@
                                 "value": "application\/json"
                             }
                         ],
-                        "body": null,
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"filter\":{\"name\":\"architecto\",\"is_active\":false},\"sort\":\"created_at\"}"
+                        },
                         "description": ""
                     },
                     "response": [
@@ -1430,7 +1630,10 @@
                                 "value": "application\/json"
                             }
                         ],
-                        "body": null,
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"filter\":{\"name\":\"architecto\",\"is_active\":false},\"sort\":\"-name\"}"
+                        },
                         "description": ""
                     },
                     "response": [
@@ -1737,7 +1940,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"header\":\"architecto\",\"footer\":\"architecto\",\"signers\":[{\"type\":\"position\",\"id\":16}]}"
+                            "raw": "{\"header\":\"architecto\",\"footer\":\"architecto\",\"signers\":[{\"type\":\"user\",\"id\":16}]}"
                         },
                         "description": "Atualiza cabe\u00e7alho, rodap\u00e9 e signat\u00e1rios autorizados dos of\u00edcios."
                     },
@@ -1904,8 +2107,51 @@
                         "url": {
                             "host": "{{baseUrl}}",
                             "path": "api\/worker-logs",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/worker-logs"
+                            "query": [
+                                {
+                                    "key": "filter%5Bworker%5D",
+                                    "value": "pdfWorker",
+                                    "description": "Filtro exato pelo worker.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bstatus%5D",
+                                    "value": "success",
+                                    "description": "Filtro exato pelo status.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bcode%5D",
+                                    "value": "PDF_GENERATED",
+                                    "description": "Filtro exato pelo c\u00f3digo do evento.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bqueue_name%5D",
+                                    "value": "oficios_queue",
+                                    "description": "Filtro exato pela fila.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bcorrelation_id%5D",
+                                    "value": "abc123",
+                                    "description": "Filtro exato pelo ID de correla\u00e7\u00e3o.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bmessage%5D",
+                                    "value": "PDF",
+                                    "description": "Filtro de pesquisa parcial pela mensagem.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "sort",
+                                    "value": "-created_at",
+                                    "description": "Campo de ordena\u00e7\u00e3o. Use \"-\" para decrescente. Valor permitido: created_at. Padr\u00e3o: -created_at.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/worker-logs?filter%5Bworker%5D=pdfWorker&filter%5Bstatus%5D=success&filter%5Bcode%5D=PDF_GENERATED&filter%5Bqueue_name%5D=oficios_queue&filter%5Bcorrelation_id%5D=abc123&filter%5Bmessage%5D=PDF&sort=-created_at"
                         },
                         "method": "GET",
                         "header": [
@@ -1918,7 +2164,10 @@
                                 "value": "application\/json"
                             }
                         ],
-                        "body": null,
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"filter\":{\"worker\":\"architecto\",\"status\":\"architecto\",\"code\":\"architecto\",\"queue_name\":\"architecto\",\"correlation_id\":\"architecto\",\"message\":\"architecto\"},\"sort\":\"created_at\"}"
+                        },
                         "description": "Retorna lista paginada de logs gerados pelos workers (pdfWorker e emailWorker),\nordenados do mais recente para o mais antigo."
                     },
                     "response": [
@@ -1942,8 +2191,39 @@
                         "url": {
                             "host": "{{baseUrl}}",
                             "path": "api\/backups",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/backups"
+                            "query": [
+                                {
+                                    "key": "filter%5Btype%5D",
+                                    "value": "manual",
+                                    "description": "Filtro exato pelo tipo de backup.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bstorage_type%5D",
+                                    "value": "r2",
+                                    "description": "Filtro exato pelo destino de armazenamento.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bfilename%5D",
+                                    "value": "backup-2026",
+                                    "description": "Filtro de pesquisa parcial pelo nome do arquivo.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bis_available%5D",
+                                    "value": "1",
+                                    "description": "Filtra pela disponibilidade do backup.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "sort",
+                                    "value": "-created_at",
+                                    "description": "Campo de ordena\u00e7\u00e3o. Use \"-\" para decrescente. Valor permitido: created_at. Padr\u00e3o: -created_at.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/backups?filter%5Btype%5D=manual&filter%5Bstorage_type%5D=r2&filter%5Bfilename%5D=backup-2026&filter%5Bis_available%5D=1&sort=-created_at"
                         },
                         "method": "GET",
                         "header": [
@@ -1956,7 +2236,10 @@
                                 "value": "application\/json"
                             }
                         ],
-                        "body": null,
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"filter\":{\"type\":\"automatic\",\"storage_type\":\"download\",\"filename\":\"architecto\",\"is_available\":true},\"sort\":\"created_at\"}"
+                        },
                         "description": "Retorna todos os backups registrados, ordenados do mais recente para o mais antigo.\nDurante a listagem, a disponibilidade dos backups manuais armazenados na R2 \u00e9 verificada\ne atualizada automaticamente.\nO campo `download_url` cont\u00e9m uma URL presignada v\u00e1lida por 1 hora (apenas para backups dispon\u00edveis na R2)."
                     },
                     "response": [
@@ -2104,7 +2387,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"correlationId\":\"architecto\",\"code\":\"architecto\",\"message\":\"architecto\",\"status\":\"warn\",\"queueName\":\"architecto\",\"worker\":\"architecto\",\"eventType\":\"architecto\"}"
+                            "raw": "{\"correlationId\":\"architecto\",\"code\":\"architecto\",\"message\":\"architecto\",\"status\":\"success\",\"queueName\":\"architecto\",\"worker\":\"architecto\",\"eventType\":\"architecto\"}"
                         },
                         "description": "Endpoint interno usado pelos workers para registrar logs de execu\u00e7\u00e3o.\nAutenticado via chave de API do broker (`X-Broker-Api-Key`), n\u00e3o por Sanctum.",
                         "auth": {

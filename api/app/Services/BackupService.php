@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Enums\BackupStorageEnum;
 use App\Enums\BackupTypeEnum;
+use App\Filters\BooleanFilter;
 use App\Models\Backup;
 use App\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -11,6 +12,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Facades\Storage;
 use RuntimeException;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class BackupService
 {
@@ -197,8 +200,16 @@ class BackupService
             }
         }
 
-        return Backup::with('user:id,name')
-            ->orderBy('created_at', 'desc')
+        return QueryBuilder::for(Backup::class)
+            ->with('user:id,name')
+            ->allowedFilters(...[
+                AllowedFilter::exact('type'),
+                AllowedFilter::exact('storage_type'),
+                AllowedFilter::partial('filename'),
+                AllowedFilter::custom('is_available', new BooleanFilter()),
+            ])
+            ->allowedSorts(...['created_at'])
+            ->defaultSort('-created_at')
             ->paginate(20);
     }
 }

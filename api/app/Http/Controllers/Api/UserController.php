@@ -25,6 +25,13 @@ class UserController extends Controller
      *
      * Retorna lista paginada de usuários com cargo e papéis.
      *
+     * @queryParam filter[name] string Filtro de pesquisa parcial pelo nome. Example: Hugo
+     * @queryParam filter[email] string Filtro de pesquisa parcial pelo email. Example: hugo@
+     * @queryParam filter[position_id] integer Filtro exato pelo cargo. Example: 1
+     * @queryParam filter[is_active] boolean Filtra por status ativo/inativo. Example: true
+     * @queryParam filter[roles] string Filtro exato pelo nome do papel (role). Example: admin
+     * @queryParam sort string Campo de ordenação. Use "-" para decrescente. Valores permitidos: name, email, created_at, last_login. Example: -created_at
+     *
      * @response 200 {
      *   "current_page": 1,
      *   "data": [{

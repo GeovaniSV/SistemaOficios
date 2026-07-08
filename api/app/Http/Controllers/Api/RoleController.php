@@ -24,6 +24,10 @@ class RoleController extends Controller
      *
      * Retorna lista paginada de papéis (roles) com suas permissões.
      *
+     * @queryParam filter[name] string Filtro de pesquisa parcial pelo nome. Example: admin
+     * @queryParam filter[status] string Filtro exato pelo status. Example: Ativo
+     * @queryParam sort string Campo de ordenação. Use "-" para decrescente. Valores permitidos: name, created_at. Example: -created_at
+     *
      * @response 200 {
      *   "current_page": 1,
      *   "data": [{

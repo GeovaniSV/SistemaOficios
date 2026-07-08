@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ViewWorkerLogRequest extends FormRequest
 {
@@ -13,6 +14,15 @@ class ViewWorkerLogRequest extends FormRequest
 
     public function rules(): array
     {
-        return [];
+        return [
+            'filter'                => ['sometimes', 'array'],
+            'filter.worker'         => ['sometimes', 'string'],
+            'filter.status'         => ['sometimes', 'string'],
+            'filter.code'           => ['sometimes', 'string'],
+            'filter.queue_name'     => ['sometimes', 'string'],
+            'filter.correlation_id' => ['sometimes', 'string'],
+            'filter.message'        => ['sometimes', 'string'],
+            'sort'                  => ['sometimes', 'string', Rule::in(['created_at', '-created_at'])],
+        ];
     }
 }

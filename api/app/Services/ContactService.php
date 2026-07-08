@@ -2,22 +2,28 @@
 
 namespace App\Services;
 
+use App\Filters\BooleanFilter;
 use App\Models\Address;
 use App\Models\Contact;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class ContactService
 {
-    public function list(?bool $isActive = null)
+    public function list()
     {
-        $query = Contact::with('address', 'responsibles');
-
-        if ($isActive !== null) {
-            $query->where('is_active', $isActive);
-        }
-
-        return $query->paginate(20);
+        return QueryBuilder::for(Contact::class)
+            ->with('address', 'responsibles')
+            ->allowedFilters(...[
+                AllowedFilter::partial('name'),
+                AllowedFilter::exact('doc'),
+                AllowedFilter::exact('type'),
+                AllowedFilter::custom('is_active', new BooleanFilter()),
+            ])
+            ->allowedSorts(...['name', 'created_at'])
+            ->paginate(20);
     }
 
     public function getById(int $id): Contact{

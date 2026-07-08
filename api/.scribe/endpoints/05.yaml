@@ -22,10 +22,100 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+    queryParameters:
+      'filter[name]':
+        custom: []
+        name: 'filter[name]'
+        description: 'Filtro de pesquisa parcial pelo nome.'
+        required: false
+        example: admin
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[status]':
+        custom: []
+        name: 'filter[status]'
+        description: 'Filtro exato pelo status.'
+        required: false
+        example: Ativo
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      sort:
+        custom: []
+        name: sort
+        description: 'Campo de ordenação. Use "-" para decrescente. Valores permitidos: name, created_at.'
+        required: false
+        example: '-created_at'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      'filter[name]': admin
+      'filter[status]': Ativo
+      sort: '-created_at'
+    bodyParameters:
+      filter:
+        custom: []
+        name: filter
+        description: ''
+        required: false
+        example: null
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.name:
+        custom: []
+        name: filter.name
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.status:
+        custom: []
+        name: filter.status
+        description: ''
+        required: false
+        example: Ativo
+        type: string
+        enumValues:
+          - Ativo
+          - Inativo
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sort:
+        custom: []
+        name: sort
+        description: ''
+        required: false
+        example: '-created_at'
+        type: string
+        enumValues:
+          - name
+          - '-name'
+          - created_at
+          - '-created_at'
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      filter:
+        name: architecto
+        status: Ativo
+      sort: '-created_at'
     fileParameters: []
     responses:
       -
@@ -104,7 +194,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: Ativo
+        example: Inativo
         type: string
         enumValues:
           - Ativo
@@ -127,7 +217,7 @@ endpoints:
     cleanBodyParameters:
       name: b
       description: 'Et animi quos velit et fugiat.'
-      status: Ativo
+      status: Inativo
       permissions:
         - architecto
     fileParameters: []
@@ -187,8 +277,62 @@ endpoints:
       id: 1
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+    bodyParameters:
+      filter:
+        custom: []
+        name: filter
+        description: ''
+        required: false
+        example: null
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.name:
+        custom: []
+        name: filter.name
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.status:
+        custom: []
+        name: filter.status
+        description: ''
+        required: false
+        example: Inativo
+        type: string
+        enumValues:
+          - Ativo
+          - Inativo
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sort:
+        custom: []
+        name: sort
+        description: ''
+        required: false
+        example: '-created_at'
+        type: string
+        enumValues:
+          - name
+          - '-name'
+          - created_at
+          - '-created_at'
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      filter:
+        name: architecto
+        status: Inativo
+      sort: '-created_at'
     fileParameters: []
     responses:
       -
@@ -281,7 +425,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: Inativo
+        example: Ativo
         type: string
         enumValues:
           - Ativo
@@ -304,7 +448,7 @@ endpoints:
     cleanBodyParameters:
       name: b
       description: 'Et animi quos velit et fugiat.'
-      status: Inativo
+      status: Ativo
       permissions:
         - architecto
     fileParameters: []

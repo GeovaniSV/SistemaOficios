@@ -24,10 +24,192 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+    queryParameters:
+      'filter[worker]':
+        custom: []
+        name: 'filter[worker]'
+        description: 'Filtro exato pelo worker.'
+        required: false
+        example: pdfWorker
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[status]':
+        custom: []
+        name: 'filter[status]'
+        description: 'Filtro exato pelo status.'
+        required: false
+        example: success
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[code]':
+        custom: []
+        name: 'filter[code]'
+        description: 'Filtro exato pelo código do evento.'
+        required: false
+        example: PDF_GENERATED
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[queue_name]':
+        custom: []
+        name: 'filter[queue_name]'
+        description: 'Filtro exato pela fila.'
+        required: false
+        example: oficios_queue
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[correlation_id]':
+        custom: []
+        name: 'filter[correlation_id]'
+        description: 'Filtro exato pelo ID de correlação.'
+        required: false
+        example: abc123
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[message]':
+        custom: []
+        name: 'filter[message]'
+        description: 'Filtro de pesquisa parcial pela mensagem.'
+        required: false
+        example: PDF
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      sort:
+        custom: []
+        name: sort
+        description: 'Campo de ordenação. Use "-" para decrescente. Valor permitido: created_at. Padrão: -created_at.'
+        required: false
+        example: '-created_at'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      'filter[worker]': pdfWorker
+      'filter[status]': success
+      'filter[code]': PDF_GENERATED
+      'filter[queue_name]': oficios_queue
+      'filter[correlation_id]': abc123
+      'filter[message]': PDF
+      sort: '-created_at'
+    bodyParameters:
+      filter:
+        custom: []
+        name: filter
+        description: ''
+        required: false
+        example: null
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.worker:
+        custom: []
+        name: filter.worker
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.status:
+        custom: []
+        name: filter.status
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.code:
+        custom: []
+        name: filter.code
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.queue_name:
+        custom: []
+        name: filter.queue_name
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.correlation_id:
+        custom: []
+        name: filter.correlation_id
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.message:
+        custom: []
+        name: filter.message
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sort:
+        custom: []
+        name: sort
+        description: ''
+        required: false
+        example: created_at
+        type: string
+        enumValues:
+          - created_at
+          - '-created_at'
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      filter:
+        worker: architecto
+        status: architecto
+        code: architecto
+        queue_name: architecto
+        correlation_id: architecto
+        message: architecto
+      sort: created_at
     fileParameters: []
     responses:
       -

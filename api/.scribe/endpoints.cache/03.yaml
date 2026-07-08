@@ -24,10 +24,174 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+    queryParameters:
+      'filter[name]':
+        custom: []
+        name: 'filter[name]'
+        description: 'Filtro de pesquisa parcial pelo nome.'
+        required: false
+        example: Hugo
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[email]':
+        custom: []
+        name: 'filter[email]'
+        description: 'Filtro de pesquisa parcial pelo email.'
+        required: false
+        example: hugo@
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[position_id]':
+        custom: []
+        name: 'filter[position_id]'
+        description: 'Filtro exato pelo cargo.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[is_active]':
+        custom: []
+        name: 'filter[is_active]'
+        description: 'Filtra por status ativo/inativo.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[roles]':
+        custom: []
+        name: 'filter[roles]'
+        description: 'Filtro exato pelo nome do papel (role).'
+        required: false
+        example: admin
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      sort:
+        custom: []
+        name: sort
+        description: 'Campo de ordenação. Use "-" para decrescente. Valores permitidos: name, email, created_at, last_login.'
+        required: false
+        example: '-created_at'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      'filter[name]': Hugo
+      'filter[email]': hugo@
+      'filter[position_id]': 1
+      'filter[is_active]': true
+      'filter[roles]': admin
+      sort: '-created_at'
+    bodyParameters:
+      filter:
+        custom: []
+        name: filter
+        description: ''
+        required: false
+        example: null
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.name:
+        custom: []
+        name: filter.name
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.email:
+        custom: []
+        name: filter.email
+        description: ''
+        required: false
+        example: gbailey@example.net
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.position_id:
+        custom: []
+        name: filter.position_id
+        description: 'The <code>id</code> of an existing record in the positions table.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.is_active:
+        custom: []
+        name: filter.is_active
+        description: ''
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.roles:
+        custom: []
+        name: filter.roles
+        description: 'The <code>name</code> of an existing record in the roles table.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sort:
+        custom: []
+        name: sort
+        description: ''
+        required: false
+        example: '-created_at'
+        type: string
+        enumValues:
+          - name
+          - '-name'
+          - email
+          - '-email'
+          - created_at
+          - '-created_at'
+          - last_login
+          - '-last_login'
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      filter:
+        name: architecto
+        email: gbailey@example.net
+        position_id: 16
+        is_active: true
+        roles: architecto
+      sort: '-created_at'
     fileParameters: []
     responses:
       -
@@ -220,8 +384,100 @@ endpoints:
       id: 1
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+    bodyParameters:
+      filter:
+        custom: []
+        name: filter
+        description: ''
+        required: false
+        example: null
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.name:
+        custom: []
+        name: filter.name
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.email:
+        custom: []
+        name: filter.email
+        description: ''
+        required: false
+        example: gbailey@example.net
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.position_id:
+        custom: []
+        name: filter.position_id
+        description: 'The <code>id</code> of an existing record in the positions table.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.is_active:
+        custom: []
+        name: filter.is_active
+        description: ''
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.roles:
+        custom: []
+        name: filter.roles
+        description: 'The <code>name</code> of an existing record in the roles table.'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sort:
+        custom: []
+        name: sort
+        description: ''
+        required: false
+        example: '-created_at'
+        type: string
+        enumValues:
+          - name
+          - '-name'
+          - email
+          - '-email'
+          - created_at
+          - '-created_at'
+          - last_login
+          - '-last_login'
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      filter:
+        name: architecto
+        email: gbailey@example.net
+        position_id: 16
+        is_active: false
+        roles: architecto
+      sort: '-created_at'
     fileParameters: []
     responses:
       -
@@ -443,14 +699,14 @@ endpoints:
         name: activate
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      activate: true
+      activate: false
     fileParameters: []
     responses:
       -

@@ -22,6 +22,10 @@ class OficioTemplateController extends Controller
     /**
      * Listar templates
      *
+     * @queryParam filter[name] string Filtro de pesquisa parcial pelo nome. Example: Solicitação
+     * @queryParam filter[is_active] boolean Filtra por status ativo/inativo. Example: true
+     * @queryParam sort string Campo de ordenação. Use "-" para decrescente. Valores permitidos: name, created_at. Example: -created_at
+     *
      * @response 200 {
      *   "current_page": 1,
      *   "data": [{

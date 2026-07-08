@@ -25,6 +25,15 @@ class OficioController extends Controller
      *
      * Retorna lista paginada de ofícios com remetente e destinatários.
      *
+     * @queryParam filter[subject] string Filtro de pesquisa parcial pelo assunto. Example: Solicitação
+     * @queryParam filter[number] string Filtro de pesquisa parcial pelo número. Example: 001
+     * @queryParam filter[department] string Filtro de pesquisa parcial pelo departamento. Example: Financeiro
+     * @queryParam filter[status] string Filtro exato pelo status. Example: DRAFT
+     * @queryParam filter[priority] string Filtro exato pela prioridade. Example: MEDIUM
+     * @queryParam filter[destination_contact_id] integer Filtro exato pelo contato de destino. Example: 1
+     * @queryParam filter[author_id] integer Filtro exato pelo autor. Example: 1
+     * @queryParam sort string Campo de ordenação. Use "-" para decrescente. Valores permitidos: number, subject, priority, status, created_at. Padrão: -created_at. Example: -created_at
+     *
      * @response 200 {
      *   "current_page": 1,
      *   "data": [{

@@ -4,12 +4,21 @@ namespace App\Services;
 
 use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\Permission\Models\Role;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class RoleService
 {
     public function list(): LengthAwarePaginator
     {
-        return Role::with('permissions')->paginate(20);
+        return QueryBuilder::for(Role::class)
+            ->with('permissions')
+            ->allowedFilters(...[
+                AllowedFilter::partial('name'),
+                AllowedFilter::exact('status'),
+            ])
+            ->allowedSorts(...['name', 'created_at'])
+            ->paginate(20);
     }
 
     public function getById(Role $role): Role

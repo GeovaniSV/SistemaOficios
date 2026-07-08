@@ -110,7 +110,7 @@ endpoints:
         name: 'signers[].type'
         description: ''
         required: true
-        example: position
+        example: user
         type: string
         enumValues:
           - user
@@ -134,7 +134,7 @@ endpoints:
       footer: architecto
       signers:
         -
-          type: position
+          type: user
           id: 16
     fileParameters: []
     responses:

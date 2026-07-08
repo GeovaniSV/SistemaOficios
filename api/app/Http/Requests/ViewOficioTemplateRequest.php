@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ViewOficioTemplateRequest extends FormRequest
 {
@@ -13,6 +14,11 @@ class ViewOficioTemplateRequest extends FormRequest
 
     public function rules(): array
     {
-        return [];
+        return [
+            'filter'           => ['sometimes', 'array'],
+            'filter.name'      => ['sometimes', 'string'],
+            'filter.is_active' => ['sometimes', 'boolean'],
+            'sort'             => ['sometimes', 'string', Rule::in(['name', '-name', 'created_at', '-created_at'])],
+        ];
     }
 }

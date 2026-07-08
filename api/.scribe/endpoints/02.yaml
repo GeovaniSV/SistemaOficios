@@ -125,7 +125,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: warn
+        example: success
         type: string
         enumValues:
           - success
@@ -193,7 +193,7 @@ endpoints:
       correlationId: architecto
       code: architecto
       message: architecto
-      status: warn
+      status: success
       queueName: architecto
       worker: architecto
       eventType: architecto

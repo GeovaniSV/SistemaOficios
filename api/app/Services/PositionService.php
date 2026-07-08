@@ -2,14 +2,23 @@
 
 namespace App\Services;
 
+use App\Filters\BooleanFilter;
 use App\Models\Position;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class PositionService
 {
     public function list(): LengthAwarePaginator
     {
-        return Position::paginate(20);
+        return QueryBuilder::for(Position::class)
+            ->allowedFilters(...[
+                AllowedFilter::partial('name'),
+                AllowedFilter::custom('is_active', new BooleanFilter()),
+            ])
+            ->allowedSorts(...['name', 'created_at'])
+            ->paginate(20);
     }
 
     public function getById(Position $position): Position

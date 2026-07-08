@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\DestroyPositionRequest;
 use App\Http\Requests\StorePositionRequest;
 use App\Http\Requests\UpdatePositionRequest;
+use App\Http\Requests\ViewPositionRequest;
 use App\Models\Position;
 use App\Services\PositionService;
 use Illuminate\Http\JsonResponse;
@@ -24,6 +25,10 @@ class PositionController extends Controller
      *
      * Retorna lista paginada de cargos.
      *
+     * @queryParam filter[name] string Filtro de pesquisa parcial pelo nome. Example: Diretor
+     * @queryParam filter[is_active] boolean Filtra por status ativo/inativo. Example: true
+     * @queryParam sort string Campo de ordenação. Use "-" para decrescente. Valores permitidos: name, created_at. Example: -created_at
+     *
      * @response 200 {
      *   "current_page": 1,
      *   "data": [{ "id": 1, "name": "Diretor", "is_active": true }],
@@ -31,7 +36,7 @@ class PositionController extends Controller
      *   "total": 1
      * }
      */
-    public function index(): JsonResponse
+    public function index(ViewPositionRequest $request): JsonResponse
     {
         return response()->json($this->service->list());
     }

@@ -28,10 +28,148 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+    queryParameters:
+      'filter[type]':
+        custom: []
+        name: 'filter[type]'
+        description: 'Filtro exato pelo tipo de backup.'
+        required: false
+        example: manual
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[storage_type]':
+        custom: []
+        name: 'filter[storage_type]'
+        description: 'Filtro exato pelo destino de armazenamento.'
+        required: false
+        example: r2
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[filename]':
+        custom: []
+        name: 'filter[filename]'
+        description: 'Filtro de pesquisa parcial pelo nome do arquivo.'
+        required: false
+        example: backup-2026
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[is_available]':
+        custom: []
+        name: 'filter[is_available]'
+        description: 'Filtra pela disponibilidade do backup.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      sort:
+        custom: []
+        name: sort
+        description: 'Campo de ordenação. Use "-" para decrescente. Valor permitido: created_at. Padrão: -created_at.'
+        required: false
+        example: '-created_at'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      'filter[type]': manual
+      'filter[storage_type]': r2
+      'filter[filename]': backup-2026
+      'filter[is_available]': true
+      sort: '-created_at'
+    bodyParameters:
+      filter:
+        custom: []
+        name: filter
+        description: ''
+        required: false
+        example: null
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.type:
+        custom: []
+        name: filter.type
+        description: ''
+        required: false
+        example: automatic
+        type: string
+        enumValues:
+          - automatic
+          - manual
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.storage_type:
+        custom: []
+        name: filter.storage_type
+        description: ''
+        required: false
+        example: download
+        type: string
+        enumValues:
+          - r2
+          - download
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.filename:
+        custom: []
+        name: filter.filename
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.is_available:
+        custom: []
+        name: filter.is_available
+        description: ''
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sort:
+        custom: []
+        name: sort
+        description: ''
+        required: false
+        example: created_at
+        type: string
+        enumValues:
+          - created_at
+          - '-created_at'
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      filter:
+        type: automatic
+        storage_type: download
+        filename: architecto
+        is_available: true
+      sort: created_at
     fileParameters: []
     responses:
       -

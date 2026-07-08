@@ -22,6 +22,14 @@ class WorkerLogController extends Controller
      * Retorna lista paginada de logs gerados pelos workers (pdfWorker e emailWorker),
      * ordenados do mais recente para o mais antigo.
      *
+     * @queryParam filter[worker] string Filtro exato pelo worker. Example: pdfWorker
+     * @queryParam filter[status] string Filtro exato pelo status. Example: success
+     * @queryParam filter[code] string Filtro exato pelo código do evento. Example: PDF_GENERATED
+     * @queryParam filter[queue_name] string Filtro exato pela fila. Example: oficios_queue
+     * @queryParam filter[correlation_id] string Filtro exato pelo ID de correlação. Example: abc123
+     * @queryParam filter[message] string Filtro de pesquisa parcial pela mensagem. Example: PDF
+     * @queryParam sort string Campo de ordenação. Use "-" para decrescente. Valor permitido: created_at. Padrão: -created_at. Example: -created_at
+     *
      * @response 200 {
      *   "current_page": 1,
      *   "data": [{

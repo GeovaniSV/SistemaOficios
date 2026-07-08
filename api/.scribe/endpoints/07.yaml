@@ -22,10 +22,234 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+    queryParameters:
+      'filter[subject]':
+        custom: []
+        name: 'filter[subject]'
+        description: 'Filtro de pesquisa parcial pelo assunto.'
+        required: false
+        example: Solicitação
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[number]':
+        custom: []
+        name: 'filter[number]'
+        description: 'Filtro de pesquisa parcial pelo número.'
+        required: false
+        example: '001'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[department]':
+        custom: []
+        name: 'filter[department]'
+        description: 'Filtro de pesquisa parcial pelo departamento.'
+        required: false
+        example: Financeiro
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[status]':
+        custom: []
+        name: 'filter[status]'
+        description: 'Filtro exato pelo status.'
+        required: false
+        example: DRAFT
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[priority]':
+        custom: []
+        name: 'filter[priority]'
+        description: 'Filtro exato pela prioridade.'
+        required: false
+        example: MEDIUM
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[destination_contact_id]':
+        custom: []
+        name: 'filter[destination_contact_id]'
+        description: 'Filtro exato pelo contato de destino.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[author_id]':
+        custom: []
+        name: 'filter[author_id]'
+        description: 'Filtro exato pelo autor.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      sort:
+        custom: []
+        name: sort
+        description: 'Campo de ordenação. Use "-" para decrescente. Valores permitidos: number, subject, priority, status, created_at. Padrão: -created_at.'
+        required: false
+        example: '-created_at'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      'filter[subject]': Solicitação
+      'filter[number]': '001'
+      'filter[department]': Financeiro
+      'filter[status]': DRAFT
+      'filter[priority]': MEDIUM
+      'filter[destination_contact_id]': 1
+      'filter[author_id]': 1
+      sort: '-created_at'
+    bodyParameters:
+      filter:
+        custom: []
+        name: filter
+        description: ''
+        required: false
+        example: null
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.subject:
+        custom: []
+        name: filter.subject
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.number:
+        custom: []
+        name: filter.number
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.department:
+        custom: []
+        name: filter.department
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.status:
+        custom: []
+        name: filter.status
+        description: ''
+        required: false
+        example: APPROVED
+        type: string
+        enumValues:
+          - DRAFT
+          - PENDING
+          - APPROVED
+          - SENT
+          - REJECTED
+          - RETURNED
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.priority:
+        custom: []
+        name: filter.priority
+        description: ''
+        required: false
+        example: URGENT
+        type: string
+        enumValues:
+          - LOW
+          - MEDIUM
+          - HIGH
+          - URGENT
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.destination_contact_id:
+        custom: []
+        name: filter.destination_contact_id
+        description: 'The <code>id</code> of an existing record in the contacts table.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.author_id:
+        custom: []
+        name: filter.author_id
+        description: 'The <code>id</code> of an existing record in the users table.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sort:
+        custom: []
+        name: sort
+        description: ''
+        required: false
+        example: '-status'
+        type: string
+        enumValues:
+          - number
+          - '-number'
+          - subject
+          - '-subject'
+          - priority
+          - '-priority'
+          - status
+          - '-status'
+          - created_at
+          - '-created_at'
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      filter:
+        subject: architecto
+        number: architecto
+        department: architecto
+        status: APPROVED
+        priority: URGENT
+        destination_contact_id: 16
+        author_id: 16
+      sort: '-status'
     fileParameters: []
     responses:
       -
@@ -106,7 +330,7 @@ endpoints:
         name: priority
         description: ''
         required: true
-        example: LOW
+        example: MEDIUM
         type: string
         enumValues:
           - LOW
@@ -162,7 +386,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       subject: b
-      priority: LOW
+      priority: MEDIUM
       content: architecto
       department: 'n'
       submit: true
@@ -230,8 +454,136 @@ endpoints:
       id: 1
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+    bodyParameters:
+      filter:
+        custom: []
+        name: filter
+        description: ''
+        required: false
+        example: null
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.subject:
+        custom: []
+        name: filter.subject
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.number:
+        custom: []
+        name: filter.number
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.department:
+        custom: []
+        name: filter.department
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.status:
+        custom: []
+        name: filter.status
+        description: ''
+        required: false
+        example: REJECTED
+        type: string
+        enumValues:
+          - DRAFT
+          - PENDING
+          - APPROVED
+          - SENT
+          - REJECTED
+          - RETURNED
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.priority:
+        custom: []
+        name: filter.priority
+        description: ''
+        required: false
+        example: HIGH
+        type: string
+        enumValues:
+          - LOW
+          - MEDIUM
+          - HIGH
+          - URGENT
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.destination_contact_id:
+        custom: []
+        name: filter.destination_contact_id
+        description: 'The <code>id</code> of an existing record in the contacts table.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.author_id:
+        custom: []
+        name: filter.author_id
+        description: 'The <code>id</code> of an existing record in the users table.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sort:
+        custom: []
+        name: sort
+        description: ''
+        required: false
+        example: number
+        type: string
+        enumValues:
+          - number
+          - '-number'
+          - subject
+          - '-subject'
+          - priority
+          - '-priority'
+          - status
+          - '-status'
+          - created_at
+          - '-created_at'
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      filter:
+        subject: architecto
+        number: architecto
+        department: architecto
+        status: REJECTED
+        priority: HIGH
+        destination_contact_id: 16
+        author_id: 16
+      sort: number
     fileParameters: []
     responses:
       -
@@ -328,7 +680,7 @@ endpoints:
         name: priority
         description: ''
         required: true
-        example: LOW
+        example: MEDIUM
         type: string
         enumValues:
           - LOW
@@ -383,7 +735,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       subject: b
-      priority: LOW
+      priority: MEDIUM
       content: architecto
       department: 'n'
       submit: true
@@ -497,7 +849,7 @@ endpoints:
         name: priority
         description: ''
         required: false
-        example: MEDIUM
+        example: LOW
         type: string
         enumValues:
           - LOW
@@ -543,7 +895,7 @@ endpoints:
       status: APPROVED
       reason: architecto
       subject: 'n'
-      priority: MEDIUM
+      priority: LOW
       content: architecto
       department: 'n'
     fileParameters: []

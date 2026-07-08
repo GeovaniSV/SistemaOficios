@@ -286,7 +286,67 @@ paths:
       summary: 'Listar usuários'
       operationId: listarUsurios
       description: 'Retorna lista paginada de usuários com cargo e papéis.'
-      parameters: []
+      parameters:
+        -
+          in: query
+          name: 'filter[name]'
+          description: 'Filtro de pesquisa parcial pelo nome.'
+          example: Hugo
+          required: false
+          schema:
+            type: string
+            description: 'Filtro de pesquisa parcial pelo nome.'
+            example: Hugo
+        -
+          in: query
+          name: 'filter[email]'
+          description: 'Filtro de pesquisa parcial pelo email.'
+          example: hugo@
+          required: false
+          schema:
+            type: string
+            description: 'Filtro de pesquisa parcial pelo email.'
+            example: hugo@
+        -
+          in: query
+          name: 'filter[position_id]'
+          description: 'Filtro exato pelo cargo.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Filtro exato pelo cargo.'
+            example: 1
+        -
+          in: query
+          name: 'filter[is_active]'
+          description: 'Filtra por status ativo/inativo.'
+          example: true
+          required: false
+          schema:
+            type: boolean
+            description: 'Filtra por status ativo/inativo.'
+            example: true
+        -
+          in: query
+          name: 'filter[roles]'
+          description: 'Filtro exato pelo nome do papel (role).'
+          example: admin
+          required: false
+          schema:
+            type: string
+            description: 'Filtro exato pelo nome do papel (role).'
+            example: admin
+        -
+          in: query
+          name: sort
+          description: 'Campo de ordenação. Use "-" para decrescente. Valores permitidos: name, email, created_at, last_login.'
+          example: '-created_at'
+          required: false
+          schema:
+            type: string
+            description: 'Campo de ordenação. Use "-" para decrescente. Valores permitidos: name, email, created_at, last_login.'
+            example: '-created_at'
       responses:
         200:
           description: ''
@@ -382,6 +442,51 @@ paths:
                     example: 1
       tags:
         - Usuários
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filter:
+                  type: object
+                  description: ''
+                  example: null
+                  properties:
+                    name:
+                      type: string
+                      description: ''
+                      example: architecto
+                    email:
+                      type: string
+                      description: ''
+                      example: gbailey@example.net
+                    position_id:
+                      type: integer
+                      description: 'The <code>id</code> of an existing record in the positions table.'
+                      example: 16
+                    is_active:
+                      type: boolean
+                      description: ''
+                      example: true
+                    roles:
+                      type: string
+                      description: 'The <code>name</code> of an existing record in the roles table.'
+                      example: architecto
+                sort:
+                  type: string
+                  description: ''
+                  example: '-created_at'
+                  enum:
+                    - name
+                    - '-name'
+                    - email
+                    - '-email'
+                    - created_at
+                    - '-created_at'
+                    - last_login
+                    - '-last_login'
     post:
       summary: 'Criar usuário'
       operationId: criarUsurio
@@ -565,6 +670,51 @@ paths:
                     example: 'No query results for model [App\Models\User]'
       tags:
         - Usuários
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filter:
+                  type: object
+                  description: ''
+                  example: null
+                  properties:
+                    name:
+                      type: string
+                      description: ''
+                      example: architecto
+                    email:
+                      type: string
+                      description: ''
+                      example: gbailey@example.net
+                    position_id:
+                      type: integer
+                      description: 'The <code>id</code> of an existing record in the positions table.'
+                      example: 16
+                    is_active:
+                      type: boolean
+                      description: ''
+                      example: false
+                    roles:
+                      type: string
+                      description: 'The <code>name</code> of an existing record in the roles table.'
+                      example: architecto
+                sort:
+                  type: string
+                  description: ''
+                  example: '-created_at'
+                  enum:
+                    - name
+                    - '-name'
+                    - email
+                    - '-email'
+                    - created_at
+                    - '-created_at'
+                    - last_login
+                    - '-last_login'
     put:
       summary: 'Atualizar usuário'
       operationId: atualizarUsurio
@@ -738,7 +888,7 @@ paths:
                 activate:
                   type: boolean
                   description: ''
-                  example: true
+                  example: false
     parameters:
       -
         in: path
@@ -753,7 +903,37 @@ paths:
       summary: 'Listar cargos'
       operationId: listarCargos
       description: 'Retorna lista paginada de cargos.'
-      parameters: []
+      parameters:
+        -
+          in: query
+          name: 'filter[name]'
+          description: 'Filtro de pesquisa parcial pelo nome.'
+          example: Diretor
+          required: false
+          schema:
+            type: string
+            description: 'Filtro de pesquisa parcial pelo nome.'
+            example: Diretor
+        -
+          in: query
+          name: 'filter[is_active]'
+          description: 'Filtra por status ativo/inativo.'
+          example: true
+          required: false
+          schema:
+            type: boolean
+            description: 'Filtra por status ativo/inativo.'
+            example: true
+        -
+          in: query
+          name: sort
+          description: 'Campo de ordenação. Use "-" para decrescente. Valores permitidos: name, created_at.'
+          example: '-created_at'
+          required: false
+          schema:
+            type: string
+            description: 'Campo de ordenação. Use "-" para decrescente. Valores permitidos: name, created_at.'
+            example: '-created_at'
       responses:
         200:
           description: ''
@@ -801,6 +981,35 @@ paths:
                     example: 1
       tags:
         - Cargos
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filter:
+                  type: object
+                  description: ''
+                  example: null
+                  properties:
+                    name:
+                      type: string
+                      description: ''
+                      example: architecto
+                    is_active:
+                      type: boolean
+                      description: ''
+                      example: true
+                sort:
+                  type: string
+                  description: ''
+                  example: created_at
+                  enum:
+                    - name
+                    - '-name'
+                    - created_at
+                    - '-created_at'
     post:
       summary: 'Criar cargo'
       operationId: criarCargo
@@ -939,7 +1148,7 @@ paths:
                 is_active:
                   type: boolean
                   description: ''
-                  example: true
+                  example: false
     delete:
       summary: 'Inativar / Reativar cargo'
       operationId: inativarReativarCargo
@@ -988,7 +1197,7 @@ paths:
                 activate:
                   type: boolean
                   description: ''
-                  example: false
+                  example: true
     parameters:
       -
         in: path
@@ -1003,7 +1212,37 @@ paths:
       summary: 'Listar papéis'
       operationId: listarPapis
       description: 'Retorna lista paginada de papéis (roles) com suas permissões.'
-      parameters: []
+      parameters:
+        -
+          in: query
+          name: 'filter[name]'
+          description: 'Filtro de pesquisa parcial pelo nome.'
+          example: admin
+          required: false
+          schema:
+            type: string
+            description: 'Filtro de pesquisa parcial pelo nome.'
+            example: admin
+        -
+          in: query
+          name: 'filter[status]'
+          description: 'Filtro exato pelo status.'
+          example: Ativo
+          required: false
+          schema:
+            type: string
+            description: 'Filtro exato pelo status.'
+            example: Ativo
+        -
+          in: query
+          name: sort
+          description: 'Campo de ordenação. Use "-" para decrescente. Valores permitidos: name, created_at.'
+          example: '-created_at'
+          required: false
+          schema:
+            type: string
+            description: 'Campo de ordenação. Use "-" para decrescente. Valores permitidos: name, created_at.'
+            example: '-created_at'
       responses:
         200:
           description: ''
@@ -1074,6 +1313,38 @@ paths:
                     example: 1
       tags:
         - Papéis
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filter:
+                  type: object
+                  description: ''
+                  example: null
+                  properties:
+                    name:
+                      type: string
+                      description: ''
+                      example: architecto
+                    status:
+                      type: string
+                      description: ''
+                      example: Ativo
+                      enum:
+                        - Ativo
+                        - Inativo
+                sort:
+                  type: string
+                  description: ''
+                  example: '-created_at'
+                  enum:
+                    - name
+                    - '-name'
+                    - created_at
+                    - '-created_at'
     post:
       summary: 'Criar papel'
       operationId: criarPapel
@@ -1124,7 +1395,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: Ativo
+                  example: Inativo
                   enum:
                     - Ativo
                     - Inativo
@@ -1199,6 +1470,38 @@ paths:
                     example: 'No query results for model [Role]'
       tags:
         - Papéis
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filter:
+                  type: object
+                  description: ''
+                  example: null
+                  properties:
+                    name:
+                      type: string
+                      description: ''
+                      example: architecto
+                    status:
+                      type: string
+                      description: ''
+                      example: Inativo
+                      enum:
+                        - Ativo
+                        - Inativo
+                sort:
+                  type: string
+                  description: ''
+                  example: '-created_at'
+                  enum:
+                    - name
+                    - '-name'
+                    - created_at
+                    - '-created_at'
     put:
       summary: 'Atualizar papel'
       operationId: atualizarPapel
@@ -1264,7 +1567,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: Inativo
+                  example: Ativo
                   enum:
                     - Ativo
                     - Inativo
@@ -1341,11 +1644,41 @@ paths:
     get:
       summary: 'Listar contatos'
       operationId: listarContatos
-      description: 'Retorna lista paginada de contatos. Filtre pelo status com o parâmetro `is_active`.'
+      description: 'Retorna lista paginada de contatos.'
       parameters:
         -
           in: query
-          name: is_active
+          name: 'filter[name]'
+          description: 'Filtro de pesquisa parcial pelo nome.'
+          example: OAB
+          required: false
+          schema:
+            type: string
+            description: 'Filtro de pesquisa parcial pelo nome.'
+            example: OAB
+        -
+          in: query
+          name: 'filter[doc]'
+          description: 'Filtro exato pelo documento (CPF/CNPJ sem máscara).'
+          example: '12345678000190'
+          required: false
+          schema:
+            type: string
+            description: 'Filtro exato pelo documento (CPF/CNPJ sem máscara).'
+            example: '12345678000190'
+        -
+          in: query
+          name: 'filter[type]'
+          description: 'Filtro exato pelo tipo de contato.'
+          example: PJ
+          required: false
+          schema:
+            type: string
+            description: 'Filtro exato pelo tipo de contato.'
+            example: PJ
+        -
+          in: query
+          name: 'filter[is_active]'
           description: 'Filtra por status ativo/inativo. Omita para retornar todos.'
           example: true
           required: false
@@ -1353,6 +1686,16 @@ paths:
             type: boolean
             description: 'Filtra por status ativo/inativo. Omita para retornar todos.'
             example: true
+        -
+          in: query
+          name: sort
+          description: 'Campo de ordenação. Use "-" para decrescente. Valores permitidos: name, created_at.'
+          example: '-created_at'
+          required: false
+          schema:
+            type: string
+            description: 'Campo de ordenação. Use "-" para decrescente. Valores permitidos: name, created_at.'
+            example: '-created_at'
       responses:
         200:
           description: ''
@@ -1430,6 +1773,46 @@ paths:
                     example: 1
       tags:
         - Contatos
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filter:
+                  type: object
+                  description: ''
+                  example: null
+                  properties:
+                    name:
+                      type: string
+                      description: ''
+                      example: architecto
+                    doc:
+                      type: string
+                      description: ''
+                      example: architecto
+                    type:
+                      type: string
+                      description: ''
+                      example: PF
+                      enum:
+                        - PF
+                        - PJ
+                    is_active:
+                      type: boolean
+                      description: ''
+                      example: false
+                sort:
+                  type: string
+                  description: ''
+                  example: created_at
+                  enum:
+                    - name
+                    - '-name'
+                    - created_at
+                    - '-created_at'
     post:
       summary: 'Criar contato'
       operationId: criarContato
@@ -1476,7 +1859,7 @@ paths:
                 type:
                   type: string
                   description: ''
-                  example: PJ
+                  example: PF
                   enum:
                     - PF
                     - PJ
@@ -1629,6 +2012,46 @@ paths:
                     example: 'Contato não encontrado.'
       tags:
         - Contatos
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filter:
+                  type: object
+                  description: ''
+                  example: null
+                  properties:
+                    name:
+                      type: string
+                      description: ''
+                      example: architecto
+                    doc:
+                      type: string
+                      description: ''
+                      example: architecto
+                    type:
+                      type: string
+                      description: ''
+                      example: PJ
+                      enum:
+                        - PF
+                        - PJ
+                    is_active:
+                      type: boolean
+                      description: ''
+                      example: false
+                sort:
+                  type: string
+                  description: ''
+                  example: created_at
+                  enum:
+                    - name
+                    - '-name'
+                    - created_at
+                    - '-created_at'
     put:
       summary: 'Atualizar contato'
       operationId: atualizarContato
@@ -1671,7 +2094,7 @@ paths:
                 type:
                   type: string
                   description: ''
-                  example: PF
+                  example: PJ
                   enum:
                     - PF
                     - PJ
@@ -1857,6 +2280,46 @@ paths:
                     position: Presidente
       tags:
         - Contatos
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filter:
+                  type: object
+                  description: ''
+                  example: null
+                  properties:
+                    name:
+                      type: string
+                      description: ''
+                      example: architecto
+                    doc:
+                      type: string
+                      description: ''
+                      example: architecto
+                    type:
+                      type: string
+                      description: ''
+                      example: PF
+                      enum:
+                        - PF
+                        - PJ
+                    is_active:
+                      type: boolean
+                      description: ''
+                      example: true
+                sort:
+                  type: string
+                  description: ''
+                  example: '-name'
+                  enum:
+                    - name
+                    - '-name'
+                    - created_at
+                    - '-created_at'
     parameters:
       -
         in: path
@@ -1871,7 +2334,87 @@ paths:
       summary: 'Listar ofícios'
       operationId: listarOfcios
       description: 'Retorna lista paginada de ofícios com remetente e destinatários.'
-      parameters: []
+      parameters:
+        -
+          in: query
+          name: 'filter[subject]'
+          description: 'Filtro de pesquisa parcial pelo assunto.'
+          example: Solicitação
+          required: false
+          schema:
+            type: string
+            description: 'Filtro de pesquisa parcial pelo assunto.'
+            example: Solicitação
+        -
+          in: query
+          name: 'filter[number]'
+          description: 'Filtro de pesquisa parcial pelo número.'
+          example: '001'
+          required: false
+          schema:
+            type: string
+            description: 'Filtro de pesquisa parcial pelo número.'
+            example: '001'
+        -
+          in: query
+          name: 'filter[department]'
+          description: 'Filtro de pesquisa parcial pelo departamento.'
+          example: Financeiro
+          required: false
+          schema:
+            type: string
+            description: 'Filtro de pesquisa parcial pelo departamento.'
+            example: Financeiro
+        -
+          in: query
+          name: 'filter[status]'
+          description: 'Filtro exato pelo status.'
+          example: DRAFT
+          required: false
+          schema:
+            type: string
+            description: 'Filtro exato pelo status.'
+            example: DRAFT
+        -
+          in: query
+          name: 'filter[priority]'
+          description: 'Filtro exato pela prioridade.'
+          example: MEDIUM
+          required: false
+          schema:
+            type: string
+            description: 'Filtro exato pela prioridade.'
+            example: MEDIUM
+        -
+          in: query
+          name: 'filter[destination_contact_id]'
+          description: 'Filtro exato pelo contato de destino.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Filtro exato pelo contato de destino.'
+            example: 1
+        -
+          in: query
+          name: 'filter[author_id]'
+          description: 'Filtro exato pelo autor.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Filtro exato pelo autor.'
+            example: 1
+        -
+          in: query
+          name: sort
+          description: 'Campo de ordenação. Use "-" para decrescente. Valores permitidos: number, subject, priority, status, created_at. Padrão: -created_at.'
+          example: '-created_at'
+          required: false
+          schema:
+            type: string
+            description: 'Campo de ordenação. Use "-" para decrescente. Valores permitidos: number, subject, priority, status, created_at. Padrão: -created_at.'
+            example: '-created_at'
       responses:
         200:
           description: ''
@@ -1934,6 +2477,73 @@ paths:
                     example: 1
       tags:
         - Ofícios
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filter:
+                  type: object
+                  description: ''
+                  example: null
+                  properties:
+                    subject:
+                      type: string
+                      description: ''
+                      example: architecto
+                    number:
+                      type: string
+                      description: ''
+                      example: architecto
+                    department:
+                      type: string
+                      description: ''
+                      example: architecto
+                    status:
+                      type: string
+                      description: ''
+                      example: APPROVED
+                      enum:
+                        - DRAFT
+                        - PENDING
+                        - APPROVED
+                        - SENT
+                        - REJECTED
+                        - RETURNED
+                    priority:
+                      type: string
+                      description: ''
+                      example: URGENT
+                      enum:
+                        - LOW
+                        - MEDIUM
+                        - HIGH
+                        - URGENT
+                    destination_contact_id:
+                      type: integer
+                      description: 'The <code>id</code> of an existing record in the contacts table.'
+                      example: 16
+                    author_id:
+                      type: integer
+                      description: 'The <code>id</code> of an existing record in the users table.'
+                      example: 16
+                sort:
+                  type: string
+                  description: ''
+                  example: '-status'
+                  enum:
+                    - number
+                    - '-number'
+                    - subject
+                    - '-subject'
+                    - priority
+                    - '-priority'
+                    - status
+                    - '-status'
+                    - created_at
+                    - '-created_at'
     post:
       summary: 'Criar ofício'
       operationId: criarOfcio
@@ -2013,7 +2623,7 @@ paths:
                 priority:
                   type: string
                   description: ''
-                  example: LOW
+                  example: MEDIUM
                   enum:
                     - LOW
                     - MEDIUM
@@ -2111,6 +2721,73 @@ paths:
                     example: 'No query results for model [App\Models\Oficio]'
       tags:
         - Ofícios
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filter:
+                  type: object
+                  description: ''
+                  example: null
+                  properties:
+                    subject:
+                      type: string
+                      description: ''
+                      example: architecto
+                    number:
+                      type: string
+                      description: ''
+                      example: architecto
+                    department:
+                      type: string
+                      description: ''
+                      example: architecto
+                    status:
+                      type: string
+                      description: ''
+                      example: REJECTED
+                      enum:
+                        - DRAFT
+                        - PENDING
+                        - APPROVED
+                        - SENT
+                        - REJECTED
+                        - RETURNED
+                    priority:
+                      type: string
+                      description: ''
+                      example: HIGH
+                      enum:
+                        - LOW
+                        - MEDIUM
+                        - HIGH
+                        - URGENT
+                    destination_contact_id:
+                      type: integer
+                      description: 'The <code>id</code> of an existing record in the contacts table.'
+                      example: 16
+                    author_id:
+                      type: integer
+                      description: 'The <code>id</code> of an existing record in the users table.'
+                      example: 16
+                sort:
+                  type: string
+                  description: ''
+                  example: number
+                  enum:
+                    - number
+                    - '-number'
+                    - subject
+                    - '-subject'
+                    - priority
+                    - '-priority'
+                    - status
+                    - '-status'
+                    - created_at
+                    - '-created_at'
     put:
       summary: 'Atualizar ofício'
       operationId: atualizarOfcio
@@ -2162,7 +2839,7 @@ paths:
                 priority:
                   type: string
                   description: ''
-                  example: LOW
+                  example: MEDIUM
                   enum:
                     - LOW
                     - MEDIUM
@@ -2271,7 +2948,7 @@ paths:
                 priority:
                   type: string
                   description: ''
-                  example: MEDIUM
+                  example: LOW
                   enum:
                     - LOW
                     - MEDIUM
@@ -2352,7 +3029,37 @@ paths:
       summary: 'Listar templates'
       operationId: listarTemplates
       description: ''
-      parameters: []
+      parameters:
+        -
+          in: query
+          name: 'filter[name]'
+          description: 'Filtro de pesquisa parcial pelo nome.'
+          example: Solicitação
+          required: false
+          schema:
+            type: string
+            description: 'Filtro de pesquisa parcial pelo nome.'
+            example: Solicitação
+        -
+          in: query
+          name: 'filter[is_active]'
+          description: 'Filtra por status ativo/inativo.'
+          example: true
+          required: false
+          schema:
+            type: boolean
+            description: 'Filtra por status ativo/inativo.'
+            example: true
+        -
+          in: query
+          name: sort
+          description: 'Campo de ordenação. Use "-" para decrescente. Valores permitidos: name, created_at.'
+          example: '-created_at'
+          required: false
+          schema:
+            type: string
+            description: 'Campo de ordenação. Use "-" para decrescente. Valores permitidos: name, created_at.'
+            example: '-created_at'
       responses:
         200:
           description: ''
@@ -2405,6 +3112,35 @@ paths:
                     example: 1
       tags:
         - 'Templates de Ofício'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filter:
+                  type: object
+                  description: ''
+                  example: null
+                  properties:
+                    name:
+                      type: string
+                      description: ''
+                      example: architecto
+                    is_active:
+                      type: boolean
+                      description: ''
+                      example: false
+                sort:
+                  type: string
+                  description: ''
+                  example: created_at
+                  enum:
+                    - name
+                    - '-name'
+                    - created_at
+                    - '-created_at'
     post:
       summary: 'Criar template'
       operationId: criarTemplate
@@ -2500,6 +3236,35 @@ paths:
                     example: 'No query results for model [App\Models\OficioTemplate]'
       tags:
         - 'Templates de Ofício'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filter:
+                  type: object
+                  description: ''
+                  example: null
+                  properties:
+                    name:
+                      type: string
+                      description: ''
+                      example: architecto
+                    is_active:
+                      type: boolean
+                      description: ''
+                      example: false
+                sort:
+                  type: string
+                  description: ''
+                  example: '-name'
+                  enum:
+                    - name
+                    - '-name'
+                    - created_at
+                    - '-created_at'
     put:
       summary: 'Atualizar template'
       operationId: atualizarTemplate
@@ -2939,7 +3704,7 @@ paths:
                       type:
                         type: string
                         description: ''
-                        example: position
+                        example: user
                         enum:
                           - user
                           - position
@@ -3187,7 +3952,77 @@ paths:
       summary: 'Listar logs'
       operationId: listarLogs
       description: "Retorna lista paginada de logs gerados pelos workers (pdfWorker e emailWorker),\nordenados do mais recente para o mais antigo."
-      parameters: []
+      parameters:
+        -
+          in: query
+          name: 'filter[worker]'
+          description: 'Filtro exato pelo worker.'
+          example: pdfWorker
+          required: false
+          schema:
+            type: string
+            description: 'Filtro exato pelo worker.'
+            example: pdfWorker
+        -
+          in: query
+          name: 'filter[status]'
+          description: 'Filtro exato pelo status.'
+          example: success
+          required: false
+          schema:
+            type: string
+            description: 'Filtro exato pelo status.'
+            example: success
+        -
+          in: query
+          name: 'filter[code]'
+          description: 'Filtro exato pelo código do evento.'
+          example: PDF_GENERATED
+          required: false
+          schema:
+            type: string
+            description: 'Filtro exato pelo código do evento.'
+            example: PDF_GENERATED
+        -
+          in: query
+          name: 'filter[queue_name]'
+          description: 'Filtro exato pela fila.'
+          example: oficios_queue
+          required: false
+          schema:
+            type: string
+            description: 'Filtro exato pela fila.'
+            example: oficios_queue
+        -
+          in: query
+          name: 'filter[correlation_id]'
+          description: 'Filtro exato pelo ID de correlação.'
+          example: abc123
+          required: false
+          schema:
+            type: string
+            description: 'Filtro exato pelo ID de correlação.'
+            example: abc123
+        -
+          in: query
+          name: 'filter[message]'
+          description: 'Filtro de pesquisa parcial pela mensagem.'
+          example: PDF
+          required: false
+          schema:
+            type: string
+            description: 'Filtro de pesquisa parcial pela mensagem.'
+            example: PDF
+        -
+          in: query
+          name: sort
+          description: 'Campo de ordenação. Use "-" para decrescente. Valor permitido: created_at. Padrão: -created_at.'
+          example: '-created_at'
+          required: false
+          schema:
+            type: string
+            description: 'Campo de ordenação. Use "-" para decrescente. Valor permitido: created_at. Padrão: -created_at.'
+            example: '-created_at'
       responses:
         200:
           description: ''
@@ -3271,6 +4106,49 @@ paths:
                     example: 1
       tags:
         - 'Logs de Workers'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filter:
+                  type: object
+                  description: ''
+                  example: null
+                  properties:
+                    worker:
+                      type: string
+                      description: ''
+                      example: architecto
+                    status:
+                      type: string
+                      description: ''
+                      example: architecto
+                    code:
+                      type: string
+                      description: ''
+                      example: architecto
+                    queue_name:
+                      type: string
+                      description: ''
+                      example: architecto
+                    correlation_id:
+                      type: string
+                      description: ''
+                      example: architecto
+                    message:
+                      type: string
+                      description: ''
+                      example: architecto
+                sort:
+                  type: string
+                  description: ''
+                  example: created_at
+                  enum:
+                    - created_at
+                    - '-created_at'
     post:
       summary: 'Registrar log de worker'
       operationId: registrarLogDeWorker
@@ -3359,7 +4237,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: warn
+                  example: success
                   enum:
                     - success
                     - error
@@ -3397,7 +4275,57 @@ paths:
       summary: 'Listar backups'
       operationId: listarBackups
       description: "Retorna todos os backups registrados, ordenados do mais recente para o mais antigo.\nDurante a listagem, a disponibilidade dos backups manuais armazenados na R2 é verificada\ne atualizada automaticamente.\nO campo `download_url` contém uma URL presignada válida por 1 hora (apenas para backups disponíveis na R2)."
-      parameters: []
+      parameters:
+        -
+          in: query
+          name: 'filter[type]'
+          description: 'Filtro exato pelo tipo de backup.'
+          example: manual
+          required: false
+          schema:
+            type: string
+            description: 'Filtro exato pelo tipo de backup.'
+            example: manual
+        -
+          in: query
+          name: 'filter[storage_type]'
+          description: 'Filtro exato pelo destino de armazenamento.'
+          example: r2
+          required: false
+          schema:
+            type: string
+            description: 'Filtro exato pelo destino de armazenamento.'
+            example: r2
+        -
+          in: query
+          name: 'filter[filename]'
+          description: 'Filtro de pesquisa parcial pelo nome do arquivo.'
+          example: backup-2026
+          required: false
+          schema:
+            type: string
+            description: 'Filtro de pesquisa parcial pelo nome do arquivo.'
+            example: backup-2026
+        -
+          in: query
+          name: 'filter[is_available]'
+          description: 'Filtra pela disponibilidade do backup.'
+          example: true
+          required: false
+          schema:
+            type: boolean
+            description: 'Filtra pela disponibilidade do backup.'
+            example: true
+        -
+          in: query
+          name: sort
+          description: 'Campo de ordenação. Use "-" para decrescente. Valor permitido: created_at. Padrão: -created_at.'
+          example: '-created_at'
+          required: false
+          schema:
+            type: string
+            description: 'Campo de ordenação. Use "-" para decrescente. Valor permitido: created_at. Padrão: -created_at.'
+            example: '-created_at'
       responses:
         200:
           description: ''
@@ -3512,6 +4440,47 @@ paths:
                     example: 2
       tags:
         - Backups
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filter:
+                  type: object
+                  description: ''
+                  example: null
+                  properties:
+                    type:
+                      type: string
+                      description: ''
+                      example: automatic
+                      enum:
+                        - automatic
+                        - manual
+                    storage_type:
+                      type: string
+                      description: ''
+                      example: download
+                      enum:
+                        - r2
+                        - download
+                    filename:
+                      type: string
+                      description: ''
+                      example: architecto
+                    is_available:
+                      type: boolean
+                      description: ''
+                      example: true
+                sort:
+                  type: string
+                  description: ''
+                  example: created_at
+                  enum:
+                    - created_at
+                    - '-created_at'
   /api/backups/manual:
     post:
       summary: 'Backup manual'

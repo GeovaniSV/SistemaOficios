@@ -2,15 +2,30 @@
 
 namespace App\Services;
 
+use App\Filters\BooleanFilter;
+use App\Filters\RoleNameFilter;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class UserService
 {
     public function list(): LengthAwarePaginator
     {
-        return User::with('position', 'roles')->where('is_dev', false)->paginate(20);
+        return QueryBuilder::for(User::class)
+            ->with('position', 'roles')
+            ->where('is_dev', false)
+            ->allowedFilters(...[
+                AllowedFilter::partial('name'),
+                AllowedFilter::partial('email'),
+                AllowedFilter::exact('position_id'),
+                AllowedFilter::custom('is_active', new BooleanFilter()),
+                AllowedFilter::custom('roles', new RoleNameFilter()),
+            ])
+            ->allowedSorts(...['name', 'email', 'created_at', 'last_login'])
+            ->paginate(20);
     }
 
     public function getById(User $user): User
